@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas Zoom + Pan + Draw Rectangle</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            background: #f0f0f0;
+            display: block;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="canvas"></canvas>
+    
+    <script>
+        let scale = 1;
+        let offsetX = 0;
+        let offsetY = 0;
+        const shapes = [];
+
+        // Draft rect (during drag)
+        let isDrawing = false;
+        let draftStart = null;
+        let draftRect = null;
+        
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Resize canvas
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            draw();
+        }
+        window.addEventListener("resize", resize);
+        resize();
+
+        // -------------------------
+        // Camera
+        // -------------------------
+
+        // -------------------------
+        // Shapes
+        // -------------------------
+
+        // Convert screen coords to WORLD coords
+        function screenToWorld(x, y) {
+            return {
+                x: (x - offsetX) / scale,
+                y: (y - offsetY) / scale
+            };
+        }
+
+        // -------------------------
+        // Rendering
+        // -------------------------
+        function draw() {
+            // Clear everything
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Apply world camera
+            ctx.setTransform(scale, 0, 0, scale, offsetX, offsetY);
+
+            // Draw saved rectangles
+            shapes.forEach(r => {
+                ctx.fillStyle = r.color;
+                ctx.fillRect(r.x, r.y, r.w, r.h);
+            });
+
+            // Draw draft rectangle (outline only)
+            if (draftRect) {
+                ctx.strokeStyle = "rgba(0,0,0,0.2)";
+                ctx.lineWidth = 1 / scale;  // keep line thin during zoom
+                ctx.fillRect(draftRect.x, draftRect.y, draftRect.w, draftRect.h);
+            }
+        }
+
+        // -------------------------
+        // Mouse Events for Drawing
+        // -------------------------
+        canvas.addEventListener("mousedown", (e) => {
+            const pos = screenToWorld(e.clientX, e.clientY);
+            isDrawing = true;
+
+            draftStart = pos;
+            draftRect = { x: pos.x, y: pos.y, w: 0, h: 0 };
+        });
+
+        canvas.addEventListener("mousemove", (e) => {
+            if (!isDrawing) return;
+
+            const pos = screenToWorld(e.clientX, e.clientY);
+
+            draftRect.w = pos.x - draftStart.x;
+            draftRect.h = pos.y - draftStart.y;
+
+            draw();
+        });
+
+        canvas.addEventListener("mouseup", () => {
+            if (!isDrawing) return;
+
+            isDrawing = false;
+
+            // Save rectangle if it has size
+            if (Math.abs(draftRect.w) > 2 && Math.abs(draftRect.h) > 2) {
+                shapes.push({
+                    x: draftRect.x,
+                    y: draftRect.y,
+                    w: draftRect.w,
+                    h: draftRect.h,
+                    color: "rgba(0,0,0,0.2)"
+                });
+            }
+
+            draftRect = null;
+            draw();
+        });
+
+        // -------------------------
+        // Pan (right-click drag or hold space?)
+        // For now: Disable pan while drawing rectangles.
+        // -------------------------
+        let isPanning = false;
+        let panStart = { x: 0, y: 0 };
+
+        canvas.addEventListener("mousedown", (e) => {
+            if (e.button === 1 || e.button === 2) { // middle or right click
+                isPanning = true;
+                panStart.x = e.clientX - offsetX;
+                panStart.y = e.clientY - offsetY;
+            }
+        });
+
+        canvas.addEventListener("mousemove", (e) => {
+            if (!isPanning) return;
+
+            offsetX = e.clientX - panStart.x;
+            offsetY = e.clientY - panStart.y;
+
+            draw();
+        });
+
+        canvas.addEventListener("mouseup", () => {
+            isPanning = false;
+        });
+
+        // Prevent context menu on right-click
+        canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+
+        // -------------------------
+        // Zoom
+        // -------------------------
+        canvas.addEventListener("wheel", (e) => {
+            e.preventDefault();
+
+            const zoomIntensity = 1.1;
+            const mouseX = e.clientX - canvas.getBoundingClientRect().left;
+            const mouseY = e.clientY - canvas.getBoundingClientRect().top;
+
+            const direction = e.deltaY < 0 ? 1 : -1;
+            const zoom = Math.pow(zoomIntensity, direction);
+
+            offsetX = mouseX - (mouseX - offsetX) * zoom;
+            offsetY = mouseY - (mouseY - offsetY) * zoom;
+
+            scale *= zoom;
+
+            draw();
+        });
+
+        draw();
+    </script>
+</body>
+
+</html>
