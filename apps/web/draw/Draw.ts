@@ -1,5 +1,5 @@
 import { Point, Shape } from "@repo/common/types";
-import { getExisitingShapes } from "./fetch";
+import { getExisitingShapes } from "../lib/http/fetch";
 import { useDrawStore } from "@repo/store/store";
 import { DrawShape } from "./DrawShape";
 import { createId } from '@paralleldrive/cuid2';

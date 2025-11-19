@@ -5,17 +5,17 @@ import { useState } from "react";
 
 export default function Home() {
 
-  const [roomId, setRoomId] = useState<string>("");
+  const [slug, setSlug] = useState<string>("");
   const router = useRouter();
 
   return (
     <div className="w-full h-full flex items-center justify-center">
       <input type="text" placeholder="Room Slug" onChange={(e) => {
-        setRoomId(e.target.value);
-      }} value={roomId}></input>
+        setSlug(e.target.value);
+      }} value={slug}></input>
 
       <button onClick={() => {
-        router.push(`/room/${roomId}`);
+        router.push(`/canvas/${slug}`);
       }}>Join Room</button>
     </div>
   );

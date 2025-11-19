@@ -125,26 +125,34 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   name: 'name',
-  photo: 'photo'
-};
-
-exports.Prisma.RoomScalarFieldEnum = {
-  id: 'id',
-  adminId: 'adminId',
-  slug: 'slug',
   createdAt: 'createdAt'
 };
 
-exports.Prisma.ChatScalarFieldEnum = {
+exports.Prisma.CanvasRoomScalarFieldEnum = {
   id: 'id',
-  message: 'message',
+  slug: 'slug',
+  adminId: 'adminId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ElementScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
   senderId: 'senderId',
-  roomId: 'roomId'
+  type: 'type',
+  data: 'data',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -157,11 +165,24 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+exports.ShapeTypes = exports.$Enums.ShapeTypes = {
+  PENCIL: 'PENCIL',
+  RECTANGLE: 'RECTANGLE',
+  ELLIPSE: 'ELLIPSE',
+  LINE: 'LINE',
+  ARROW: 'ARROW',
+  TEXT: 'TEXT'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Room: 'Room',
-  Chat: 'Chat'
+  CanvasRoom: 'CanvasRoom',
+  Element: 'Element'
 };
 
 /**

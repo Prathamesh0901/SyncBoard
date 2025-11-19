@@ -1,8 +1,12 @@
-import { WebSocketServer, WebSocket } from 'ws';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import { WebSocketServer } from 'ws';
+import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '@repo/backend-common/config';
 import { prismaClient } from '@repo/db/client';
-import { rooms } from './rooms';
+import { ClientMessage } from "@repo/common/messageTypes";
+import { onJoin } from './events/onJoin';
+import { onElementsCreate } from './events/onElementDelete';
+import { onElementDelete } from './events/onElementCreate';
+import { onLeave } from './events/onLeave';
 
 const wss = new WebSocketServer({ port: 3002 });
 
@@ -35,7 +39,7 @@ wss.on('connection', async function connection(ws, request) {
     const url = request.url;
     if(!url) {
         return;
-    }
+    }       
 
     const queryParams = new URLSearchParams(url.split('?')[1]);
     const token = queryParams.get('token') || '';
@@ -48,24 +52,33 @@ wss.on('connection', async function connection(ws, request) {
     }
     
     ws.on('message', async function message(data) {
-        const parsedData = JSON.parse(data.toString());
-        console.log(parsedData.type);
-        if(parsedData.type === 'join_room') {
-            rooms.joinRoom(parsedData.roomId, ws);
+        const message: ClientMessage = JSON.parse(data.toString());
+        console.log(message.type);
+        if (!message.type) {
+            ws.send(JSON.stringify({
+                status: 400,
+                message: 'Invalid message'
+            }))
+            return;
         }
-        else if(parsedData.type === 'leave_room') {
-            rooms.leaveRoom(parsedData.roomId, ws);
-        }
-        else if(parsedData.type === 'chat') {
-            console.log(parsedData);
-            await prismaClient.chat.create({
-                data: {
-                    roomId: parsedData.roomId,
-                    senderId: userId,
-                    message: parsedData.message
-                }
-            })
-            rooms.sendMessage(ws, parsedData.roomId, parsedData);
+
+        switch (message.type) {
+            case 'JOIN_ROOM': {
+                onJoin(ws, message, userId);
+                break;
+            }
+            case 'ELEMENT_CREATE': {
+                onElementsCreate(ws, message);
+                break;
+            }
+            case 'ELEMENT_DELETE': {
+                onElementDelete(ws, message);
+                break;
+            }
+            case 'LEAVE_ROOM': {
+                onLeave(ws, message);
+                break;
+            }
         }
     })
 

@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "scripts": {},
   "exports": {
-    "./client": "./src/index.ts"
+    "./client": "./src/index.ts",
+    "./types": "./src/types.ts"
   },
   "keywords": [],
   "author": "",

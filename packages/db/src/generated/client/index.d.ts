@@ -19,15 +19,36 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
- * Model Room
+ * Model CanvasRoom
  * 
  */
-export type Room = $Result.DefaultSelection<Prisma.$RoomPayload>
+export type CanvasRoom = $Result.DefaultSelection<Prisma.$CanvasRoomPayload>
 /**
- * Model Chat
+ * Model Element
  * 
  */
-export type Chat = $Result.DefaultSelection<Prisma.$ChatPayload>
+export type Element = $Result.DefaultSelection<Prisma.$ElementPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const ShapeTypes: {
+  PENCIL: 'PENCIL',
+  RECTANGLE: 'RECTANGLE',
+  ELLIPSE: 'ELLIPSE',
+  LINE: 'LINE',
+  ARROW: 'ARROW',
+  TEXT: 'TEXT'
+};
+
+export type ShapeTypes = (typeof ShapeTypes)[keyof typeof ShapeTypes]
+
+}
+
+export type ShapeTypes = $Enums.ShapeTypes
+
+export const ShapeTypes: typeof $Enums.ShapeTypes
 
 /**
  * ##  Prisma Client ʲˢ
@@ -158,24 +179,24 @@ export class PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.room`: Exposes CRUD operations for the **Room** model.
+   * `prisma.canvasRoom`: Exposes CRUD operations for the **CanvasRoom** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Rooms
-    * const rooms = await prisma.room.findMany()
+    * // Fetch zero or more CanvasRooms
+    * const canvasRooms = await prisma.canvasRoom.findMany()
     * ```
     */
-  get room(): Prisma.RoomDelegate<ExtArgs, ClientOptions>;
+  get canvasRoom(): Prisma.CanvasRoomDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.chat`: Exposes CRUD operations for the **Chat** model.
+   * `prisma.element`: Exposes CRUD operations for the **Element** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Chats
-    * const chats = await prisma.chat.findMany()
+    * // Fetch zero or more Elements
+    * const elements = await prisma.element.findMany()
     * ```
     */
-  get chat(): Prisma.ChatDelegate<ExtArgs, ClientOptions>;
+  get element(): Prisma.ElementDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -618,8 +639,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Room: 'Room',
-    Chat: 'Chat'
+    CanvasRoom: 'CanvasRoom',
+    Element: 'Element'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -638,7 +659,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "room" | "chat"
+      modelProps: "user" | "canvasRoom" | "element"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -716,151 +737,151 @@ export namespace Prisma {
           }
         }
       }
-      Room: {
-        payload: Prisma.$RoomPayload<ExtArgs>
-        fields: Prisma.RoomFieldRefs
+      CanvasRoom: {
+        payload: Prisma.$CanvasRoomPayload<ExtArgs>
+        fields: Prisma.CanvasRoomFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.RoomFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload> | null
+            args: Prisma.CanvasRoomFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CanvasRoomPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.RoomFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
+            args: Prisma.CanvasRoomFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CanvasRoomPayload>
           }
           findFirst: {
-            args: Prisma.RoomFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload> | null
+            args: Prisma.CanvasRoomFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CanvasRoomPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.RoomFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
+            args: Prisma.CanvasRoomFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CanvasRoomPayload>
           }
           findMany: {
-            args: Prisma.RoomFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>[]
+            args: Prisma.CanvasRoomFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CanvasRoomPayload>[]
           }
           create: {
-            args: Prisma.RoomCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
+            args: Prisma.CanvasRoomCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CanvasRoomPayload>
           }
           createMany: {
-            args: Prisma.RoomCreateManyArgs<ExtArgs>
+            args: Prisma.CanvasRoomCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.RoomCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>[]
+            args: Prisma.CanvasRoomCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CanvasRoomPayload>[]
           }
           delete: {
-            args: Prisma.RoomDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
+            args: Prisma.CanvasRoomDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CanvasRoomPayload>
           }
           update: {
-            args: Prisma.RoomUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
+            args: Prisma.CanvasRoomUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CanvasRoomPayload>
           }
           deleteMany: {
-            args: Prisma.RoomDeleteManyArgs<ExtArgs>
+            args: Prisma.CanvasRoomDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.RoomUpdateManyArgs<ExtArgs>
+            args: Prisma.CanvasRoomUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.RoomUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>[]
+            args: Prisma.CanvasRoomUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CanvasRoomPayload>[]
           }
           upsert: {
-            args: Prisma.RoomUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
+            args: Prisma.CanvasRoomUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CanvasRoomPayload>
           }
           aggregate: {
-            args: Prisma.RoomAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateRoom>
+            args: Prisma.CanvasRoomAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCanvasRoom>
           }
           groupBy: {
-            args: Prisma.RoomGroupByArgs<ExtArgs>
-            result: $Utils.Optional<RoomGroupByOutputType>[]
+            args: Prisma.CanvasRoomGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CanvasRoomGroupByOutputType>[]
           }
           count: {
-            args: Prisma.RoomCountArgs<ExtArgs>
-            result: $Utils.Optional<RoomCountAggregateOutputType> | number
+            args: Prisma.CanvasRoomCountArgs<ExtArgs>
+            result: $Utils.Optional<CanvasRoomCountAggregateOutputType> | number
           }
         }
       }
-      Chat: {
-        payload: Prisma.$ChatPayload<ExtArgs>
-        fields: Prisma.ChatFieldRefs
+      Element: {
+        payload: Prisma.$ElementPayload<ExtArgs>
+        fields: Prisma.ElementFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ChatFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ChatPayload> | null
+            args: Prisma.ElementFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ChatFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ChatPayload>
+            args: Prisma.ElementFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementPayload>
           }
           findFirst: {
-            args: Prisma.ChatFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ChatPayload> | null
+            args: Prisma.ElementFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ChatFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ChatPayload>
+            args: Prisma.ElementFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementPayload>
           }
           findMany: {
-            args: Prisma.ChatFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ChatPayload>[]
+            args: Prisma.ElementFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementPayload>[]
           }
           create: {
-            args: Prisma.ChatCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ChatPayload>
+            args: Prisma.ElementCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementPayload>
           }
           createMany: {
-            args: Prisma.ChatCreateManyArgs<ExtArgs>
+            args: Prisma.ElementCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ChatCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ChatPayload>[]
+            args: Prisma.ElementCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementPayload>[]
           }
           delete: {
-            args: Prisma.ChatDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ChatPayload>
+            args: Prisma.ElementDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementPayload>
           }
           update: {
-            args: Prisma.ChatUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ChatPayload>
+            args: Prisma.ElementUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementPayload>
           }
           deleteMany: {
-            args: Prisma.ChatDeleteManyArgs<ExtArgs>
+            args: Prisma.ElementDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ChatUpdateManyArgs<ExtArgs>
+            args: Prisma.ElementUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ChatUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ChatPayload>[]
+            args: Prisma.ElementUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementPayload>[]
           }
           upsert: {
-            args: Prisma.ChatUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ChatPayload>
+            args: Prisma.ElementUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementPayload>
           }
           aggregate: {
-            args: Prisma.ChatAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateChat>
+            args: Prisma.ElementAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateElement>
           }
           groupBy: {
-            args: Prisma.ChatGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ChatGroupByOutputType>[]
+            args: Prisma.ElementGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ElementGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ChatCountArgs<ExtArgs>
-            result: $Utils.Optional<ChatCountAggregateOutputType> | number
+            args: Prisma.ElementCountArgs<ExtArgs>
+            result: $Utils.Optional<ElementCountAggregateOutputType> | number
           }
         }
       }
@@ -961,8 +982,8 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
-    room?: RoomOmit
-    chat?: ChatOmit
+    canvasRoom?: CanvasRoomOmit
+    element?: ElementOmit
   }
 
   /* Types for Logging */
@@ -1044,12 +1065,14 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     rooms: number
-    chats: number
+    adminRooms: number
+    elements: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     rooms?: boolean | UserCountOutputTypeCountRoomsArgs
-    chats?: boolean | UserCountOutputTypeCountChatsArgs
+    adminRooms?: boolean | UserCountOutputTypeCountAdminRoomsArgs
+    elements?: boolean | UserCountOutputTypeCountElementsArgs
   }
 
   // Custom InputTypes
@@ -1067,45 +1090,61 @@ export namespace Prisma {
    * UserCountOutputType without action
    */
   export type UserCountOutputTypeCountRoomsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RoomWhereInput
+    where?: CanvasRoomWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountChatsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ChatWhereInput
+  export type UserCountOutputTypeCountAdminRoomsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CanvasRoomWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountElementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ElementWhereInput
   }
 
 
   /**
-   * Count Type RoomCountOutputType
+   * Count Type CanvasRoomCountOutputType
    */
 
-  export type RoomCountOutputType = {
-    chats: number
+  export type CanvasRoomCountOutputType = {
+    users: number
+    elements: number
   }
 
-  export type RoomCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    chats?: boolean | RoomCountOutputTypeCountChatsArgs
+  export type CanvasRoomCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | CanvasRoomCountOutputTypeCountUsersArgs
+    elements?: boolean | CanvasRoomCountOutputTypeCountElementsArgs
   }
 
   // Custom InputTypes
   /**
-   * RoomCountOutputType without action
+   * CanvasRoomCountOutputType without action
    */
-  export type RoomCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RoomCountOutputType
+     * Select specific fields to fetch from the CanvasRoomCountOutputType
      */
-    select?: RoomCountOutputTypeSelect<ExtArgs> | null
+    select?: CanvasRoomCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * RoomCountOutputType without action
+   * CanvasRoomCountOutputType without action
    */
-  export type RoomCountOutputTypeCountChatsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ChatWhereInput
+  export type CanvasRoomCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+  }
+
+  /**
+   * CanvasRoomCountOutputType without action
+   */
+  export type CanvasRoomCountOutputTypeCountElementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ElementWhereInput
   }
 
 
@@ -1128,7 +1167,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     name: string | null
-    photo: string | null
+    createdAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1136,7 +1175,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     name: string | null
-    photo: string | null
+    createdAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1144,7 +1183,7 @@ export namespace Prisma {
     email: number
     password: number
     name: number
-    photo: number
+    createdAt: number
     _all: number
   }
 
@@ -1154,7 +1193,7 @@ export namespace Prisma {
     email?: true
     password?: true
     name?: true
-    photo?: true
+    createdAt?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1162,7 +1201,7 @@ export namespace Prisma {
     email?: true
     password?: true
     name?: true
-    photo?: true
+    createdAt?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1170,7 +1209,7 @@ export namespace Prisma {
     email?: true
     password?: true
     name?: true
-    photo?: true
+    createdAt?: true
     _all?: true
   }
 
@@ -1250,8 +1289,8 @@ export namespace Prisma {
     id: string
     email: string
     password: string
-    name: string
-    photo: string | null
+    name: string | null
+    createdAt: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1276,9 +1315,10 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
-    photo?: boolean
+    createdAt?: boolean
     rooms?: boolean | User$roomsArgs<ExtArgs>
-    chats?: boolean | User$chatsArgs<ExtArgs>
+    adminRooms?: boolean | User$adminRoomsArgs<ExtArgs>
+    elements?: boolean | User$elementsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1287,7 +1327,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
-    photo?: boolean
+    createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1295,7 +1335,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
-    photo?: boolean
+    createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1303,13 +1343,14 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
-    photo?: boolean
+    createdAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "photo", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     rooms?: boolean | User$roomsArgs<ExtArgs>
-    chats?: boolean | User$chatsArgs<ExtArgs>
+    adminRooms?: boolean | User$adminRoomsArgs<ExtArgs>
+    elements?: boolean | User$elementsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1318,15 +1359,16 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      rooms: Prisma.$RoomPayload<ExtArgs>[]
-      chats: Prisma.$ChatPayload<ExtArgs>[]
+      rooms: Prisma.$CanvasRoomPayload<ExtArgs>[]
+      adminRooms: Prisma.$CanvasRoomPayload<ExtArgs>[]
+      elements: Prisma.$ElementPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
       password: string
-      name: string
-      photo: string | null
+      name: string | null
+      createdAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1721,8 +1763,9 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    rooms<T extends User$roomsArgs<ExtArgs> = {}>(args?: Subset<T, User$roomsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    chats<T extends User$chatsArgs<ExtArgs> = {}>(args?: Subset<T, User$chatsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    rooms<T extends User$roomsArgs<ExtArgs> = {}>(args?: Subset<T, User$roomsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    adminRooms<T extends User$adminRoomsArgs<ExtArgs> = {}>(args?: Subset<T, User$adminRoomsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    elements<T extends User$elementsArgs<ExtArgs> = {}>(args?: Subset<T, User$elementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1756,7 +1799,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
-    readonly photo: FieldRef<"User", 'String'>
+    readonly createdAt: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -2149,47 +2192,71 @@ export namespace Prisma {
    */
   export type User$roomsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelect<ExtArgs> | null
+    select?: CanvasRoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
-    where?: RoomWhereInput
-    orderBy?: RoomOrderByWithRelationInput | RoomOrderByWithRelationInput[]
-    cursor?: RoomWhereUniqueInput
+    include?: CanvasRoomInclude<ExtArgs> | null
+    where?: CanvasRoomWhereInput
+    orderBy?: CanvasRoomOrderByWithRelationInput | CanvasRoomOrderByWithRelationInput[]
+    cursor?: CanvasRoomWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: RoomScalarFieldEnum | RoomScalarFieldEnum[]
+    distinct?: CanvasRoomScalarFieldEnum | CanvasRoomScalarFieldEnum[]
   }
 
   /**
-   * User.chats
+   * User.adminRooms
    */
-  export type User$chatsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$adminRoomsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: CanvasRoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
-    where?: ChatWhereInput
-    orderBy?: ChatOrderByWithRelationInput | ChatOrderByWithRelationInput[]
-    cursor?: ChatWhereUniqueInput
+    include?: CanvasRoomInclude<ExtArgs> | null
+    where?: CanvasRoomWhereInput
+    orderBy?: CanvasRoomOrderByWithRelationInput | CanvasRoomOrderByWithRelationInput[]
+    cursor?: CanvasRoomWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ChatScalarFieldEnum | ChatScalarFieldEnum[]
+    distinct?: CanvasRoomScalarFieldEnum | CanvasRoomScalarFieldEnum[]
+  }
+
+  /**
+   * User.elements
+   */
+  export type User$elementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Element
+     */
+    select?: ElementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Element
+     */
+    omit?: ElementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementInclude<ExtArgs> | null
+    where?: ElementWhereInput
+    orderBy?: ElementOrderByWithRelationInput | ElementOrderByWithRelationInput[]
+    cursor?: ElementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ElementScalarFieldEnum | ElementScalarFieldEnum[]
   }
 
   /**
@@ -2212,343 +2279,358 @@ export namespace Prisma {
 
 
   /**
-   * Model Room
+   * Model CanvasRoom
    */
 
-  export type AggregateRoom = {
-    _count: RoomCountAggregateOutputType | null
-    _min: RoomMinAggregateOutputType | null
-    _max: RoomMaxAggregateOutputType | null
+  export type AggregateCanvasRoom = {
+    _count: CanvasRoomCountAggregateOutputType | null
+    _min: CanvasRoomMinAggregateOutputType | null
+    _max: CanvasRoomMaxAggregateOutputType | null
   }
 
-  export type RoomMinAggregateOutputType = {
+  export type CanvasRoomMinAggregateOutputType = {
     id: string | null
-    adminId: string | null
     slug: string | null
+    adminId: string | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
-  export type RoomMaxAggregateOutputType = {
+  export type CanvasRoomMaxAggregateOutputType = {
     id: string | null
-    adminId: string | null
     slug: string | null
+    adminId: string | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
-  export type RoomCountAggregateOutputType = {
+  export type CanvasRoomCountAggregateOutputType = {
     id: number
-    adminId: number
     slug: number
+    adminId: number
     createdAt: number
+    updatedAt: number
     _all: number
   }
 
 
-  export type RoomMinAggregateInputType = {
+  export type CanvasRoomMinAggregateInputType = {
     id?: true
-    adminId?: true
     slug?: true
+    adminId?: true
     createdAt?: true
+    updatedAt?: true
   }
 
-  export type RoomMaxAggregateInputType = {
+  export type CanvasRoomMaxAggregateInputType = {
     id?: true
-    adminId?: true
     slug?: true
+    adminId?: true
     createdAt?: true
+    updatedAt?: true
   }
 
-  export type RoomCountAggregateInputType = {
+  export type CanvasRoomCountAggregateInputType = {
     id?: true
-    adminId?: true
     slug?: true
+    adminId?: true
     createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
-  export type RoomAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Room to aggregate.
+     * Filter which CanvasRoom to aggregate.
      */
-    where?: RoomWhereInput
+    where?: CanvasRoomWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Rooms to fetch.
+     * Determine the order of CanvasRooms to fetch.
      */
-    orderBy?: RoomOrderByWithRelationInput | RoomOrderByWithRelationInput[]
+    orderBy?: CanvasRoomOrderByWithRelationInput | CanvasRoomOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: RoomWhereUniqueInput
+    cursor?: CanvasRoomWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Rooms from the position of the cursor.
+     * Take `±n` CanvasRooms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Rooms.
+     * Skip the first `n` CanvasRooms.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Rooms
+     * Count returned CanvasRooms
     **/
-    _count?: true | RoomCountAggregateInputType
+    _count?: true | CanvasRoomCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: RoomMinAggregateInputType
+    _min?: CanvasRoomMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: RoomMaxAggregateInputType
+    _max?: CanvasRoomMaxAggregateInputType
   }
 
-  export type GetRoomAggregateType<T extends RoomAggregateArgs> = {
-        [P in keyof T & keyof AggregateRoom]: P extends '_count' | 'count'
+  export type GetCanvasRoomAggregateType<T extends CanvasRoomAggregateArgs> = {
+        [P in keyof T & keyof AggregateCanvasRoom]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateRoom[P]>
-      : GetScalarType<T[P], AggregateRoom[P]>
+        : GetScalarType<T[P], AggregateCanvasRoom[P]>
+      : GetScalarType<T[P], AggregateCanvasRoom[P]>
   }
 
 
 
 
-  export type RoomGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RoomWhereInput
-    orderBy?: RoomOrderByWithAggregationInput | RoomOrderByWithAggregationInput[]
-    by: RoomScalarFieldEnum[] | RoomScalarFieldEnum
-    having?: RoomScalarWhereWithAggregatesInput
+  export type CanvasRoomGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CanvasRoomWhereInput
+    orderBy?: CanvasRoomOrderByWithAggregationInput | CanvasRoomOrderByWithAggregationInput[]
+    by: CanvasRoomScalarFieldEnum[] | CanvasRoomScalarFieldEnum
+    having?: CanvasRoomScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: RoomCountAggregateInputType | true
-    _min?: RoomMinAggregateInputType
-    _max?: RoomMaxAggregateInputType
+    _count?: CanvasRoomCountAggregateInputType | true
+    _min?: CanvasRoomMinAggregateInputType
+    _max?: CanvasRoomMaxAggregateInputType
   }
 
-  export type RoomGroupByOutputType = {
+  export type CanvasRoomGroupByOutputType = {
     id: string
-    adminId: string
     slug: string
+    adminId: string
     createdAt: Date
-    _count: RoomCountAggregateOutputType | null
-    _min: RoomMinAggregateOutputType | null
-    _max: RoomMaxAggregateOutputType | null
+    updatedAt: Date
+    _count: CanvasRoomCountAggregateOutputType | null
+    _min: CanvasRoomMinAggregateOutputType | null
+    _max: CanvasRoomMaxAggregateOutputType | null
   }
 
-  type GetRoomGroupByPayload<T extends RoomGroupByArgs> = Prisma.PrismaPromise<
+  type GetCanvasRoomGroupByPayload<T extends CanvasRoomGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<RoomGroupByOutputType, T['by']> &
+      PickEnumerable<CanvasRoomGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof RoomGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof CanvasRoomGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], RoomGroupByOutputType[P]>
-            : GetScalarType<T[P], RoomGroupByOutputType[P]>
+              : GetScalarType<T[P], CanvasRoomGroupByOutputType[P]>
+            : GetScalarType<T[P], CanvasRoomGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type RoomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CanvasRoomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    adminId?: boolean
     slug?: boolean
+    adminId?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     admin?: boolean | UserDefaultArgs<ExtArgs>
-    chats?: boolean | Room$chatsArgs<ExtArgs>
-    _count?: boolean | RoomCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["room"]>
+    users?: boolean | CanvasRoom$usersArgs<ExtArgs>
+    elements?: boolean | CanvasRoom$elementsArgs<ExtArgs>
+    _count?: boolean | CanvasRoomCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["canvasRoom"]>
 
-  export type RoomSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CanvasRoomSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    adminId?: boolean
     slug?: boolean
+    adminId?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     admin?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["room"]>
+  }, ExtArgs["result"]["canvasRoom"]>
 
-  export type RoomSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CanvasRoomSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    adminId?: boolean
     slug?: boolean
+    adminId?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     admin?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["room"]>
+  }, ExtArgs["result"]["canvasRoom"]>
 
-  export type RoomSelectScalar = {
+  export type CanvasRoomSelectScalar = {
     id?: boolean
-    adminId?: boolean
     slug?: boolean
+    adminId?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type RoomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "adminId" | "slug" | "createdAt", ExtArgs["result"]["room"]>
-  export type RoomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "adminId" | "createdAt" | "updatedAt", ExtArgs["result"]["canvasRoom"]>
+  export type CanvasRoomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     admin?: boolean | UserDefaultArgs<ExtArgs>
-    chats?: boolean | Room$chatsArgs<ExtArgs>
-    _count?: boolean | RoomCountOutputTypeDefaultArgs<ExtArgs>
+    users?: boolean | CanvasRoom$usersArgs<ExtArgs>
+    elements?: boolean | CanvasRoom$elementsArgs<ExtArgs>
+    _count?: boolean | CanvasRoomCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type RoomIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     admin?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type RoomIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     admin?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $RoomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Room"
+  export type $CanvasRoomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CanvasRoom"
     objects: {
       admin: Prisma.$UserPayload<ExtArgs>
-      chats: Prisma.$ChatPayload<ExtArgs>[]
+      users: Prisma.$UserPayload<ExtArgs>[]
+      elements: Prisma.$ElementPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      adminId: string
       slug: string
+      adminId: string
       createdAt: Date
-    }, ExtArgs["result"]["room"]>
+      updatedAt: Date
+    }, ExtArgs["result"]["canvasRoom"]>
     composites: {}
   }
 
-  type RoomGetPayload<S extends boolean | null | undefined | RoomDefaultArgs> = $Result.GetResult<Prisma.$RoomPayload, S>
+  type CanvasRoomGetPayload<S extends boolean | null | undefined | CanvasRoomDefaultArgs> = $Result.GetResult<Prisma.$CanvasRoomPayload, S>
 
-  type RoomCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<RoomFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: RoomCountAggregateInputType | true
+  type CanvasRoomCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CanvasRoomFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CanvasRoomCountAggregateInputType | true
     }
 
-  export interface RoomDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Room'], meta: { name: 'Room' } }
+  export interface CanvasRoomDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CanvasRoom'], meta: { name: 'CanvasRoom' } }
     /**
-     * Find zero or one Room that matches the filter.
-     * @param {RoomFindUniqueArgs} args - Arguments to find a Room
+     * Find zero or one CanvasRoom that matches the filter.
+     * @param {CanvasRoomFindUniqueArgs} args - Arguments to find a CanvasRoom
      * @example
-     * // Get one Room
-     * const room = await prisma.room.findUnique({
+     * // Get one CanvasRoom
+     * const canvasRoom = await prisma.canvasRoom.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends RoomFindUniqueArgs>(args: SelectSubset<T, RoomFindUniqueArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends CanvasRoomFindUniqueArgs>(args: SelectSubset<T, CanvasRoomFindUniqueArgs<ExtArgs>>): Prisma__CanvasRoomClient<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Room that matches the filter or throw an error with `error.code='P2025'`
+     * Find one CanvasRoom that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {RoomFindUniqueOrThrowArgs} args - Arguments to find a Room
+     * @param {CanvasRoomFindUniqueOrThrowArgs} args - Arguments to find a CanvasRoom
      * @example
-     * // Get one Room
-     * const room = await prisma.room.findUniqueOrThrow({
+     * // Get one CanvasRoom
+     * const canvasRoom = await prisma.canvasRoom.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends RoomFindUniqueOrThrowArgs>(args: SelectSubset<T, RoomFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends CanvasRoomFindUniqueOrThrowArgs>(args: SelectSubset<T, CanvasRoomFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CanvasRoomClient<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Room that matches the filter.
+     * Find the first CanvasRoom that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomFindFirstArgs} args - Arguments to find a Room
+     * @param {CanvasRoomFindFirstArgs} args - Arguments to find a CanvasRoom
      * @example
-     * // Get one Room
-     * const room = await prisma.room.findFirst({
+     * // Get one CanvasRoom
+     * const canvasRoom = await prisma.canvasRoom.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends RoomFindFirstArgs>(args?: SelectSubset<T, RoomFindFirstArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends CanvasRoomFindFirstArgs>(args?: SelectSubset<T, CanvasRoomFindFirstArgs<ExtArgs>>): Prisma__CanvasRoomClient<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Room that matches the filter or
+     * Find the first CanvasRoom that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomFindFirstOrThrowArgs} args - Arguments to find a Room
+     * @param {CanvasRoomFindFirstOrThrowArgs} args - Arguments to find a CanvasRoom
      * @example
-     * // Get one Room
-     * const room = await prisma.room.findFirstOrThrow({
+     * // Get one CanvasRoom
+     * const canvasRoom = await prisma.canvasRoom.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends RoomFindFirstOrThrowArgs>(args?: SelectSubset<T, RoomFindFirstOrThrowArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends CanvasRoomFindFirstOrThrowArgs>(args?: SelectSubset<T, CanvasRoomFindFirstOrThrowArgs<ExtArgs>>): Prisma__CanvasRoomClient<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Rooms that matches the filter.
+     * Find zero or more CanvasRooms that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {CanvasRoomFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Rooms
-     * const rooms = await prisma.room.findMany()
+     * // Get all CanvasRooms
+     * const canvasRooms = await prisma.canvasRoom.findMany()
      * 
-     * // Get first 10 Rooms
-     * const rooms = await prisma.room.findMany({ take: 10 })
+     * // Get first 10 CanvasRooms
+     * const canvasRooms = await prisma.canvasRoom.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const roomWithIdOnly = await prisma.room.findMany({ select: { id: true } })
+     * const canvasRoomWithIdOnly = await prisma.canvasRoom.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends RoomFindManyArgs>(args?: SelectSubset<T, RoomFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends CanvasRoomFindManyArgs>(args?: SelectSubset<T, CanvasRoomFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Room.
-     * @param {RoomCreateArgs} args - Arguments to create a Room.
+     * Create a CanvasRoom.
+     * @param {CanvasRoomCreateArgs} args - Arguments to create a CanvasRoom.
      * @example
-     * // Create one Room
-     * const Room = await prisma.room.create({
+     * // Create one CanvasRoom
+     * const CanvasRoom = await prisma.canvasRoom.create({
      *   data: {
-     *     // ... data to create a Room
+     *     // ... data to create a CanvasRoom
      *   }
      * })
      * 
      */
-    create<T extends RoomCreateArgs>(args: SelectSubset<T, RoomCreateArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends CanvasRoomCreateArgs>(args: SelectSubset<T, CanvasRoomCreateArgs<ExtArgs>>): Prisma__CanvasRoomClient<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Rooms.
-     * @param {RoomCreateManyArgs} args - Arguments to create many Rooms.
+     * Create many CanvasRooms.
+     * @param {CanvasRoomCreateManyArgs} args - Arguments to create many CanvasRooms.
      * @example
-     * // Create many Rooms
-     * const room = await prisma.room.createMany({
+     * // Create many CanvasRooms
+     * const canvasRoom = await prisma.canvasRoom.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends RoomCreateManyArgs>(args?: SelectSubset<T, RoomCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends CanvasRoomCreateManyArgs>(args?: SelectSubset<T, CanvasRoomCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Rooms and returns the data saved in the database.
-     * @param {RoomCreateManyAndReturnArgs} args - Arguments to create many Rooms.
+     * Create many CanvasRooms and returns the data saved in the database.
+     * @param {CanvasRoomCreateManyAndReturnArgs} args - Arguments to create many CanvasRooms.
      * @example
-     * // Create many Rooms
-     * const room = await prisma.room.createManyAndReturn({
+     * // Create many CanvasRooms
+     * const canvasRoom = await prisma.canvasRoom.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Rooms and only return the `id`
-     * const roomWithIdOnly = await prisma.room.createManyAndReturn({
+     * // Create many CanvasRooms and only return the `id`
+     * const canvasRoomWithIdOnly = await prisma.canvasRoom.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -2558,28 +2640,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends RoomCreateManyAndReturnArgs>(args?: SelectSubset<T, RoomCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends CanvasRoomCreateManyAndReturnArgs>(args?: SelectSubset<T, CanvasRoomCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Room.
-     * @param {RoomDeleteArgs} args - Arguments to delete one Room.
+     * Delete a CanvasRoom.
+     * @param {CanvasRoomDeleteArgs} args - Arguments to delete one CanvasRoom.
      * @example
-     * // Delete one Room
-     * const Room = await prisma.room.delete({
+     * // Delete one CanvasRoom
+     * const CanvasRoom = await prisma.canvasRoom.delete({
      *   where: {
-     *     // ... filter to delete one Room
+     *     // ... filter to delete one CanvasRoom
      *   }
      * })
      * 
      */
-    delete<T extends RoomDeleteArgs>(args: SelectSubset<T, RoomDeleteArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends CanvasRoomDeleteArgs>(args: SelectSubset<T, CanvasRoomDeleteArgs<ExtArgs>>): Prisma__CanvasRoomClient<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Room.
-     * @param {RoomUpdateArgs} args - Arguments to update one Room.
+     * Update one CanvasRoom.
+     * @param {CanvasRoomUpdateArgs} args - Arguments to update one CanvasRoom.
      * @example
-     * // Update one Room
-     * const room = await prisma.room.update({
+     * // Update one CanvasRoom
+     * const canvasRoom = await prisma.canvasRoom.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2589,30 +2671,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends RoomUpdateArgs>(args: SelectSubset<T, RoomUpdateArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends CanvasRoomUpdateArgs>(args: SelectSubset<T, CanvasRoomUpdateArgs<ExtArgs>>): Prisma__CanvasRoomClient<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Rooms.
-     * @param {RoomDeleteManyArgs} args - Arguments to filter Rooms to delete.
+     * Delete zero or more CanvasRooms.
+     * @param {CanvasRoomDeleteManyArgs} args - Arguments to filter CanvasRooms to delete.
      * @example
-     * // Delete a few Rooms
-     * const { count } = await prisma.room.deleteMany({
+     * // Delete a few CanvasRooms
+     * const { count } = await prisma.canvasRoom.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends RoomDeleteManyArgs>(args?: SelectSubset<T, RoomDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends CanvasRoomDeleteManyArgs>(args?: SelectSubset<T, CanvasRoomDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Rooms.
+     * Update zero or more CanvasRooms.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {CanvasRoomUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Rooms
-     * const room = await prisma.room.updateMany({
+     * // Update many CanvasRooms
+     * const canvasRoom = await prisma.canvasRoom.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2622,14 +2704,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends RoomUpdateManyArgs>(args: SelectSubset<T, RoomUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends CanvasRoomUpdateManyArgs>(args: SelectSubset<T, CanvasRoomUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Rooms and returns the data updated in the database.
-     * @param {RoomUpdateManyAndReturnArgs} args - Arguments to update many Rooms.
+     * Update zero or more CanvasRooms and returns the data updated in the database.
+     * @param {CanvasRoomUpdateManyAndReturnArgs} args - Arguments to update many CanvasRooms.
      * @example
-     * // Update many Rooms
-     * const room = await prisma.room.updateManyAndReturn({
+     * // Update many CanvasRooms
+     * const canvasRoom = await prisma.canvasRoom.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2638,8 +2720,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Rooms and only return the `id`
-     * const roomWithIdOnly = await prisma.room.updateManyAndReturn({
+     * // Update zero or more CanvasRooms and only return the `id`
+     * const canvasRoomWithIdOnly = await prisma.canvasRoom.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -2652,56 +2734,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends RoomUpdateManyAndReturnArgs>(args: SelectSubset<T, RoomUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends CanvasRoomUpdateManyAndReturnArgs>(args: SelectSubset<T, CanvasRoomUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Room.
-     * @param {RoomUpsertArgs} args - Arguments to update or create a Room.
+     * Create or update one CanvasRoom.
+     * @param {CanvasRoomUpsertArgs} args - Arguments to update or create a CanvasRoom.
      * @example
-     * // Update or create a Room
-     * const room = await prisma.room.upsert({
+     * // Update or create a CanvasRoom
+     * const canvasRoom = await prisma.canvasRoom.upsert({
      *   create: {
-     *     // ... data to create a Room
+     *     // ... data to create a CanvasRoom
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Room we want to update
+     *     // ... the filter for the CanvasRoom we want to update
      *   }
      * })
      */
-    upsert<T extends RoomUpsertArgs>(args: SelectSubset<T, RoomUpsertArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends CanvasRoomUpsertArgs>(args: SelectSubset<T, CanvasRoomUpsertArgs<ExtArgs>>): Prisma__CanvasRoomClient<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Rooms.
+     * Count the number of CanvasRooms.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomCountArgs} args - Arguments to filter Rooms to count.
+     * @param {CanvasRoomCountArgs} args - Arguments to filter CanvasRooms to count.
      * @example
-     * // Count the number of Rooms
-     * const count = await prisma.room.count({
+     * // Count the number of CanvasRooms
+     * const count = await prisma.canvasRoom.count({
      *   where: {
-     *     // ... the filter for the Rooms we want to count
+     *     // ... the filter for the CanvasRooms we want to count
      *   }
      * })
     **/
-    count<T extends RoomCountArgs>(
-      args?: Subset<T, RoomCountArgs>,
+    count<T extends CanvasRoomCountArgs>(
+      args?: Subset<T, CanvasRoomCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], RoomCountAggregateOutputType>
+          : GetScalarType<T['select'], CanvasRoomCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Room.
+     * Allows you to perform aggregations operations on a CanvasRoom.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {CanvasRoomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2721,13 +2803,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends RoomAggregateArgs>(args: Subset<T, RoomAggregateArgs>): Prisma.PrismaPromise<GetRoomAggregateType<T>>
+    aggregate<T extends CanvasRoomAggregateArgs>(args: Subset<T, CanvasRoomAggregateArgs>): Prisma.PrismaPromise<GetCanvasRoomAggregateType<T>>
 
     /**
-     * Group by Room.
+     * Group by CanvasRoom.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomGroupByArgs} args - Group by arguments.
+     * @param {CanvasRoomGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2742,14 +2824,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends RoomGroupByArgs,
+      T extends CanvasRoomGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RoomGroupByArgs['orderBy'] }
-        : { orderBy?: RoomGroupByArgs['orderBy'] },
+        ? { orderBy: CanvasRoomGroupByArgs['orderBy'] }
+        : { orderBy?: CanvasRoomGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -2798,23 +2880,24 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, RoomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, CanvasRoomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCanvasRoomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Room model
+   * Fields of the CanvasRoom model
    */
-  readonly fields: RoomFieldRefs;
+  readonly fields: CanvasRoomFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Room.
+   * The delegate class that acts as a "Promise-like" for CanvasRoom.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__RoomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__CanvasRoomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     admin<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    chats<T extends Room$chatsArgs<ExtArgs> = {}>(args?: Subset<T, Room$chatsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    users<T extends CanvasRoom$usersArgs<ExtArgs> = {}>(args?: Subset<T, CanvasRoom$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    elements<T extends CanvasRoom$elementsArgs<ExtArgs> = {}>(args?: Subset<T, CanvasRoom$elementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2841,825 +2924,848 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Room model
+   * Fields of the CanvasRoom model
    */
-  interface RoomFieldRefs {
-    readonly id: FieldRef<"Room", 'String'>
-    readonly adminId: FieldRef<"Room", 'String'>
-    readonly slug: FieldRef<"Room", 'String'>
-    readonly createdAt: FieldRef<"Room", 'DateTime'>
+  interface CanvasRoomFieldRefs {
+    readonly id: FieldRef<"CanvasRoom", 'String'>
+    readonly slug: FieldRef<"CanvasRoom", 'String'>
+    readonly adminId: FieldRef<"CanvasRoom", 'String'>
+    readonly createdAt: FieldRef<"CanvasRoom", 'DateTime'>
+    readonly updatedAt: FieldRef<"CanvasRoom", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Room findUnique
+   * CanvasRoom findUnique
    */
-  export type RoomFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelect<ExtArgs> | null
+    select?: CanvasRoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
+    include?: CanvasRoomInclude<ExtArgs> | null
     /**
-     * Filter, which Room to fetch.
+     * Filter, which CanvasRoom to fetch.
      */
-    where: RoomWhereUniqueInput
+    where: CanvasRoomWhereUniqueInput
   }
 
   /**
-   * Room findUniqueOrThrow
+   * CanvasRoom findUniqueOrThrow
    */
-  export type RoomFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelect<ExtArgs> | null
+    select?: CanvasRoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
+    include?: CanvasRoomInclude<ExtArgs> | null
     /**
-     * Filter, which Room to fetch.
+     * Filter, which CanvasRoom to fetch.
      */
-    where: RoomWhereUniqueInput
+    where: CanvasRoomWhereUniqueInput
   }
 
   /**
-   * Room findFirst
+   * CanvasRoom findFirst
    */
-  export type RoomFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelect<ExtArgs> | null
+    select?: CanvasRoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
+    include?: CanvasRoomInclude<ExtArgs> | null
     /**
-     * Filter, which Room to fetch.
+     * Filter, which CanvasRoom to fetch.
      */
-    where?: RoomWhereInput
+    where?: CanvasRoomWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Rooms to fetch.
+     * Determine the order of CanvasRooms to fetch.
      */
-    orderBy?: RoomOrderByWithRelationInput | RoomOrderByWithRelationInput[]
+    orderBy?: CanvasRoomOrderByWithRelationInput | CanvasRoomOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Rooms.
+     * Sets the position for searching for CanvasRooms.
      */
-    cursor?: RoomWhereUniqueInput
+    cursor?: CanvasRoomWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Rooms from the position of the cursor.
+     * Take `±n` CanvasRooms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Rooms.
+     * Skip the first `n` CanvasRooms.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Rooms.
+     * Filter by unique combinations of CanvasRooms.
      */
-    distinct?: RoomScalarFieldEnum | RoomScalarFieldEnum[]
+    distinct?: CanvasRoomScalarFieldEnum | CanvasRoomScalarFieldEnum[]
   }
 
   /**
-   * Room findFirstOrThrow
+   * CanvasRoom findFirstOrThrow
    */
-  export type RoomFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelect<ExtArgs> | null
+    select?: CanvasRoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
+    include?: CanvasRoomInclude<ExtArgs> | null
     /**
-     * Filter, which Room to fetch.
+     * Filter, which CanvasRoom to fetch.
      */
-    where?: RoomWhereInput
+    where?: CanvasRoomWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Rooms to fetch.
+     * Determine the order of CanvasRooms to fetch.
      */
-    orderBy?: RoomOrderByWithRelationInput | RoomOrderByWithRelationInput[]
+    orderBy?: CanvasRoomOrderByWithRelationInput | CanvasRoomOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Rooms.
+     * Sets the position for searching for CanvasRooms.
      */
-    cursor?: RoomWhereUniqueInput
+    cursor?: CanvasRoomWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Rooms from the position of the cursor.
+     * Take `±n` CanvasRooms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Rooms.
+     * Skip the first `n` CanvasRooms.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Rooms.
+     * Filter by unique combinations of CanvasRooms.
      */
-    distinct?: RoomScalarFieldEnum | RoomScalarFieldEnum[]
+    distinct?: CanvasRoomScalarFieldEnum | CanvasRoomScalarFieldEnum[]
   }
 
   /**
-   * Room findMany
+   * CanvasRoom findMany
    */
-  export type RoomFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelect<ExtArgs> | null
+    select?: CanvasRoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
+    include?: CanvasRoomInclude<ExtArgs> | null
     /**
-     * Filter, which Rooms to fetch.
+     * Filter, which CanvasRooms to fetch.
      */
-    where?: RoomWhereInput
+    where?: CanvasRoomWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Rooms to fetch.
+     * Determine the order of CanvasRooms to fetch.
      */
-    orderBy?: RoomOrderByWithRelationInput | RoomOrderByWithRelationInput[]
+    orderBy?: CanvasRoomOrderByWithRelationInput | CanvasRoomOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Rooms.
+     * Sets the position for listing CanvasRooms.
      */
-    cursor?: RoomWhereUniqueInput
+    cursor?: CanvasRoomWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Rooms from the position of the cursor.
+     * Take `±n` CanvasRooms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Rooms.
+     * Skip the first `n` CanvasRooms.
      */
     skip?: number
-    distinct?: RoomScalarFieldEnum | RoomScalarFieldEnum[]
+    distinct?: CanvasRoomScalarFieldEnum | CanvasRoomScalarFieldEnum[]
   }
 
   /**
-   * Room create
+   * CanvasRoom create
    */
-  export type RoomCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelect<ExtArgs> | null
+    select?: CanvasRoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
+    include?: CanvasRoomInclude<ExtArgs> | null
     /**
-     * The data needed to create a Room.
+     * The data needed to create a CanvasRoom.
      */
-    data: XOR<RoomCreateInput, RoomUncheckedCreateInput>
+    data: XOR<CanvasRoomCreateInput, CanvasRoomUncheckedCreateInput>
   }
 
   /**
-   * Room createMany
+   * CanvasRoom createMany
    */
-  export type RoomCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Rooms.
+     * The data used to create many CanvasRooms.
      */
-    data: RoomCreateManyInput | RoomCreateManyInput[]
+    data: CanvasRoomCreateManyInput | CanvasRoomCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Room createManyAndReturn
+   * CanvasRoom createManyAndReturn
    */
-  export type RoomCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelectCreateManyAndReturn<ExtArgs> | null
+    select?: CanvasRoomSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
-     * The data used to create many Rooms.
+     * The data used to create many CanvasRooms.
      */
-    data: RoomCreateManyInput | RoomCreateManyInput[]
+    data: CanvasRoomCreateManyInput | CanvasRoomCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: CanvasRoomIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Room update
+   * CanvasRoom update
    */
-  export type RoomUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelect<ExtArgs> | null
+    select?: CanvasRoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
+    include?: CanvasRoomInclude<ExtArgs> | null
     /**
-     * The data needed to update a Room.
+     * The data needed to update a CanvasRoom.
      */
-    data: XOR<RoomUpdateInput, RoomUncheckedUpdateInput>
+    data: XOR<CanvasRoomUpdateInput, CanvasRoomUncheckedUpdateInput>
     /**
-     * Choose, which Room to update.
+     * Choose, which CanvasRoom to update.
      */
-    where: RoomWhereUniqueInput
+    where: CanvasRoomWhereUniqueInput
   }
 
   /**
-   * Room updateMany
+   * CanvasRoom updateMany
    */
-  export type RoomUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Rooms.
+     * The data used to update CanvasRooms.
      */
-    data: XOR<RoomUpdateManyMutationInput, RoomUncheckedUpdateManyInput>
+    data: XOR<CanvasRoomUpdateManyMutationInput, CanvasRoomUncheckedUpdateManyInput>
     /**
-     * Filter which Rooms to update
+     * Filter which CanvasRooms to update
      */
-    where?: RoomWhereInput
+    where?: CanvasRoomWhereInput
     /**
-     * Limit how many Rooms to update.
+     * Limit how many CanvasRooms to update.
      */
     limit?: number
   }
 
   /**
-   * Room updateManyAndReturn
+   * CanvasRoom updateManyAndReturn
    */
-  export type RoomUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: CanvasRoomSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
-     * The data used to update Rooms.
+     * The data used to update CanvasRooms.
      */
-    data: XOR<RoomUpdateManyMutationInput, RoomUncheckedUpdateManyInput>
+    data: XOR<CanvasRoomUpdateManyMutationInput, CanvasRoomUncheckedUpdateManyInput>
     /**
-     * Filter which Rooms to update
+     * Filter which CanvasRooms to update
      */
-    where?: RoomWhereInput
+    where?: CanvasRoomWhereInput
     /**
-     * Limit how many Rooms to update.
+     * Limit how many CanvasRooms to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: CanvasRoomIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Room upsert
+   * CanvasRoom upsert
    */
-  export type RoomUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelect<ExtArgs> | null
+    select?: CanvasRoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
+    include?: CanvasRoomInclude<ExtArgs> | null
     /**
-     * The filter to search for the Room to update in case it exists.
+     * The filter to search for the CanvasRoom to update in case it exists.
      */
-    where: RoomWhereUniqueInput
+    where: CanvasRoomWhereUniqueInput
     /**
-     * In case the Room found by the `where` argument doesn't exist, create a new Room with this data.
+     * In case the CanvasRoom found by the `where` argument doesn't exist, create a new CanvasRoom with this data.
      */
-    create: XOR<RoomCreateInput, RoomUncheckedCreateInput>
+    create: XOR<CanvasRoomCreateInput, CanvasRoomUncheckedCreateInput>
     /**
-     * In case the Room was found with the provided `where` argument, update it with this data.
+     * In case the CanvasRoom was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<RoomUpdateInput, RoomUncheckedUpdateInput>
+    update: XOR<CanvasRoomUpdateInput, CanvasRoomUncheckedUpdateInput>
   }
 
   /**
-   * Room delete
+   * CanvasRoom delete
    */
-  export type RoomDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the CanvasRoom
      */
-    select?: RoomSelect<ExtArgs> | null
+    select?: CanvasRoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the CanvasRoom
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: CanvasRoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
+    include?: CanvasRoomInclude<ExtArgs> | null
     /**
-     * Filter which Room to delete.
+     * Filter which CanvasRoom to delete.
      */
-    where: RoomWhereUniqueInput
+    where: CanvasRoomWhereUniqueInput
   }
 
   /**
-   * Room deleteMany
+   * CanvasRoom deleteMany
    */
-  export type RoomDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoomDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Rooms to delete
+     * Filter which CanvasRooms to delete
      */
-    where?: RoomWhereInput
+    where?: CanvasRoomWhereInput
     /**
-     * Limit how many Rooms to delete.
+     * Limit how many CanvasRooms to delete.
      */
     limit?: number
   }
 
   /**
-   * Room.chats
+   * CanvasRoom.users
    */
-  export type Room$chatsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoom$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the User
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the User
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
-    where?: ChatWhereInput
-    orderBy?: ChatOrderByWithRelationInput | ChatOrderByWithRelationInput[]
-    cursor?: ChatWhereUniqueInput
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ChatScalarFieldEnum | ChatScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * Room without action
+   * CanvasRoom.elements
    */
-  export type RoomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CanvasRoom$elementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Room
+     * Select specific fields to fetch from the Element
      */
-    select?: RoomSelect<ExtArgs> | null
+    select?: ElementSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Room
+     * Omit specific fields from the Element
      */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
+    include?: ElementInclude<ExtArgs> | null
+    where?: ElementWhereInput
+    orderBy?: ElementOrderByWithRelationInput | ElementOrderByWithRelationInput[]
+    cursor?: ElementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ElementScalarFieldEnum | ElementScalarFieldEnum[]
+  }
+
+  /**
+   * CanvasRoom without action
+   */
+  export type CanvasRoomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CanvasRoom
+     */
+    select?: CanvasRoomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CanvasRoom
+     */
+    omit?: CanvasRoomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CanvasRoomInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model Chat
+   * Model Element
    */
 
-  export type AggregateChat = {
-    _count: ChatCountAggregateOutputType | null
-    _avg: ChatAvgAggregateOutputType | null
-    _sum: ChatSumAggregateOutputType | null
-    _min: ChatMinAggregateOutputType | null
-    _max: ChatMaxAggregateOutputType | null
+  export type AggregateElement = {
+    _count: ElementCountAggregateOutputType | null
+    _min: ElementMinAggregateOutputType | null
+    _max: ElementMaxAggregateOutputType | null
   }
 
-  export type ChatAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type ChatSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type ChatMinAggregateOutputType = {
-    id: number | null
-    message: string | null
-    senderId: string | null
+  export type ElementMinAggregateOutputType = {
+    id: string | null
     roomId: string | null
-  }
-
-  export type ChatMaxAggregateOutputType = {
-    id: number | null
-    message: string | null
     senderId: string | null
-    roomId: string | null
+    type: $Enums.ShapeTypes | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
-  export type ChatCountAggregateOutputType = {
+  export type ElementMaxAggregateOutputType = {
+    id: string | null
+    roomId: string | null
+    senderId: string | null
+    type: $Enums.ShapeTypes | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ElementCountAggregateOutputType = {
     id: number
-    message: number
-    senderId: number
     roomId: number
+    senderId: number
+    type: number
+    data: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
 
-  export type ChatAvgAggregateInputType = {
+  export type ElementMinAggregateInputType = {
     id?: true
-  }
-
-  export type ChatSumAggregateInputType = {
-    id?: true
-  }
-
-  export type ChatMinAggregateInputType = {
-    id?: true
-    message?: true
-    senderId?: true
     roomId?: true
+    senderId?: true
+    type?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
-  export type ChatMaxAggregateInputType = {
+  export type ElementMaxAggregateInputType = {
     id?: true
-    message?: true
-    senderId?: true
     roomId?: true
+    senderId?: true
+    type?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
-  export type ChatCountAggregateInputType = {
+  export type ElementCountAggregateInputType = {
     id?: true
-    message?: true
-    senderId?: true
     roomId?: true
+    senderId?: true
+    type?: true
+    data?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
-  export type ChatAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Chat to aggregate.
+     * Filter which Element to aggregate.
      */
-    where?: ChatWhereInput
+    where?: ElementWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Chats to fetch.
+     * Determine the order of Elements to fetch.
      */
-    orderBy?: ChatOrderByWithRelationInput | ChatOrderByWithRelationInput[]
+    orderBy?: ElementOrderByWithRelationInput | ElementOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ChatWhereUniqueInput
+    cursor?: ElementWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Chats from the position of the cursor.
+     * Take `±n` Elements from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Chats.
+     * Skip the first `n` Elements.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Chats
+     * Count returned Elements
     **/
-    _count?: true | ChatCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: ChatAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ChatSumAggregateInputType
+    _count?: true | ElementCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ChatMinAggregateInputType
+    _min?: ElementMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ChatMaxAggregateInputType
+    _max?: ElementMaxAggregateInputType
   }
 
-  export type GetChatAggregateType<T extends ChatAggregateArgs> = {
-        [P in keyof T & keyof AggregateChat]: P extends '_count' | 'count'
+  export type GetElementAggregateType<T extends ElementAggregateArgs> = {
+        [P in keyof T & keyof AggregateElement]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateChat[P]>
-      : GetScalarType<T[P], AggregateChat[P]>
+        : GetScalarType<T[P], AggregateElement[P]>
+      : GetScalarType<T[P], AggregateElement[P]>
   }
 
 
 
 
-  export type ChatGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ChatWhereInput
-    orderBy?: ChatOrderByWithAggregationInput | ChatOrderByWithAggregationInput[]
-    by: ChatScalarFieldEnum[] | ChatScalarFieldEnum
-    having?: ChatScalarWhereWithAggregatesInput
+  export type ElementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ElementWhereInput
+    orderBy?: ElementOrderByWithAggregationInput | ElementOrderByWithAggregationInput[]
+    by: ElementScalarFieldEnum[] | ElementScalarFieldEnum
+    having?: ElementScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ChatCountAggregateInputType | true
-    _avg?: ChatAvgAggregateInputType
-    _sum?: ChatSumAggregateInputType
-    _min?: ChatMinAggregateInputType
-    _max?: ChatMaxAggregateInputType
+    _count?: ElementCountAggregateInputType | true
+    _min?: ElementMinAggregateInputType
+    _max?: ElementMaxAggregateInputType
   }
 
-  export type ChatGroupByOutputType = {
-    id: number
-    message: string
-    senderId: string
+  export type ElementGroupByOutputType = {
+    id: string
     roomId: string
-    _count: ChatCountAggregateOutputType | null
-    _avg: ChatAvgAggregateOutputType | null
-    _sum: ChatSumAggregateOutputType | null
-    _min: ChatMinAggregateOutputType | null
-    _max: ChatMaxAggregateOutputType | null
+    senderId: string
+    type: $Enums.ShapeTypes
+    data: JsonValue
+    createdAt: Date
+    updatedAt: Date
+    _count: ElementCountAggregateOutputType | null
+    _min: ElementMinAggregateOutputType | null
+    _max: ElementMaxAggregateOutputType | null
   }
 
-  type GetChatGroupByPayload<T extends ChatGroupByArgs> = Prisma.PrismaPromise<
+  type GetElementGroupByPayload<T extends ElementGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ChatGroupByOutputType, T['by']> &
+      PickEnumerable<ElementGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ChatGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ElementGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ChatGroupByOutputType[P]>
-            : GetScalarType<T[P], ChatGroupByOutputType[P]>
+              : GetScalarType<T[P], ElementGroupByOutputType[P]>
+            : GetScalarType<T[P], ElementGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ChatSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ElementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    message?: boolean
-    senderId?: boolean
     roomId?: boolean
+    senderId?: boolean
+    type?: boolean
+    data?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    room?: boolean | CanvasRoomDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["chat"]>
+  }, ExtArgs["result"]["element"]>
 
-  export type ChatSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ElementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    message?: boolean
-    senderId?: boolean
     roomId?: boolean
+    senderId?: boolean
+    type?: boolean
+    data?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    room?: boolean | CanvasRoomDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["chat"]>
+  }, ExtArgs["result"]["element"]>
 
-  export type ChatSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ElementSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    message?: boolean
-    senderId?: boolean
     roomId?: boolean
+    senderId?: boolean
+    type?: boolean
+    data?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    room?: boolean | CanvasRoomDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["chat"]>
+  }, ExtArgs["result"]["element"]>
 
-  export type ChatSelectScalar = {
+  export type ElementSelectScalar = {
     id?: boolean
-    message?: boolean
-    senderId?: boolean
     roomId?: boolean
+    senderId?: boolean
+    type?: boolean
+    data?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type ChatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "message" | "senderId" | "roomId", ExtArgs["result"]["chat"]>
-  export type ChatInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "roomId" | "senderId" | "type" | "data" | "createdAt" | "updatedAt", ExtArgs["result"]["element"]>
+  export type ElementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    room?: boolean | CanvasRoomDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
   }
-  export type ChatIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    room?: boolean | CanvasRoomDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
   }
-  export type ChatIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    room?: boolean | CanvasRoomDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
   }
 
-  export type $ChatPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Chat"
+  export type $ElementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Element"
     objects: {
+      room: Prisma.$CanvasRoomPayload<ExtArgs>
       sender: Prisma.$UserPayload<ExtArgs>
-      room: Prisma.$RoomPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
-      message: string
-      senderId: string
+      id: string
       roomId: string
-    }, ExtArgs["result"]["chat"]>
+      senderId: string
+      type: $Enums.ShapeTypes
+      data: Prisma.JsonValue
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["element"]>
     composites: {}
   }
 
-  type ChatGetPayload<S extends boolean | null | undefined | ChatDefaultArgs> = $Result.GetResult<Prisma.$ChatPayload, S>
+  type ElementGetPayload<S extends boolean | null | undefined | ElementDefaultArgs> = $Result.GetResult<Prisma.$ElementPayload, S>
 
-  type ChatCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ChatFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ChatCountAggregateInputType | true
+  type ElementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ElementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ElementCountAggregateInputType | true
     }
 
-  export interface ChatDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Chat'], meta: { name: 'Chat' } }
+  export interface ElementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Element'], meta: { name: 'Element' } }
     /**
-     * Find zero or one Chat that matches the filter.
-     * @param {ChatFindUniqueArgs} args - Arguments to find a Chat
+     * Find zero or one Element that matches the filter.
+     * @param {ElementFindUniqueArgs} args - Arguments to find a Element
      * @example
-     * // Get one Chat
-     * const chat = await prisma.chat.findUnique({
+     * // Get one Element
+     * const element = await prisma.element.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ChatFindUniqueArgs>(args: SelectSubset<T, ChatFindUniqueArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ElementFindUniqueArgs>(args: SelectSubset<T, ElementFindUniqueArgs<ExtArgs>>): Prisma__ElementClient<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Chat that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Element that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ChatFindUniqueOrThrowArgs} args - Arguments to find a Chat
+     * @param {ElementFindUniqueOrThrowArgs} args - Arguments to find a Element
      * @example
-     * // Get one Chat
-     * const chat = await prisma.chat.findUniqueOrThrow({
+     * // Get one Element
+     * const element = await prisma.element.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ChatFindUniqueOrThrowArgs>(args: SelectSubset<T, ChatFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ElementFindUniqueOrThrowArgs>(args: SelectSubset<T, ElementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ElementClient<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Chat that matches the filter.
+     * Find the first Element that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChatFindFirstArgs} args - Arguments to find a Chat
+     * @param {ElementFindFirstArgs} args - Arguments to find a Element
      * @example
-     * // Get one Chat
-     * const chat = await prisma.chat.findFirst({
+     * // Get one Element
+     * const element = await prisma.element.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ChatFindFirstArgs>(args?: SelectSubset<T, ChatFindFirstArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ElementFindFirstArgs>(args?: SelectSubset<T, ElementFindFirstArgs<ExtArgs>>): Prisma__ElementClient<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Chat that matches the filter or
+     * Find the first Element that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChatFindFirstOrThrowArgs} args - Arguments to find a Chat
+     * @param {ElementFindFirstOrThrowArgs} args - Arguments to find a Element
      * @example
-     * // Get one Chat
-     * const chat = await prisma.chat.findFirstOrThrow({
+     * // Get one Element
+     * const element = await prisma.element.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ChatFindFirstOrThrowArgs>(args?: SelectSubset<T, ChatFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ElementFindFirstOrThrowArgs>(args?: SelectSubset<T, ElementFindFirstOrThrowArgs<ExtArgs>>): Prisma__ElementClient<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Chats that matches the filter.
+     * Find zero or more Elements that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChatFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ElementFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Chats
-     * const chats = await prisma.chat.findMany()
+     * // Get all Elements
+     * const elements = await prisma.element.findMany()
      * 
-     * // Get first 10 Chats
-     * const chats = await prisma.chat.findMany({ take: 10 })
+     * // Get first 10 Elements
+     * const elements = await prisma.element.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const chatWithIdOnly = await prisma.chat.findMany({ select: { id: true } })
+     * const elementWithIdOnly = await prisma.element.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ChatFindManyArgs>(args?: SelectSubset<T, ChatFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ElementFindManyArgs>(args?: SelectSubset<T, ElementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Chat.
-     * @param {ChatCreateArgs} args - Arguments to create a Chat.
+     * Create a Element.
+     * @param {ElementCreateArgs} args - Arguments to create a Element.
      * @example
-     * // Create one Chat
-     * const Chat = await prisma.chat.create({
+     * // Create one Element
+     * const Element = await prisma.element.create({
      *   data: {
-     *     // ... data to create a Chat
+     *     // ... data to create a Element
      *   }
      * })
      * 
      */
-    create<T extends ChatCreateArgs>(args: SelectSubset<T, ChatCreateArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ElementCreateArgs>(args: SelectSubset<T, ElementCreateArgs<ExtArgs>>): Prisma__ElementClient<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Chats.
-     * @param {ChatCreateManyArgs} args - Arguments to create many Chats.
+     * Create many Elements.
+     * @param {ElementCreateManyArgs} args - Arguments to create many Elements.
      * @example
-     * // Create many Chats
-     * const chat = await prisma.chat.createMany({
+     * // Create many Elements
+     * const element = await prisma.element.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ChatCreateManyArgs>(args?: SelectSubset<T, ChatCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ElementCreateManyArgs>(args?: SelectSubset<T, ElementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Chats and returns the data saved in the database.
-     * @param {ChatCreateManyAndReturnArgs} args - Arguments to create many Chats.
+     * Create many Elements and returns the data saved in the database.
+     * @param {ElementCreateManyAndReturnArgs} args - Arguments to create many Elements.
      * @example
-     * // Create many Chats
-     * const chat = await prisma.chat.createManyAndReturn({
+     * // Create many Elements
+     * const element = await prisma.element.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Chats and only return the `id`
-     * const chatWithIdOnly = await prisma.chat.createManyAndReturn({
+     * // Create many Elements and only return the `id`
+     * const elementWithIdOnly = await prisma.element.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -3669,28 +3775,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ChatCreateManyAndReturnArgs>(args?: SelectSubset<T, ChatCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ElementCreateManyAndReturnArgs>(args?: SelectSubset<T, ElementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Chat.
-     * @param {ChatDeleteArgs} args - Arguments to delete one Chat.
+     * Delete a Element.
+     * @param {ElementDeleteArgs} args - Arguments to delete one Element.
      * @example
-     * // Delete one Chat
-     * const Chat = await prisma.chat.delete({
+     * // Delete one Element
+     * const Element = await prisma.element.delete({
      *   where: {
-     *     // ... filter to delete one Chat
+     *     // ... filter to delete one Element
      *   }
      * })
      * 
      */
-    delete<T extends ChatDeleteArgs>(args: SelectSubset<T, ChatDeleteArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ElementDeleteArgs>(args: SelectSubset<T, ElementDeleteArgs<ExtArgs>>): Prisma__ElementClient<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Chat.
-     * @param {ChatUpdateArgs} args - Arguments to update one Chat.
+     * Update one Element.
+     * @param {ElementUpdateArgs} args - Arguments to update one Element.
      * @example
-     * // Update one Chat
-     * const chat = await prisma.chat.update({
+     * // Update one Element
+     * const element = await prisma.element.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3700,30 +3806,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ChatUpdateArgs>(args: SelectSubset<T, ChatUpdateArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ElementUpdateArgs>(args: SelectSubset<T, ElementUpdateArgs<ExtArgs>>): Prisma__ElementClient<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Chats.
-     * @param {ChatDeleteManyArgs} args - Arguments to filter Chats to delete.
+     * Delete zero or more Elements.
+     * @param {ElementDeleteManyArgs} args - Arguments to filter Elements to delete.
      * @example
-     * // Delete a few Chats
-     * const { count } = await prisma.chat.deleteMany({
+     * // Delete a few Elements
+     * const { count } = await prisma.element.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ChatDeleteManyArgs>(args?: SelectSubset<T, ChatDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ElementDeleteManyArgs>(args?: SelectSubset<T, ElementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Chats.
+     * Update zero or more Elements.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChatUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ElementUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Chats
-     * const chat = await prisma.chat.updateMany({
+     * // Update many Elements
+     * const element = await prisma.element.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3733,14 +3839,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ChatUpdateManyArgs>(args: SelectSubset<T, ChatUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ElementUpdateManyArgs>(args: SelectSubset<T, ElementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Chats and returns the data updated in the database.
-     * @param {ChatUpdateManyAndReturnArgs} args - Arguments to update many Chats.
+     * Update zero or more Elements and returns the data updated in the database.
+     * @param {ElementUpdateManyAndReturnArgs} args - Arguments to update many Elements.
      * @example
-     * // Update many Chats
-     * const chat = await prisma.chat.updateManyAndReturn({
+     * // Update many Elements
+     * const element = await prisma.element.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3749,8 +3855,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Chats and only return the `id`
-     * const chatWithIdOnly = await prisma.chat.updateManyAndReturn({
+     * // Update zero or more Elements and only return the `id`
+     * const elementWithIdOnly = await prisma.element.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -3763,56 +3869,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ChatUpdateManyAndReturnArgs>(args: SelectSubset<T, ChatUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ElementUpdateManyAndReturnArgs>(args: SelectSubset<T, ElementUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Chat.
-     * @param {ChatUpsertArgs} args - Arguments to update or create a Chat.
+     * Create or update one Element.
+     * @param {ElementUpsertArgs} args - Arguments to update or create a Element.
      * @example
-     * // Update or create a Chat
-     * const chat = await prisma.chat.upsert({
+     * // Update or create a Element
+     * const element = await prisma.element.upsert({
      *   create: {
-     *     // ... data to create a Chat
+     *     // ... data to create a Element
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Chat we want to update
+     *     // ... the filter for the Element we want to update
      *   }
      * })
      */
-    upsert<T extends ChatUpsertArgs>(args: SelectSubset<T, ChatUpsertArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ElementUpsertArgs>(args: SelectSubset<T, ElementUpsertArgs<ExtArgs>>): Prisma__ElementClient<$Result.GetResult<Prisma.$ElementPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Chats.
+     * Count the number of Elements.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChatCountArgs} args - Arguments to filter Chats to count.
+     * @param {ElementCountArgs} args - Arguments to filter Elements to count.
      * @example
-     * // Count the number of Chats
-     * const count = await prisma.chat.count({
+     * // Count the number of Elements
+     * const count = await prisma.element.count({
      *   where: {
-     *     // ... the filter for the Chats we want to count
+     *     // ... the filter for the Elements we want to count
      *   }
      * })
     **/
-    count<T extends ChatCountArgs>(
-      args?: Subset<T, ChatCountArgs>,
+    count<T extends ElementCountArgs>(
+      args?: Subset<T, ElementCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ChatCountAggregateOutputType>
+          : GetScalarType<T['select'], ElementCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Chat.
+     * Allows you to perform aggregations operations on a Element.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChatAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ElementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -3832,13 +3938,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ChatAggregateArgs>(args: Subset<T, ChatAggregateArgs>): Prisma.PrismaPromise<GetChatAggregateType<T>>
+    aggregate<T extends ElementAggregateArgs>(args: Subset<T, ElementAggregateArgs>): Prisma.PrismaPromise<GetElementAggregateType<T>>
 
     /**
-     * Group by Chat.
+     * Group by Element.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChatGroupByArgs} args - Group by arguments.
+     * @param {ElementGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -3853,14 +3959,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ChatGroupByArgs,
+      T extends ElementGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ChatGroupByArgs['orderBy'] }
-        : { orderBy?: ChatGroupByArgs['orderBy'] },
+        ? { orderBy: ElementGroupByArgs['orderBy'] }
+        : { orderBy?: ElementGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -3909,23 +4015,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ChatGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChatGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ElementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetElementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Chat model
+   * Fields of the Element model
    */
-  readonly fields: ChatFieldRefs;
+  readonly fields: ElementFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Chat.
+   * The delegate class that acts as a "Promise-like" for Element.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ChatClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ElementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    room<T extends CanvasRoomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CanvasRoomDefaultArgs<ExtArgs>>): Prisma__CanvasRoomClient<$Result.GetResult<Prisma.$CanvasRoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     sender<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    room<T extends RoomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RoomDefaultArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3952,424 +4058,427 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Chat model
+   * Fields of the Element model
    */
-  interface ChatFieldRefs {
-    readonly id: FieldRef<"Chat", 'Int'>
-    readonly message: FieldRef<"Chat", 'String'>
-    readonly senderId: FieldRef<"Chat", 'String'>
-    readonly roomId: FieldRef<"Chat", 'String'>
+  interface ElementFieldRefs {
+    readonly id: FieldRef<"Element", 'String'>
+    readonly roomId: FieldRef<"Element", 'String'>
+    readonly senderId: FieldRef<"Element", 'String'>
+    readonly type: FieldRef<"Element", 'ShapeTypes'>
+    readonly data: FieldRef<"Element", 'Json'>
+    readonly createdAt: FieldRef<"Element", 'DateTime'>
+    readonly updatedAt: FieldRef<"Element", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Chat findUnique
+   * Element findUnique
    */
-  export type ChatFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: ElementSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
+    include?: ElementInclude<ExtArgs> | null
     /**
-     * Filter, which Chat to fetch.
+     * Filter, which Element to fetch.
      */
-    where: ChatWhereUniqueInput
+    where: ElementWhereUniqueInput
   }
 
   /**
-   * Chat findUniqueOrThrow
+   * Element findUniqueOrThrow
    */
-  export type ChatFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: ElementSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
+    include?: ElementInclude<ExtArgs> | null
     /**
-     * Filter, which Chat to fetch.
+     * Filter, which Element to fetch.
      */
-    where: ChatWhereUniqueInput
+    where: ElementWhereUniqueInput
   }
 
   /**
-   * Chat findFirst
+   * Element findFirst
    */
-  export type ChatFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: ElementSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
+    include?: ElementInclude<ExtArgs> | null
     /**
-     * Filter, which Chat to fetch.
+     * Filter, which Element to fetch.
      */
-    where?: ChatWhereInput
+    where?: ElementWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Chats to fetch.
+     * Determine the order of Elements to fetch.
      */
-    orderBy?: ChatOrderByWithRelationInput | ChatOrderByWithRelationInput[]
+    orderBy?: ElementOrderByWithRelationInput | ElementOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Chats.
+     * Sets the position for searching for Elements.
      */
-    cursor?: ChatWhereUniqueInput
+    cursor?: ElementWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Chats from the position of the cursor.
+     * Take `±n` Elements from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Chats.
+     * Skip the first `n` Elements.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Chats.
+     * Filter by unique combinations of Elements.
      */
-    distinct?: ChatScalarFieldEnum | ChatScalarFieldEnum[]
+    distinct?: ElementScalarFieldEnum | ElementScalarFieldEnum[]
   }
 
   /**
-   * Chat findFirstOrThrow
+   * Element findFirstOrThrow
    */
-  export type ChatFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: ElementSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
+    include?: ElementInclude<ExtArgs> | null
     /**
-     * Filter, which Chat to fetch.
+     * Filter, which Element to fetch.
      */
-    where?: ChatWhereInput
+    where?: ElementWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Chats to fetch.
+     * Determine the order of Elements to fetch.
      */
-    orderBy?: ChatOrderByWithRelationInput | ChatOrderByWithRelationInput[]
+    orderBy?: ElementOrderByWithRelationInput | ElementOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Chats.
+     * Sets the position for searching for Elements.
      */
-    cursor?: ChatWhereUniqueInput
+    cursor?: ElementWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Chats from the position of the cursor.
+     * Take `±n` Elements from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Chats.
+     * Skip the first `n` Elements.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Chats.
+     * Filter by unique combinations of Elements.
      */
-    distinct?: ChatScalarFieldEnum | ChatScalarFieldEnum[]
+    distinct?: ElementScalarFieldEnum | ElementScalarFieldEnum[]
   }
 
   /**
-   * Chat findMany
+   * Element findMany
    */
-  export type ChatFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: ElementSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
+    include?: ElementInclude<ExtArgs> | null
     /**
-     * Filter, which Chats to fetch.
+     * Filter, which Elements to fetch.
      */
-    where?: ChatWhereInput
+    where?: ElementWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Chats to fetch.
+     * Determine the order of Elements to fetch.
      */
-    orderBy?: ChatOrderByWithRelationInput | ChatOrderByWithRelationInput[]
+    orderBy?: ElementOrderByWithRelationInput | ElementOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Chats.
+     * Sets the position for listing Elements.
      */
-    cursor?: ChatWhereUniqueInput
+    cursor?: ElementWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Chats from the position of the cursor.
+     * Take `±n` Elements from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Chats.
+     * Skip the first `n` Elements.
      */
     skip?: number
-    distinct?: ChatScalarFieldEnum | ChatScalarFieldEnum[]
+    distinct?: ElementScalarFieldEnum | ElementScalarFieldEnum[]
   }
 
   /**
-   * Chat create
+   * Element create
    */
-  export type ChatCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: ElementSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
+    include?: ElementInclude<ExtArgs> | null
     /**
-     * The data needed to create a Chat.
+     * The data needed to create a Element.
      */
-    data: XOR<ChatCreateInput, ChatUncheckedCreateInput>
+    data: XOR<ElementCreateInput, ElementUncheckedCreateInput>
   }
 
   /**
-   * Chat createMany
+   * Element createMany
    */
-  export type ChatCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Chats.
+     * The data used to create many Elements.
      */
-    data: ChatCreateManyInput | ChatCreateManyInput[]
+    data: ElementCreateManyInput | ElementCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Chat createManyAndReturn
+   * Element createManyAndReturn
    */
-  export type ChatCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ElementSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
-     * The data used to create many Chats.
+     * The data used to create many Elements.
      */
-    data: ChatCreateManyInput | ChatCreateManyInput[]
+    data: ElementCreateManyInput | ElementCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: ElementIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Chat update
+   * Element update
    */
-  export type ChatUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: ElementSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
+    include?: ElementInclude<ExtArgs> | null
     /**
-     * The data needed to update a Chat.
+     * The data needed to update a Element.
      */
-    data: XOR<ChatUpdateInput, ChatUncheckedUpdateInput>
+    data: XOR<ElementUpdateInput, ElementUncheckedUpdateInput>
     /**
-     * Choose, which Chat to update.
+     * Choose, which Element to update.
      */
-    where: ChatWhereUniqueInput
+    where: ElementWhereUniqueInput
   }
 
   /**
-   * Chat updateMany
+   * Element updateMany
    */
-  export type ChatUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Chats.
+     * The data used to update Elements.
      */
-    data: XOR<ChatUpdateManyMutationInput, ChatUncheckedUpdateManyInput>
+    data: XOR<ElementUpdateManyMutationInput, ElementUncheckedUpdateManyInput>
     /**
-     * Filter which Chats to update
+     * Filter which Elements to update
      */
-    where?: ChatWhereInput
+    where?: ElementWhereInput
     /**
-     * Limit how many Chats to update.
+     * Limit how many Elements to update.
      */
     limit?: number
   }
 
   /**
-   * Chat updateManyAndReturn
+   * Element updateManyAndReturn
    */
-  export type ChatUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ElementSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
-     * The data used to update Chats.
+     * The data used to update Elements.
      */
-    data: XOR<ChatUpdateManyMutationInput, ChatUncheckedUpdateManyInput>
+    data: XOR<ElementUpdateManyMutationInput, ElementUncheckedUpdateManyInput>
     /**
-     * Filter which Chats to update
+     * Filter which Elements to update
      */
-    where?: ChatWhereInput
+    where?: ElementWhereInput
     /**
-     * Limit how many Chats to update.
+     * Limit how many Elements to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: ElementIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Chat upsert
+   * Element upsert
    */
-  export type ChatUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: ElementSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
+    include?: ElementInclude<ExtArgs> | null
     /**
-     * The filter to search for the Chat to update in case it exists.
+     * The filter to search for the Element to update in case it exists.
      */
-    where: ChatWhereUniqueInput
+    where: ElementWhereUniqueInput
     /**
-     * In case the Chat found by the `where` argument doesn't exist, create a new Chat with this data.
+     * In case the Element found by the `where` argument doesn't exist, create a new Element with this data.
      */
-    create: XOR<ChatCreateInput, ChatUncheckedCreateInput>
+    create: XOR<ElementCreateInput, ElementUncheckedCreateInput>
     /**
-     * In case the Chat was found with the provided `where` argument, update it with this data.
+     * In case the Element was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ChatUpdateInput, ChatUncheckedUpdateInput>
+    update: XOR<ElementUpdateInput, ElementUncheckedUpdateInput>
   }
 
   /**
-   * Chat delete
+   * Element delete
    */
-  export type ChatDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: ElementSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
+    include?: ElementInclude<ExtArgs> | null
     /**
-     * Filter which Chat to delete.
+     * Filter which Element to delete.
      */
-    where: ChatWhereUniqueInput
+    where: ElementWhereUniqueInput
   }
 
   /**
-   * Chat deleteMany
+   * Element deleteMany
    */
-  export type ChatDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Chats to delete
+     * Filter which Elements to delete
      */
-    where?: ChatWhereInput
+    where?: ElementWhereInput
     /**
-     * Limit how many Chats to delete.
+     * Limit how many Elements to delete.
      */
     limit?: number
   }
 
   /**
-   * Chat without action
+   * Element without action
    */
-  export type ChatDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ElementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Chat
+     * Select specific fields to fetch from the Element
      */
-    select?: ChatSelect<ExtArgs> | null
+    select?: ElementSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Chat
+     * Omit specific fields from the Element
      */
-    omit?: ChatOmit<ExtArgs> | null
+    omit?: ElementOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ChatInclude<ExtArgs> | null
+    include?: ElementInclude<ExtArgs> | null
   }
 
 
@@ -4392,30 +4501,34 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     name: 'name',
-    photo: 'photo'
+    createdAt: 'createdAt'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-  export const RoomScalarFieldEnum: {
+  export const CanvasRoomScalarFieldEnum: {
     id: 'id',
-    adminId: 'adminId',
     slug: 'slug',
-    createdAt: 'createdAt'
+    adminId: 'adminId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
-  export type RoomScalarFieldEnum = (typeof RoomScalarFieldEnum)[keyof typeof RoomScalarFieldEnum]
+  export type CanvasRoomScalarFieldEnum = (typeof CanvasRoomScalarFieldEnum)[keyof typeof CanvasRoomScalarFieldEnum]
 
 
-  export const ChatScalarFieldEnum: {
+  export const ElementScalarFieldEnum: {
     id: 'id',
-    message: 'message',
+    roomId: 'roomId',
     senderId: 'senderId',
-    roomId: 'roomId'
+    type: 'type',
+    data: 'data',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
-  export type ChatScalarFieldEnum = (typeof ChatScalarFieldEnum)[keyof typeof ChatScalarFieldEnum]
+  export type ElementScalarFieldEnum = (typeof ElementScalarFieldEnum)[keyof typeof ElementScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4424,6 +4537,13 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -4440,6 +4560,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -4476,6 +4605,34 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'ShapeTypes'
+   */
+  export type EnumShapeTypesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShapeTypes'>
+    
+
+
+  /**
+   * Reference to a field of type 'ShapeTypes[]'
+   */
+  export type ListEnumShapeTypesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShapeTypes[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -4486,20 +4643,6 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -4513,20 +4656,22 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
-    name?: StringFilter<"User"> | string
-    photo?: StringNullableFilter<"User"> | string | null
-    rooms?: RoomListRelationFilter
-    chats?: ChatListRelationFilter
+    name?: StringNullableFilter<"User"> | string | null
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    rooms?: CanvasRoomListRelationFilter
+    adminRooms?: CanvasRoomListRelationFilter
+    elements?: ElementListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    name?: SortOrder
-    photo?: SortOrderInput | SortOrder
-    rooms?: RoomOrderByRelationAggregateInput
-    chats?: ChatOrderByRelationAggregateInput
+    name?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    rooms?: CanvasRoomOrderByRelationAggregateInput
+    adminRooms?: CanvasRoomOrderByRelationAggregateInput
+    elements?: ElementOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4536,18 +4681,19 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
-    name?: StringFilter<"User"> | string
-    photo?: StringNullableFilter<"User"> | string | null
-    rooms?: RoomListRelationFilter
-    chats?: ChatListRelationFilter
+    name?: StringNullableFilter<"User"> | string | null
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    rooms?: CanvasRoomListRelationFilter
+    adminRooms?: CanvasRoomListRelationFilter
+    elements?: ElementListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    name?: SortOrder
-    photo?: SortOrderInput | SortOrder
+    name?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -4560,276 +4706,336 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
-    name?: StringWithAggregatesFilter<"User"> | string
-    photo?: StringNullableWithAggregatesFilter<"User"> | string | null
+    name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
-  export type RoomWhereInput = {
-    AND?: RoomWhereInput | RoomWhereInput[]
-    OR?: RoomWhereInput[]
-    NOT?: RoomWhereInput | RoomWhereInput[]
-    id?: StringFilter<"Room"> | string
-    adminId?: StringFilter<"Room"> | string
-    slug?: StringFilter<"Room"> | string
-    createdAt?: DateTimeFilter<"Room"> | Date | string
+  export type CanvasRoomWhereInput = {
+    AND?: CanvasRoomWhereInput | CanvasRoomWhereInput[]
+    OR?: CanvasRoomWhereInput[]
+    NOT?: CanvasRoomWhereInput | CanvasRoomWhereInput[]
+    id?: StringFilter<"CanvasRoom"> | string
+    slug?: StringFilter<"CanvasRoom"> | string
+    adminId?: StringFilter<"CanvasRoom"> | string
+    createdAt?: DateTimeFilter<"CanvasRoom"> | Date | string
+    updatedAt?: DateTimeFilter<"CanvasRoom"> | Date | string
     admin?: XOR<UserScalarRelationFilter, UserWhereInput>
-    chats?: ChatListRelationFilter
+    users?: UserListRelationFilter
+    elements?: ElementListRelationFilter
   }
 
-  export type RoomOrderByWithRelationInput = {
+  export type CanvasRoomOrderByWithRelationInput = {
     id?: SortOrder
-    adminId?: SortOrder
     slug?: SortOrder
+    adminId?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     admin?: UserOrderByWithRelationInput
-    chats?: ChatOrderByRelationAggregateInput
+    users?: UserOrderByRelationAggregateInput
+    elements?: ElementOrderByRelationAggregateInput
   }
 
-  export type RoomWhereUniqueInput = Prisma.AtLeast<{
+  export type CanvasRoomWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     slug?: string
-    AND?: RoomWhereInput | RoomWhereInput[]
-    OR?: RoomWhereInput[]
-    NOT?: RoomWhereInput | RoomWhereInput[]
-    adminId?: StringFilter<"Room"> | string
-    createdAt?: DateTimeFilter<"Room"> | Date | string
+    AND?: CanvasRoomWhereInput | CanvasRoomWhereInput[]
+    OR?: CanvasRoomWhereInput[]
+    NOT?: CanvasRoomWhereInput | CanvasRoomWhereInput[]
+    adminId?: StringFilter<"CanvasRoom"> | string
+    createdAt?: DateTimeFilter<"CanvasRoom"> | Date | string
+    updatedAt?: DateTimeFilter<"CanvasRoom"> | Date | string
     admin?: XOR<UserScalarRelationFilter, UserWhereInput>
-    chats?: ChatListRelationFilter
+    users?: UserListRelationFilter
+    elements?: ElementListRelationFilter
   }, "id" | "slug">
 
-  export type RoomOrderByWithAggregationInput = {
+  export type CanvasRoomOrderByWithAggregationInput = {
     id?: SortOrder
-    adminId?: SortOrder
     slug?: SortOrder
+    adminId?: SortOrder
     createdAt?: SortOrder
-    _count?: RoomCountOrderByAggregateInput
-    _max?: RoomMaxOrderByAggregateInput
-    _min?: RoomMinOrderByAggregateInput
+    updatedAt?: SortOrder
+    _count?: CanvasRoomCountOrderByAggregateInput
+    _max?: CanvasRoomMaxOrderByAggregateInput
+    _min?: CanvasRoomMinOrderByAggregateInput
   }
 
-  export type RoomScalarWhereWithAggregatesInput = {
-    AND?: RoomScalarWhereWithAggregatesInput | RoomScalarWhereWithAggregatesInput[]
-    OR?: RoomScalarWhereWithAggregatesInput[]
-    NOT?: RoomScalarWhereWithAggregatesInput | RoomScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Room"> | string
-    adminId?: StringWithAggregatesFilter<"Room"> | string
-    slug?: StringWithAggregatesFilter<"Room"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Room"> | Date | string
+  export type CanvasRoomScalarWhereWithAggregatesInput = {
+    AND?: CanvasRoomScalarWhereWithAggregatesInput | CanvasRoomScalarWhereWithAggregatesInput[]
+    OR?: CanvasRoomScalarWhereWithAggregatesInput[]
+    NOT?: CanvasRoomScalarWhereWithAggregatesInput | CanvasRoomScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CanvasRoom"> | string
+    slug?: StringWithAggregatesFilter<"CanvasRoom"> | string
+    adminId?: StringWithAggregatesFilter<"CanvasRoom"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CanvasRoom"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CanvasRoom"> | Date | string
   }
 
-  export type ChatWhereInput = {
-    AND?: ChatWhereInput | ChatWhereInput[]
-    OR?: ChatWhereInput[]
-    NOT?: ChatWhereInput | ChatWhereInput[]
-    id?: IntFilter<"Chat"> | number
-    message?: StringFilter<"Chat"> | string
-    senderId?: StringFilter<"Chat"> | string
-    roomId?: StringFilter<"Chat"> | string
+  export type ElementWhereInput = {
+    AND?: ElementWhereInput | ElementWhereInput[]
+    OR?: ElementWhereInput[]
+    NOT?: ElementWhereInput | ElementWhereInput[]
+    id?: StringFilter<"Element"> | string
+    roomId?: StringFilter<"Element"> | string
+    senderId?: StringFilter<"Element"> | string
+    type?: EnumShapeTypesFilter<"Element"> | $Enums.ShapeTypes
+    data?: JsonFilter<"Element">
+    createdAt?: DateTimeFilter<"Element"> | Date | string
+    updatedAt?: DateTimeFilter<"Element"> | Date | string
+    room?: XOR<CanvasRoomScalarRelationFilter, CanvasRoomWhereInput>
     sender?: XOR<UserScalarRelationFilter, UserWhereInput>
-    room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
   }
 
-  export type ChatOrderByWithRelationInput = {
+  export type ElementOrderByWithRelationInput = {
     id?: SortOrder
-    message?: SortOrder
-    senderId?: SortOrder
     roomId?: SortOrder
+    senderId?: SortOrder
+    type?: SortOrder
+    data?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    room?: CanvasRoomOrderByWithRelationInput
     sender?: UserOrderByWithRelationInput
-    room?: RoomOrderByWithRelationInput
   }
 
-  export type ChatWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: ChatWhereInput | ChatWhereInput[]
-    OR?: ChatWhereInput[]
-    NOT?: ChatWhereInput | ChatWhereInput[]
-    message?: StringFilter<"Chat"> | string
-    senderId?: StringFilter<"Chat"> | string
-    roomId?: StringFilter<"Chat"> | string
+  export type ElementWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ElementWhereInput | ElementWhereInput[]
+    OR?: ElementWhereInput[]
+    NOT?: ElementWhereInput | ElementWhereInput[]
+    roomId?: StringFilter<"Element"> | string
+    senderId?: StringFilter<"Element"> | string
+    type?: EnumShapeTypesFilter<"Element"> | $Enums.ShapeTypes
+    data?: JsonFilter<"Element">
+    createdAt?: DateTimeFilter<"Element"> | Date | string
+    updatedAt?: DateTimeFilter<"Element"> | Date | string
+    room?: XOR<CanvasRoomScalarRelationFilter, CanvasRoomWhereInput>
     sender?: XOR<UserScalarRelationFilter, UserWhereInput>
-    room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
   }, "id">
 
-  export type ChatOrderByWithAggregationInput = {
+  export type ElementOrderByWithAggregationInput = {
     id?: SortOrder
-    message?: SortOrder
-    senderId?: SortOrder
     roomId?: SortOrder
-    _count?: ChatCountOrderByAggregateInput
-    _avg?: ChatAvgOrderByAggregateInput
-    _max?: ChatMaxOrderByAggregateInput
-    _min?: ChatMinOrderByAggregateInput
-    _sum?: ChatSumOrderByAggregateInput
+    senderId?: SortOrder
+    type?: SortOrder
+    data?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ElementCountOrderByAggregateInput
+    _max?: ElementMaxOrderByAggregateInput
+    _min?: ElementMinOrderByAggregateInput
   }
 
-  export type ChatScalarWhereWithAggregatesInput = {
-    AND?: ChatScalarWhereWithAggregatesInput | ChatScalarWhereWithAggregatesInput[]
-    OR?: ChatScalarWhereWithAggregatesInput[]
-    NOT?: ChatScalarWhereWithAggregatesInput | ChatScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Chat"> | number
-    message?: StringWithAggregatesFilter<"Chat"> | string
-    senderId?: StringWithAggregatesFilter<"Chat"> | string
-    roomId?: StringWithAggregatesFilter<"Chat"> | string
+  export type ElementScalarWhereWithAggregatesInput = {
+    AND?: ElementScalarWhereWithAggregatesInput | ElementScalarWhereWithAggregatesInput[]
+    OR?: ElementScalarWhereWithAggregatesInput[]
+    NOT?: ElementScalarWhereWithAggregatesInput | ElementScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Element"> | string
+    roomId?: StringWithAggregatesFilter<"Element"> | string
+    senderId?: StringWithAggregatesFilter<"Element"> | string
+    type?: EnumShapeTypesWithAggregatesFilter<"Element"> | $Enums.ShapeTypes
+    data?: JsonWithAggregatesFilter<"Element">
+    createdAt?: DateTimeWithAggregatesFilter<"Element"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Element"> | Date | string
   }
 
   export type UserCreateInput = {
     id?: string
     email: string
     password: string
-    name: string
-    photo?: string | null
-    rooms?: RoomCreateNestedManyWithoutAdminInput
-    chats?: ChatCreateNestedManyWithoutSenderInput
+    name?: string | null
+    createdAt?: Date | string
+    rooms?: CanvasRoomCreateNestedManyWithoutUsersInput
+    adminRooms?: CanvasRoomCreateNestedManyWithoutAdminInput
+    elements?: ElementCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
     email: string
     password: string
-    name: string
-    photo?: string | null
-    rooms?: RoomUncheckedCreateNestedManyWithoutAdminInput
-    chats?: ChatUncheckedCreateNestedManyWithoutSenderInput
+    name?: string | null
+    createdAt?: Date | string
+    rooms?: CanvasRoomUncheckedCreateNestedManyWithoutUsersInput
+    adminRooms?: CanvasRoomUncheckedCreateNestedManyWithoutAdminInput
+    elements?: ElementUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    photo?: NullableStringFieldUpdateOperationsInput | string | null
-    rooms?: RoomUpdateManyWithoutAdminNestedInput
-    chats?: ChatUpdateManyWithoutSenderNestedInput
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rooms?: CanvasRoomUpdateManyWithoutUsersNestedInput
+    adminRooms?: CanvasRoomUpdateManyWithoutAdminNestedInput
+    elements?: ElementUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    photo?: NullableStringFieldUpdateOperationsInput | string | null
-    rooms?: RoomUncheckedUpdateManyWithoutAdminNestedInput
-    chats?: ChatUncheckedUpdateManyWithoutSenderNestedInput
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rooms?: CanvasRoomUncheckedUpdateManyWithoutUsersNestedInput
+    adminRooms?: CanvasRoomUncheckedUpdateManyWithoutAdminNestedInput
+    elements?: ElementUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: string
     email: string
     password: string
-    name: string
-    photo?: string | null
+    name?: string | null
+    createdAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    photo?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    photo?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoomCreateInput = {
+  export type CanvasRoomCreateInput = {
     id?: string
     slug: string
     createdAt?: Date | string
-    admin: UserCreateNestedOneWithoutRoomsInput
-    chats?: ChatCreateNestedManyWithoutRoomInput
+    updatedAt?: Date | string
+    admin: UserCreateNestedOneWithoutAdminRoomsInput
+    users?: UserCreateNestedManyWithoutRoomsInput
+    elements?: ElementCreateNestedManyWithoutRoomInput
   }
 
-  export type RoomUncheckedCreateInput = {
+  export type CanvasRoomUncheckedCreateInput = {
     id?: string
+    slug: string
     adminId: string
-    slug: string
     createdAt?: Date | string
-    chats?: ChatUncheckedCreateNestedManyWithoutRoomInput
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutRoomsInput
+    elements?: ElementUncheckedCreateNestedManyWithoutRoomInput
   }
 
-  export type RoomUpdateInput = {
+  export type CanvasRoomUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    admin?: UserUpdateOneRequiredWithoutRoomsNestedInput
-    chats?: ChatUpdateManyWithoutRoomNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: UserUpdateOneRequiredWithoutAdminRoomsNestedInput
+    users?: UserUpdateManyWithoutRoomsNestedInput
+    elements?: ElementUpdateManyWithoutRoomNestedInput
   }
 
-  export type RoomUncheckedUpdateInput = {
+  export type CanvasRoomUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     adminId?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chats?: ChatUncheckedUpdateManyWithoutRoomNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutRoomsNestedInput
+    elements?: ElementUncheckedUpdateManyWithoutRoomNestedInput
   }
 
-  export type RoomCreateManyInput = {
+  export type CanvasRoomCreateManyInput = {
     id?: string
-    adminId: string
     slug: string
+    adminId: string
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type RoomUpdateManyMutationInput = {
+  export type CanvasRoomUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoomUncheckedUpdateManyInput = {
+  export type CanvasRoomUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     adminId?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ChatCreateInput = {
-    message: string
-    sender: UserCreateNestedOneWithoutChatsInput
-    room: RoomCreateNestedOneWithoutChatsInput
+  export type ElementCreateInput = {
+    id?: string
+    type: $Enums.ShapeTypes
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    room: CanvasRoomCreateNestedOneWithoutElementsInput
+    sender: UserCreateNestedOneWithoutElementsInput
   }
 
-  export type ChatUncheckedCreateInput = {
-    id?: number
-    message: string
-    senderId: string
+  export type ElementUncheckedCreateInput = {
+    id?: string
     roomId: string
-  }
-
-  export type ChatUpdateInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    sender?: UserUpdateOneRequiredWithoutChatsNestedInput
-    room?: RoomUpdateOneRequiredWithoutChatsNestedInput
-  }
-
-  export type ChatUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    senderId?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ChatCreateManyInput = {
-    id?: number
-    message: string
     senderId: string
-    roomId: string
+    type: $Enums.ShapeTypes
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type ChatUpdateManyMutationInput = {
-    message?: StringFieldUpdateOperationsInput | string
+  export type ElementUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumShapeTypesFieldUpdateOperationsInput | $Enums.ShapeTypes
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    room?: CanvasRoomUpdateOneRequiredWithoutElementsNestedInput
+    sender?: UserUpdateOneRequiredWithoutElementsNestedInput
   }
 
-  export type ChatUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    senderId?: StringFieldUpdateOperationsInput | string
+  export type ElementUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     roomId?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    type?: EnumShapeTypesFieldUpdateOperationsInput | $Enums.ShapeTypes
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElementCreateManyInput = {
+    id?: string
+    roomId: string
+    senderId: string
+    type: $Enums.ShapeTypes
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ElementUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumShapeTypesFieldUpdateOperationsInput | $Enums.ShapeTypes
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElementUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roomId?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    type?: EnumShapeTypesFieldUpdateOperationsInput | $Enums.ShapeTypes
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -4862,16 +5068,27 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type RoomListRelationFilter = {
-    every?: RoomWhereInput
-    some?: RoomWhereInput
-    none?: RoomWhereInput
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type ChatListRelationFilter = {
-    every?: ChatWhereInput
-    some?: ChatWhereInput
-    none?: ChatWhereInput
+  export type CanvasRoomListRelationFilter = {
+    every?: CanvasRoomWhereInput
+    some?: CanvasRoomWhereInput
+    none?: CanvasRoomWhereInput
+  }
+
+  export type ElementListRelationFilter = {
+    every?: ElementWhereInput
+    some?: ElementWhereInput
+    none?: ElementWhereInput
   }
 
   export type SortOrderInput = {
@@ -4879,11 +5096,11 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type RoomOrderByRelationAggregateInput = {
+  export type CanvasRoomOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type ChatOrderByRelationAggregateInput = {
+  export type ElementOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -4892,7 +5109,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
-    photo?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -4900,7 +5117,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
-    photo?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -4908,7 +5125,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
-    photo?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -4947,43 +5164,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
-  export type RoomCountOrderByAggregateInput = {
-    id?: SortOrder
-    adminId?: SortOrder
-    slug?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type RoomMaxOrderByAggregateInput = {
-    id?: SortOrder
-    adminId?: SortOrder
-    slug?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type RoomMinOrderByAggregateInput = {
-    id?: SortOrder
-    adminId?: SortOrder
-    slug?: SortOrder
-    createdAt?: SortOrder
-  }
-
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -4998,93 +5178,182 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
-  export type RoomScalarRelationFilter = {
-    is?: RoomWhereInput
-    isNot?: RoomWhereInput
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
   }
 
-  export type ChatCountOrderByAggregateInput = {
+  export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CanvasRoomCountOrderByAggregateInput = {
     id?: SortOrder
-    message?: SortOrder
-    senderId?: SortOrder
+    slug?: SortOrder
+    adminId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CanvasRoomMaxOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    adminId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CanvasRoomMinOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    adminId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumShapeTypesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ShapeTypes | EnumShapeTypesFieldRefInput<$PrismaModel>
+    in?: $Enums.ShapeTypes[] | ListEnumShapeTypesFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ShapeTypes[] | ListEnumShapeTypesFieldRefInput<$PrismaModel>
+    not?: NestedEnumShapeTypesFilter<$PrismaModel> | $Enums.ShapeTypes
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type CanvasRoomScalarRelationFilter = {
+    is?: CanvasRoomWhereInput
+    isNot?: CanvasRoomWhereInput
+  }
+
+  export type ElementCountOrderByAggregateInput = {
+    id?: SortOrder
     roomId?: SortOrder
-  }
-
-  export type ChatAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type ChatMaxOrderByAggregateInput = {
-    id?: SortOrder
-    message?: SortOrder
     senderId?: SortOrder
-    roomId?: SortOrder
+    type?: SortOrder
+    data?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type ChatMinOrderByAggregateInput = {
+  export type ElementMaxOrderByAggregateInput = {
     id?: SortOrder
-    message?: SortOrder
+    roomId?: SortOrder
     senderId?: SortOrder
-    roomId?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type ChatSumOrderByAggregateInput = {
+  export type ElementMinOrderByAggregateInput = {
     id?: SortOrder
+    roomId?: SortOrder
+    senderId?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+  export type EnumShapeTypesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ShapeTypes | EnumShapeTypesFieldRefInput<$PrismaModel>
+    in?: $Enums.ShapeTypes[] | ListEnumShapeTypesFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ShapeTypes[] | ListEnumShapeTypesFieldRefInput<$PrismaModel>
+    not?: NestedEnumShapeTypesWithAggregatesFilter<$PrismaModel> | $Enums.ShapeTypes
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumShapeTypesFilter<$PrismaModel>
+    _max?: NestedEnumShapeTypesFilter<$PrismaModel>
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
   }
 
-  export type RoomCreateNestedManyWithoutAdminInput = {
-    create?: XOR<RoomCreateWithoutAdminInput, RoomUncheckedCreateWithoutAdminInput> | RoomCreateWithoutAdminInput[] | RoomUncheckedCreateWithoutAdminInput[]
-    connectOrCreate?: RoomCreateOrConnectWithoutAdminInput | RoomCreateOrConnectWithoutAdminInput[]
-    createMany?: RoomCreateManyAdminInputEnvelope
-    connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
+  export type CanvasRoomCreateNestedManyWithoutUsersInput = {
+    create?: XOR<CanvasRoomCreateWithoutUsersInput, CanvasRoomUncheckedCreateWithoutUsersInput> | CanvasRoomCreateWithoutUsersInput[] | CanvasRoomUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: CanvasRoomCreateOrConnectWithoutUsersInput | CanvasRoomCreateOrConnectWithoutUsersInput[]
+    connect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
   }
 
-  export type ChatCreateNestedManyWithoutSenderInput = {
-    create?: XOR<ChatCreateWithoutSenderInput, ChatUncheckedCreateWithoutSenderInput> | ChatCreateWithoutSenderInput[] | ChatUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: ChatCreateOrConnectWithoutSenderInput | ChatCreateOrConnectWithoutSenderInput[]
-    createMany?: ChatCreateManySenderInputEnvelope
-    connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
+  export type CanvasRoomCreateNestedManyWithoutAdminInput = {
+    create?: XOR<CanvasRoomCreateWithoutAdminInput, CanvasRoomUncheckedCreateWithoutAdminInput> | CanvasRoomCreateWithoutAdminInput[] | CanvasRoomUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: CanvasRoomCreateOrConnectWithoutAdminInput | CanvasRoomCreateOrConnectWithoutAdminInput[]
+    createMany?: CanvasRoomCreateManyAdminInputEnvelope
+    connect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
   }
 
-  export type RoomUncheckedCreateNestedManyWithoutAdminInput = {
-    create?: XOR<RoomCreateWithoutAdminInput, RoomUncheckedCreateWithoutAdminInput> | RoomCreateWithoutAdminInput[] | RoomUncheckedCreateWithoutAdminInput[]
-    connectOrCreate?: RoomCreateOrConnectWithoutAdminInput | RoomCreateOrConnectWithoutAdminInput[]
-    createMany?: RoomCreateManyAdminInputEnvelope
-    connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
+  export type ElementCreateNestedManyWithoutSenderInput = {
+    create?: XOR<ElementCreateWithoutSenderInput, ElementUncheckedCreateWithoutSenderInput> | ElementCreateWithoutSenderInput[] | ElementUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: ElementCreateOrConnectWithoutSenderInput | ElementCreateOrConnectWithoutSenderInput[]
+    createMany?: ElementCreateManySenderInputEnvelope
+    connect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
   }
 
-  export type ChatUncheckedCreateNestedManyWithoutSenderInput = {
-    create?: XOR<ChatCreateWithoutSenderInput, ChatUncheckedCreateWithoutSenderInput> | ChatCreateWithoutSenderInput[] | ChatUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: ChatCreateOrConnectWithoutSenderInput | ChatCreateOrConnectWithoutSenderInput[]
-    createMany?: ChatCreateManySenderInputEnvelope
-    connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
+  export type CanvasRoomUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<CanvasRoomCreateWithoutUsersInput, CanvasRoomUncheckedCreateWithoutUsersInput> | CanvasRoomCreateWithoutUsersInput[] | CanvasRoomUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: CanvasRoomCreateOrConnectWithoutUsersInput | CanvasRoomCreateOrConnectWithoutUsersInput[]
+    connect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+  }
+
+  export type CanvasRoomUncheckedCreateNestedManyWithoutAdminInput = {
+    create?: XOR<CanvasRoomCreateWithoutAdminInput, CanvasRoomUncheckedCreateWithoutAdminInput> | CanvasRoomCreateWithoutAdminInput[] | CanvasRoomUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: CanvasRoomCreateOrConnectWithoutAdminInput | CanvasRoomCreateOrConnectWithoutAdminInput[]
+    createMany?: CanvasRoomCreateManyAdminInputEnvelope
+    connect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+  }
+
+  export type ElementUncheckedCreateNestedManyWithoutSenderInput = {
+    create?: XOR<ElementCreateWithoutSenderInput, ElementUncheckedCreateWithoutSenderInput> | ElementCreateWithoutSenderInput[] | ElementUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: ElementCreateOrConnectWithoutSenderInput | ElementCreateOrConnectWithoutSenderInput[]
+    createMany?: ElementCreateManySenderInputEnvelope
+    connect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5095,156 +5364,216 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type RoomUpdateManyWithoutAdminNestedInput = {
-    create?: XOR<RoomCreateWithoutAdminInput, RoomUncheckedCreateWithoutAdminInput> | RoomCreateWithoutAdminInput[] | RoomUncheckedCreateWithoutAdminInput[]
-    connectOrCreate?: RoomCreateOrConnectWithoutAdminInput | RoomCreateOrConnectWithoutAdminInput[]
-    upsert?: RoomUpsertWithWhereUniqueWithoutAdminInput | RoomUpsertWithWhereUniqueWithoutAdminInput[]
-    createMany?: RoomCreateManyAdminInputEnvelope
-    set?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    disconnect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    delete?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    update?: RoomUpdateWithWhereUniqueWithoutAdminInput | RoomUpdateWithWhereUniqueWithoutAdminInput[]
-    updateMany?: RoomUpdateManyWithWhereWithoutAdminInput | RoomUpdateManyWithWhereWithoutAdminInput[]
-    deleteMany?: RoomScalarWhereInput | RoomScalarWhereInput[]
-  }
-
-  export type ChatUpdateManyWithoutSenderNestedInput = {
-    create?: XOR<ChatCreateWithoutSenderInput, ChatUncheckedCreateWithoutSenderInput> | ChatCreateWithoutSenderInput[] | ChatUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: ChatCreateOrConnectWithoutSenderInput | ChatCreateOrConnectWithoutSenderInput[]
-    upsert?: ChatUpsertWithWhereUniqueWithoutSenderInput | ChatUpsertWithWhereUniqueWithoutSenderInput[]
-    createMany?: ChatCreateManySenderInputEnvelope
-    set?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    disconnect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    delete?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    update?: ChatUpdateWithWhereUniqueWithoutSenderInput | ChatUpdateWithWhereUniqueWithoutSenderInput[]
-    updateMany?: ChatUpdateManyWithWhereWithoutSenderInput | ChatUpdateManyWithWhereWithoutSenderInput[]
-    deleteMany?: ChatScalarWhereInput | ChatScalarWhereInput[]
-  }
-
-  export type RoomUncheckedUpdateManyWithoutAdminNestedInput = {
-    create?: XOR<RoomCreateWithoutAdminInput, RoomUncheckedCreateWithoutAdminInput> | RoomCreateWithoutAdminInput[] | RoomUncheckedCreateWithoutAdminInput[]
-    connectOrCreate?: RoomCreateOrConnectWithoutAdminInput | RoomCreateOrConnectWithoutAdminInput[]
-    upsert?: RoomUpsertWithWhereUniqueWithoutAdminInput | RoomUpsertWithWhereUniqueWithoutAdminInput[]
-    createMany?: RoomCreateManyAdminInputEnvelope
-    set?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    disconnect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    delete?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    update?: RoomUpdateWithWhereUniqueWithoutAdminInput | RoomUpdateWithWhereUniqueWithoutAdminInput[]
-    updateMany?: RoomUpdateManyWithWhereWithoutAdminInput | RoomUpdateManyWithWhereWithoutAdminInput[]
-    deleteMany?: RoomScalarWhereInput | RoomScalarWhereInput[]
-  }
-
-  export type ChatUncheckedUpdateManyWithoutSenderNestedInput = {
-    create?: XOR<ChatCreateWithoutSenderInput, ChatUncheckedCreateWithoutSenderInput> | ChatCreateWithoutSenderInput[] | ChatUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: ChatCreateOrConnectWithoutSenderInput | ChatCreateOrConnectWithoutSenderInput[]
-    upsert?: ChatUpsertWithWhereUniqueWithoutSenderInput | ChatUpsertWithWhereUniqueWithoutSenderInput[]
-    createMany?: ChatCreateManySenderInputEnvelope
-    set?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    disconnect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    delete?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    update?: ChatUpdateWithWhereUniqueWithoutSenderInput | ChatUpdateWithWhereUniqueWithoutSenderInput[]
-    updateMany?: ChatUpdateManyWithWhereWithoutSenderInput | ChatUpdateManyWithWhereWithoutSenderInput[]
-    deleteMany?: ChatScalarWhereInput | ChatScalarWhereInput[]
-  }
-
-  export type UserCreateNestedOneWithoutRoomsInput = {
-    create?: XOR<UserCreateWithoutRoomsInput, UserUncheckedCreateWithoutRoomsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutRoomsInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type ChatCreateNestedManyWithoutRoomInput = {
-    create?: XOR<ChatCreateWithoutRoomInput, ChatUncheckedCreateWithoutRoomInput> | ChatCreateWithoutRoomInput[] | ChatUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: ChatCreateOrConnectWithoutRoomInput | ChatCreateOrConnectWithoutRoomInput[]
-    createMany?: ChatCreateManyRoomInputEnvelope
-    connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-  }
-
-  export type ChatUncheckedCreateNestedManyWithoutRoomInput = {
-    create?: XOR<ChatCreateWithoutRoomInput, ChatUncheckedCreateWithoutRoomInput> | ChatCreateWithoutRoomInput[] | ChatUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: ChatCreateOrConnectWithoutRoomInput | ChatCreateOrConnectWithoutRoomInput[]
-    createMany?: ChatCreateManyRoomInputEnvelope
-    connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-  }
-
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
 
-  export type UserUpdateOneRequiredWithoutRoomsNestedInput = {
-    create?: XOR<UserCreateWithoutRoomsInput, UserUncheckedCreateWithoutRoomsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutRoomsInput
-    upsert?: UserUpsertWithoutRoomsInput
+  export type CanvasRoomUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<CanvasRoomCreateWithoutUsersInput, CanvasRoomUncheckedCreateWithoutUsersInput> | CanvasRoomCreateWithoutUsersInput[] | CanvasRoomUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: CanvasRoomCreateOrConnectWithoutUsersInput | CanvasRoomCreateOrConnectWithoutUsersInput[]
+    upsert?: CanvasRoomUpsertWithWhereUniqueWithoutUsersInput | CanvasRoomUpsertWithWhereUniqueWithoutUsersInput[]
+    set?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    disconnect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    delete?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    connect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    update?: CanvasRoomUpdateWithWhereUniqueWithoutUsersInput | CanvasRoomUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: CanvasRoomUpdateManyWithWhereWithoutUsersInput | CanvasRoomUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: CanvasRoomScalarWhereInput | CanvasRoomScalarWhereInput[]
+  }
+
+  export type CanvasRoomUpdateManyWithoutAdminNestedInput = {
+    create?: XOR<CanvasRoomCreateWithoutAdminInput, CanvasRoomUncheckedCreateWithoutAdminInput> | CanvasRoomCreateWithoutAdminInput[] | CanvasRoomUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: CanvasRoomCreateOrConnectWithoutAdminInput | CanvasRoomCreateOrConnectWithoutAdminInput[]
+    upsert?: CanvasRoomUpsertWithWhereUniqueWithoutAdminInput | CanvasRoomUpsertWithWhereUniqueWithoutAdminInput[]
+    createMany?: CanvasRoomCreateManyAdminInputEnvelope
+    set?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    disconnect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    delete?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    connect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    update?: CanvasRoomUpdateWithWhereUniqueWithoutAdminInput | CanvasRoomUpdateWithWhereUniqueWithoutAdminInput[]
+    updateMany?: CanvasRoomUpdateManyWithWhereWithoutAdminInput | CanvasRoomUpdateManyWithWhereWithoutAdminInput[]
+    deleteMany?: CanvasRoomScalarWhereInput | CanvasRoomScalarWhereInput[]
+  }
+
+  export type ElementUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<ElementCreateWithoutSenderInput, ElementUncheckedCreateWithoutSenderInput> | ElementCreateWithoutSenderInput[] | ElementUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: ElementCreateOrConnectWithoutSenderInput | ElementCreateOrConnectWithoutSenderInput[]
+    upsert?: ElementUpsertWithWhereUniqueWithoutSenderInput | ElementUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: ElementCreateManySenderInputEnvelope
+    set?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    disconnect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    delete?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    connect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    update?: ElementUpdateWithWhereUniqueWithoutSenderInput | ElementUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: ElementUpdateManyWithWhereWithoutSenderInput | ElementUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: ElementScalarWhereInput | ElementScalarWhereInput[]
+  }
+
+  export type CanvasRoomUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<CanvasRoomCreateWithoutUsersInput, CanvasRoomUncheckedCreateWithoutUsersInput> | CanvasRoomCreateWithoutUsersInput[] | CanvasRoomUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: CanvasRoomCreateOrConnectWithoutUsersInput | CanvasRoomCreateOrConnectWithoutUsersInput[]
+    upsert?: CanvasRoomUpsertWithWhereUniqueWithoutUsersInput | CanvasRoomUpsertWithWhereUniqueWithoutUsersInput[]
+    set?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    disconnect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    delete?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    connect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    update?: CanvasRoomUpdateWithWhereUniqueWithoutUsersInput | CanvasRoomUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: CanvasRoomUpdateManyWithWhereWithoutUsersInput | CanvasRoomUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: CanvasRoomScalarWhereInput | CanvasRoomScalarWhereInput[]
+  }
+
+  export type CanvasRoomUncheckedUpdateManyWithoutAdminNestedInput = {
+    create?: XOR<CanvasRoomCreateWithoutAdminInput, CanvasRoomUncheckedCreateWithoutAdminInput> | CanvasRoomCreateWithoutAdminInput[] | CanvasRoomUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: CanvasRoomCreateOrConnectWithoutAdminInput | CanvasRoomCreateOrConnectWithoutAdminInput[]
+    upsert?: CanvasRoomUpsertWithWhereUniqueWithoutAdminInput | CanvasRoomUpsertWithWhereUniqueWithoutAdminInput[]
+    createMany?: CanvasRoomCreateManyAdminInputEnvelope
+    set?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    disconnect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    delete?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    connect?: CanvasRoomWhereUniqueInput | CanvasRoomWhereUniqueInput[]
+    update?: CanvasRoomUpdateWithWhereUniqueWithoutAdminInput | CanvasRoomUpdateWithWhereUniqueWithoutAdminInput[]
+    updateMany?: CanvasRoomUpdateManyWithWhereWithoutAdminInput | CanvasRoomUpdateManyWithWhereWithoutAdminInput[]
+    deleteMany?: CanvasRoomScalarWhereInput | CanvasRoomScalarWhereInput[]
+  }
+
+  export type ElementUncheckedUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<ElementCreateWithoutSenderInput, ElementUncheckedCreateWithoutSenderInput> | ElementCreateWithoutSenderInput[] | ElementUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: ElementCreateOrConnectWithoutSenderInput | ElementCreateOrConnectWithoutSenderInput[]
+    upsert?: ElementUpsertWithWhereUniqueWithoutSenderInput | ElementUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: ElementCreateManySenderInputEnvelope
+    set?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    disconnect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    delete?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    connect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    update?: ElementUpdateWithWhereUniqueWithoutSenderInput | ElementUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: ElementUpdateManyWithWhereWithoutSenderInput | ElementUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: ElementScalarWhereInput | ElementScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutAdminRoomsInput = {
+    create?: XOR<UserCreateWithoutAdminRoomsInput, UserUncheckedCreateWithoutAdminRoomsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAdminRoomsInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRoomsInput, UserUpdateWithoutRoomsInput>, UserUncheckedUpdateWithoutRoomsInput>
   }
 
-  export type ChatUpdateManyWithoutRoomNestedInput = {
-    create?: XOR<ChatCreateWithoutRoomInput, ChatUncheckedCreateWithoutRoomInput> | ChatCreateWithoutRoomInput[] | ChatUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: ChatCreateOrConnectWithoutRoomInput | ChatCreateOrConnectWithoutRoomInput[]
-    upsert?: ChatUpsertWithWhereUniqueWithoutRoomInput | ChatUpsertWithWhereUniqueWithoutRoomInput[]
-    createMany?: ChatCreateManyRoomInputEnvelope
-    set?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    disconnect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    delete?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    update?: ChatUpdateWithWhereUniqueWithoutRoomInput | ChatUpdateWithWhereUniqueWithoutRoomInput[]
-    updateMany?: ChatUpdateManyWithWhereWithoutRoomInput | ChatUpdateManyWithWhereWithoutRoomInput[]
-    deleteMany?: ChatScalarWhereInput | ChatScalarWhereInput[]
+  export type UserCreateNestedManyWithoutRoomsInput = {
+    create?: XOR<UserCreateWithoutRoomsInput, UserUncheckedCreateWithoutRoomsInput> | UserCreateWithoutRoomsInput[] | UserUncheckedCreateWithoutRoomsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutRoomsInput | UserCreateOrConnectWithoutRoomsInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
-  export type ChatUncheckedUpdateManyWithoutRoomNestedInput = {
-    create?: XOR<ChatCreateWithoutRoomInput, ChatUncheckedCreateWithoutRoomInput> | ChatCreateWithoutRoomInput[] | ChatUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: ChatCreateOrConnectWithoutRoomInput | ChatCreateOrConnectWithoutRoomInput[]
-    upsert?: ChatUpsertWithWhereUniqueWithoutRoomInput | ChatUpsertWithWhereUniqueWithoutRoomInput[]
-    createMany?: ChatCreateManyRoomInputEnvelope
-    set?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    disconnect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    delete?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
-    update?: ChatUpdateWithWhereUniqueWithoutRoomInput | ChatUpdateWithWhereUniqueWithoutRoomInput[]
-    updateMany?: ChatUpdateManyWithWhereWithoutRoomInput | ChatUpdateManyWithWhereWithoutRoomInput[]
-    deleteMany?: ChatScalarWhereInput | ChatScalarWhereInput[]
+  export type ElementCreateNestedManyWithoutRoomInput = {
+    create?: XOR<ElementCreateWithoutRoomInput, ElementUncheckedCreateWithoutRoomInput> | ElementCreateWithoutRoomInput[] | ElementUncheckedCreateWithoutRoomInput[]
+    connectOrCreate?: ElementCreateOrConnectWithoutRoomInput | ElementCreateOrConnectWithoutRoomInput[]
+    createMany?: ElementCreateManyRoomInputEnvelope
+    connect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
   }
 
-  export type UserCreateNestedOneWithoutChatsInput = {
-    create?: XOR<UserCreateWithoutChatsInput, UserUncheckedCreateWithoutChatsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutChatsInput
+  export type UserUncheckedCreateNestedManyWithoutRoomsInput = {
+    create?: XOR<UserCreateWithoutRoomsInput, UserUncheckedCreateWithoutRoomsInput> | UserCreateWithoutRoomsInput[] | UserUncheckedCreateWithoutRoomsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutRoomsInput | UserCreateOrConnectWithoutRoomsInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type ElementUncheckedCreateNestedManyWithoutRoomInput = {
+    create?: XOR<ElementCreateWithoutRoomInput, ElementUncheckedCreateWithoutRoomInput> | ElementCreateWithoutRoomInput[] | ElementUncheckedCreateWithoutRoomInput[]
+    connectOrCreate?: ElementCreateOrConnectWithoutRoomInput | ElementCreateOrConnectWithoutRoomInput[]
+    createMany?: ElementCreateManyRoomInputEnvelope
+    connect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutAdminRoomsNestedInput = {
+    create?: XOR<UserCreateWithoutAdminRoomsInput, UserUncheckedCreateWithoutAdminRoomsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAdminRoomsInput
+    upsert?: UserUpsertWithoutAdminRoomsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAdminRoomsInput, UserUpdateWithoutAdminRoomsInput>, UserUncheckedUpdateWithoutAdminRoomsInput>
+  }
+
+  export type UserUpdateManyWithoutRoomsNestedInput = {
+    create?: XOR<UserCreateWithoutRoomsInput, UserUncheckedCreateWithoutRoomsInput> | UserCreateWithoutRoomsInput[] | UserUncheckedCreateWithoutRoomsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutRoomsInput | UserCreateOrConnectWithoutRoomsInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutRoomsInput | UserUpsertWithWhereUniqueWithoutRoomsInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutRoomsInput | UserUpdateWithWhereUniqueWithoutRoomsInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutRoomsInput | UserUpdateManyWithWhereWithoutRoomsInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ElementUpdateManyWithoutRoomNestedInput = {
+    create?: XOR<ElementCreateWithoutRoomInput, ElementUncheckedCreateWithoutRoomInput> | ElementCreateWithoutRoomInput[] | ElementUncheckedCreateWithoutRoomInput[]
+    connectOrCreate?: ElementCreateOrConnectWithoutRoomInput | ElementCreateOrConnectWithoutRoomInput[]
+    upsert?: ElementUpsertWithWhereUniqueWithoutRoomInput | ElementUpsertWithWhereUniqueWithoutRoomInput[]
+    createMany?: ElementCreateManyRoomInputEnvelope
+    set?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    disconnect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    delete?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    connect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    update?: ElementUpdateWithWhereUniqueWithoutRoomInput | ElementUpdateWithWhereUniqueWithoutRoomInput[]
+    updateMany?: ElementUpdateManyWithWhereWithoutRoomInput | ElementUpdateManyWithWhereWithoutRoomInput[]
+    deleteMany?: ElementScalarWhereInput | ElementScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutRoomsNestedInput = {
+    create?: XOR<UserCreateWithoutRoomsInput, UserUncheckedCreateWithoutRoomsInput> | UserCreateWithoutRoomsInput[] | UserUncheckedCreateWithoutRoomsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutRoomsInput | UserCreateOrConnectWithoutRoomsInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutRoomsInput | UserUpsertWithWhereUniqueWithoutRoomsInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutRoomsInput | UserUpdateWithWhereUniqueWithoutRoomsInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutRoomsInput | UserUpdateManyWithWhereWithoutRoomsInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ElementUncheckedUpdateManyWithoutRoomNestedInput = {
+    create?: XOR<ElementCreateWithoutRoomInput, ElementUncheckedCreateWithoutRoomInput> | ElementCreateWithoutRoomInput[] | ElementUncheckedCreateWithoutRoomInput[]
+    connectOrCreate?: ElementCreateOrConnectWithoutRoomInput | ElementCreateOrConnectWithoutRoomInput[]
+    upsert?: ElementUpsertWithWhereUniqueWithoutRoomInput | ElementUpsertWithWhereUniqueWithoutRoomInput[]
+    createMany?: ElementCreateManyRoomInputEnvelope
+    set?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    disconnect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    delete?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    connect?: ElementWhereUniqueInput | ElementWhereUniqueInput[]
+    update?: ElementUpdateWithWhereUniqueWithoutRoomInput | ElementUpdateWithWhereUniqueWithoutRoomInput[]
+    updateMany?: ElementUpdateManyWithWhereWithoutRoomInput | ElementUpdateManyWithWhereWithoutRoomInput[]
+    deleteMany?: ElementScalarWhereInput | ElementScalarWhereInput[]
+  }
+
+  export type CanvasRoomCreateNestedOneWithoutElementsInput = {
+    create?: XOR<CanvasRoomCreateWithoutElementsInput, CanvasRoomUncheckedCreateWithoutElementsInput>
+    connectOrCreate?: CanvasRoomCreateOrConnectWithoutElementsInput
+    connect?: CanvasRoomWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutElementsInput = {
+    create?: XOR<UserCreateWithoutElementsInput, UserUncheckedCreateWithoutElementsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutElementsInput
     connect?: UserWhereUniqueInput
   }
 
-  export type RoomCreateNestedOneWithoutChatsInput = {
-    create?: XOR<RoomCreateWithoutChatsInput, RoomUncheckedCreateWithoutChatsInput>
-    connectOrCreate?: RoomCreateOrConnectWithoutChatsInput
-    connect?: RoomWhereUniqueInput
+  export type EnumShapeTypesFieldUpdateOperationsInput = {
+    set?: $Enums.ShapeTypes
   }
 
-  export type UserUpdateOneRequiredWithoutChatsNestedInput = {
-    create?: XOR<UserCreateWithoutChatsInput, UserUncheckedCreateWithoutChatsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutChatsInput
-    upsert?: UserUpsertWithoutChatsInput
+  export type CanvasRoomUpdateOneRequiredWithoutElementsNestedInput = {
+    create?: XOR<CanvasRoomCreateWithoutElementsInput, CanvasRoomUncheckedCreateWithoutElementsInput>
+    connectOrCreate?: CanvasRoomCreateOrConnectWithoutElementsInput
+    upsert?: CanvasRoomUpsertWithoutElementsInput
+    connect?: CanvasRoomWhereUniqueInput
+    update?: XOR<XOR<CanvasRoomUpdateToOneWithWhereWithoutElementsInput, CanvasRoomUpdateWithoutElementsInput>, CanvasRoomUncheckedUpdateWithoutElementsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutElementsNestedInput = {
+    create?: XOR<UserCreateWithoutElementsInput, UserUncheckedCreateWithoutElementsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutElementsInput
+    upsert?: UserUpsertWithoutElementsInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChatsInput, UserUpdateWithoutChatsInput>, UserUncheckedUpdateWithoutChatsInput>
-  }
-
-  export type RoomUpdateOneRequiredWithoutChatsNestedInput = {
-    create?: XOR<RoomCreateWithoutChatsInput, RoomUncheckedCreateWithoutChatsInput>
-    connectOrCreate?: RoomCreateOrConnectWithoutChatsInput
-    upsert?: RoomUpsertWithoutChatsInput
-    connect?: RoomWhereUniqueInput
-    update?: XOR<XOR<RoomUpdateToOneWithWhereWithoutChatsInput, RoomUpdateWithoutChatsInput>, RoomUncheckedUpdateWithoutChatsInput>
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutElementsInput, UserUpdateWithoutElementsInput>, UserUncheckedUpdateWithoutElementsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5273,6 +5602,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5331,17 +5671,6 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5356,146 +5685,240 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+  export type NestedEnumShapeTypesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ShapeTypes | EnumShapeTypesFieldRefInput<$PrismaModel>
+    in?: $Enums.ShapeTypes[] | ListEnumShapeTypesFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ShapeTypes[] | ListEnumShapeTypesFieldRefInput<$PrismaModel>
+    not?: NestedEnumShapeTypesFilter<$PrismaModel> | $Enums.ShapeTypes
+  }
+
+  export type NestedEnumShapeTypesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ShapeTypes | EnumShapeTypesFieldRefInput<$PrismaModel>
+    in?: $Enums.ShapeTypes[] | ListEnumShapeTypesFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ShapeTypes[] | ListEnumShapeTypesFieldRefInput<$PrismaModel>
+    not?: NestedEnumShapeTypesWithAggregatesFilter<$PrismaModel> | $Enums.ShapeTypes
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumShapeTypesFilter<$PrismaModel>
+    _max?: NestedEnumShapeTypesFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type RoomCreateWithoutAdminInput = {
+  export type CanvasRoomCreateWithoutUsersInput = {
     id?: string
     slug: string
     createdAt?: Date | string
-    chats?: ChatCreateNestedManyWithoutRoomInput
+    updatedAt?: Date | string
+    admin: UserCreateNestedOneWithoutAdminRoomsInput
+    elements?: ElementCreateNestedManyWithoutRoomInput
   }
 
-  export type RoomUncheckedCreateWithoutAdminInput = {
+  export type CanvasRoomUncheckedCreateWithoutUsersInput = {
+    id?: string
+    slug: string
+    adminId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    elements?: ElementUncheckedCreateNestedManyWithoutRoomInput
+  }
+
+  export type CanvasRoomCreateOrConnectWithoutUsersInput = {
+    where: CanvasRoomWhereUniqueInput
+    create: XOR<CanvasRoomCreateWithoutUsersInput, CanvasRoomUncheckedCreateWithoutUsersInput>
+  }
+
+  export type CanvasRoomCreateWithoutAdminInput = {
     id?: string
     slug: string
     createdAt?: Date | string
-    chats?: ChatUncheckedCreateNestedManyWithoutRoomInput
+    updatedAt?: Date | string
+    users?: UserCreateNestedManyWithoutRoomsInput
+    elements?: ElementCreateNestedManyWithoutRoomInput
   }
 
-  export type RoomCreateOrConnectWithoutAdminInput = {
-    where: RoomWhereUniqueInput
-    create: XOR<RoomCreateWithoutAdminInput, RoomUncheckedCreateWithoutAdminInput>
+  export type CanvasRoomUncheckedCreateWithoutAdminInput = {
+    id?: string
+    slug: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutRoomsInput
+    elements?: ElementUncheckedCreateNestedManyWithoutRoomInput
   }
 
-  export type RoomCreateManyAdminInputEnvelope = {
-    data: RoomCreateManyAdminInput | RoomCreateManyAdminInput[]
+  export type CanvasRoomCreateOrConnectWithoutAdminInput = {
+    where: CanvasRoomWhereUniqueInput
+    create: XOR<CanvasRoomCreateWithoutAdminInput, CanvasRoomUncheckedCreateWithoutAdminInput>
+  }
+
+  export type CanvasRoomCreateManyAdminInputEnvelope = {
+    data: CanvasRoomCreateManyAdminInput | CanvasRoomCreateManyAdminInput[]
     skipDuplicates?: boolean
   }
 
-  export type ChatCreateWithoutSenderInput = {
-    message: string
-    room: RoomCreateNestedOneWithoutChatsInput
+  export type ElementCreateWithoutSenderInput = {
+    id?: string
+    type: $Enums.ShapeTypes
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    room: CanvasRoomCreateNestedOneWithoutElementsInput
   }
 
-  export type ChatUncheckedCreateWithoutSenderInput = {
-    id?: number
-    message: string
+  export type ElementUncheckedCreateWithoutSenderInput = {
+    id?: string
     roomId: string
+    type: $Enums.ShapeTypes
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type ChatCreateOrConnectWithoutSenderInput = {
-    where: ChatWhereUniqueInput
-    create: XOR<ChatCreateWithoutSenderInput, ChatUncheckedCreateWithoutSenderInput>
+  export type ElementCreateOrConnectWithoutSenderInput = {
+    where: ElementWhereUniqueInput
+    create: XOR<ElementCreateWithoutSenderInput, ElementUncheckedCreateWithoutSenderInput>
   }
 
-  export type ChatCreateManySenderInputEnvelope = {
-    data: ChatCreateManySenderInput | ChatCreateManySenderInput[]
+  export type ElementCreateManySenderInputEnvelope = {
+    data: ElementCreateManySenderInput | ElementCreateManySenderInput[]
     skipDuplicates?: boolean
   }
 
-  export type RoomUpsertWithWhereUniqueWithoutAdminInput = {
-    where: RoomWhereUniqueInput
-    update: XOR<RoomUpdateWithoutAdminInput, RoomUncheckedUpdateWithoutAdminInput>
-    create: XOR<RoomCreateWithoutAdminInput, RoomUncheckedCreateWithoutAdminInput>
+  export type CanvasRoomUpsertWithWhereUniqueWithoutUsersInput = {
+    where: CanvasRoomWhereUniqueInput
+    update: XOR<CanvasRoomUpdateWithoutUsersInput, CanvasRoomUncheckedUpdateWithoutUsersInput>
+    create: XOR<CanvasRoomCreateWithoutUsersInput, CanvasRoomUncheckedCreateWithoutUsersInput>
   }
 
-  export type RoomUpdateWithWhereUniqueWithoutAdminInput = {
-    where: RoomWhereUniqueInput
-    data: XOR<RoomUpdateWithoutAdminInput, RoomUncheckedUpdateWithoutAdminInput>
+  export type CanvasRoomUpdateWithWhereUniqueWithoutUsersInput = {
+    where: CanvasRoomWhereUniqueInput
+    data: XOR<CanvasRoomUpdateWithoutUsersInput, CanvasRoomUncheckedUpdateWithoutUsersInput>
   }
 
-  export type RoomUpdateManyWithWhereWithoutAdminInput = {
-    where: RoomScalarWhereInput
-    data: XOR<RoomUpdateManyMutationInput, RoomUncheckedUpdateManyWithoutAdminInput>
+  export type CanvasRoomUpdateManyWithWhereWithoutUsersInput = {
+    where: CanvasRoomScalarWhereInput
+    data: XOR<CanvasRoomUpdateManyMutationInput, CanvasRoomUncheckedUpdateManyWithoutUsersInput>
   }
 
-  export type RoomScalarWhereInput = {
-    AND?: RoomScalarWhereInput | RoomScalarWhereInput[]
-    OR?: RoomScalarWhereInput[]
-    NOT?: RoomScalarWhereInput | RoomScalarWhereInput[]
-    id?: StringFilter<"Room"> | string
-    adminId?: StringFilter<"Room"> | string
-    slug?: StringFilter<"Room"> | string
-    createdAt?: DateTimeFilter<"Room"> | Date | string
+  export type CanvasRoomScalarWhereInput = {
+    AND?: CanvasRoomScalarWhereInput | CanvasRoomScalarWhereInput[]
+    OR?: CanvasRoomScalarWhereInput[]
+    NOT?: CanvasRoomScalarWhereInput | CanvasRoomScalarWhereInput[]
+    id?: StringFilter<"CanvasRoom"> | string
+    slug?: StringFilter<"CanvasRoom"> | string
+    adminId?: StringFilter<"CanvasRoom"> | string
+    createdAt?: DateTimeFilter<"CanvasRoom"> | Date | string
+    updatedAt?: DateTimeFilter<"CanvasRoom"> | Date | string
   }
 
-  export type ChatUpsertWithWhereUniqueWithoutSenderInput = {
-    where: ChatWhereUniqueInput
-    update: XOR<ChatUpdateWithoutSenderInput, ChatUncheckedUpdateWithoutSenderInput>
-    create: XOR<ChatCreateWithoutSenderInput, ChatUncheckedCreateWithoutSenderInput>
+  export type CanvasRoomUpsertWithWhereUniqueWithoutAdminInput = {
+    where: CanvasRoomWhereUniqueInput
+    update: XOR<CanvasRoomUpdateWithoutAdminInput, CanvasRoomUncheckedUpdateWithoutAdminInput>
+    create: XOR<CanvasRoomCreateWithoutAdminInput, CanvasRoomUncheckedCreateWithoutAdminInput>
   }
 
-  export type ChatUpdateWithWhereUniqueWithoutSenderInput = {
-    where: ChatWhereUniqueInput
-    data: XOR<ChatUpdateWithoutSenderInput, ChatUncheckedUpdateWithoutSenderInput>
+  export type CanvasRoomUpdateWithWhereUniqueWithoutAdminInput = {
+    where: CanvasRoomWhereUniqueInput
+    data: XOR<CanvasRoomUpdateWithoutAdminInput, CanvasRoomUncheckedUpdateWithoutAdminInput>
   }
 
-  export type ChatUpdateManyWithWhereWithoutSenderInput = {
-    where: ChatScalarWhereInput
-    data: XOR<ChatUpdateManyMutationInput, ChatUncheckedUpdateManyWithoutSenderInput>
+  export type CanvasRoomUpdateManyWithWhereWithoutAdminInput = {
+    where: CanvasRoomScalarWhereInput
+    data: XOR<CanvasRoomUpdateManyMutationInput, CanvasRoomUncheckedUpdateManyWithoutAdminInput>
   }
 
-  export type ChatScalarWhereInput = {
-    AND?: ChatScalarWhereInput | ChatScalarWhereInput[]
-    OR?: ChatScalarWhereInput[]
-    NOT?: ChatScalarWhereInput | ChatScalarWhereInput[]
-    id?: IntFilter<"Chat"> | number
-    message?: StringFilter<"Chat"> | string
-    senderId?: StringFilter<"Chat"> | string
-    roomId?: StringFilter<"Chat"> | string
+  export type ElementUpsertWithWhereUniqueWithoutSenderInput = {
+    where: ElementWhereUniqueInput
+    update: XOR<ElementUpdateWithoutSenderInput, ElementUncheckedUpdateWithoutSenderInput>
+    create: XOR<ElementCreateWithoutSenderInput, ElementUncheckedCreateWithoutSenderInput>
+  }
+
+  export type ElementUpdateWithWhereUniqueWithoutSenderInput = {
+    where: ElementWhereUniqueInput
+    data: XOR<ElementUpdateWithoutSenderInput, ElementUncheckedUpdateWithoutSenderInput>
+  }
+
+  export type ElementUpdateManyWithWhereWithoutSenderInput = {
+    where: ElementScalarWhereInput
+    data: XOR<ElementUpdateManyMutationInput, ElementUncheckedUpdateManyWithoutSenderInput>
+  }
+
+  export type ElementScalarWhereInput = {
+    AND?: ElementScalarWhereInput | ElementScalarWhereInput[]
+    OR?: ElementScalarWhereInput[]
+    NOT?: ElementScalarWhereInput | ElementScalarWhereInput[]
+    id?: StringFilter<"Element"> | string
+    roomId?: StringFilter<"Element"> | string
+    senderId?: StringFilter<"Element"> | string
+    type?: EnumShapeTypesFilter<"Element"> | $Enums.ShapeTypes
+    data?: JsonFilter<"Element">
+    createdAt?: DateTimeFilter<"Element"> | Date | string
+    updatedAt?: DateTimeFilter<"Element"> | Date | string
+  }
+
+  export type UserCreateWithoutAdminRoomsInput = {
+    id?: string
+    email: string
+    password: string
+    name?: string | null
+    createdAt?: Date | string
+    rooms?: CanvasRoomCreateNestedManyWithoutUsersInput
+    elements?: ElementCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserUncheckedCreateWithoutAdminRoomsInput = {
+    id?: string
+    email: string
+    password: string
+    name?: string | null
+    createdAt?: Date | string
+    rooms?: CanvasRoomUncheckedCreateNestedManyWithoutUsersInput
+    elements?: ElementUncheckedCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserCreateOrConnectWithoutAdminRoomsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAdminRoomsInput, UserUncheckedCreateWithoutAdminRoomsInput>
   }
 
   export type UserCreateWithoutRoomsInput = {
     id?: string
     email: string
     password: string
-    name: string
-    photo?: string | null
-    chats?: ChatCreateNestedManyWithoutSenderInput
+    name?: string | null
+    createdAt?: Date | string
+    adminRooms?: CanvasRoomCreateNestedManyWithoutAdminInput
+    elements?: ElementCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutRoomsInput = {
     id?: string
     email: string
     password: string
-    name: string
-    photo?: string | null
-    chats?: ChatUncheckedCreateNestedManyWithoutSenderInput
+    name?: string | null
+    createdAt?: Date | string
+    adminRooms?: CanvasRoomUncheckedCreateNestedManyWithoutAdminInput
+    elements?: ElementUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutRoomsInput = {
@@ -5503,238 +5926,372 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutRoomsInput, UserUncheckedCreateWithoutRoomsInput>
   }
 
-  export type ChatCreateWithoutRoomInput = {
-    message: string
-    sender: UserCreateNestedOneWithoutChatsInput
+  export type ElementCreateWithoutRoomInput = {
+    id?: string
+    type: $Enums.ShapeTypes
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sender: UserCreateNestedOneWithoutElementsInput
   }
 
-  export type ChatUncheckedCreateWithoutRoomInput = {
-    id?: number
-    message: string
+  export type ElementUncheckedCreateWithoutRoomInput = {
+    id?: string
     senderId: string
+    type: $Enums.ShapeTypes
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type ChatCreateOrConnectWithoutRoomInput = {
-    where: ChatWhereUniqueInput
-    create: XOR<ChatCreateWithoutRoomInput, ChatUncheckedCreateWithoutRoomInput>
+  export type ElementCreateOrConnectWithoutRoomInput = {
+    where: ElementWhereUniqueInput
+    create: XOR<ElementCreateWithoutRoomInput, ElementUncheckedCreateWithoutRoomInput>
   }
 
-  export type ChatCreateManyRoomInputEnvelope = {
-    data: ChatCreateManyRoomInput | ChatCreateManyRoomInput[]
+  export type ElementCreateManyRoomInputEnvelope = {
+    data: ElementCreateManyRoomInput | ElementCreateManyRoomInput[]
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutRoomsInput = {
-    update: XOR<UserUpdateWithoutRoomsInput, UserUncheckedUpdateWithoutRoomsInput>
-    create: XOR<UserCreateWithoutRoomsInput, UserUncheckedCreateWithoutRoomsInput>
+  export type UserUpsertWithoutAdminRoomsInput = {
+    update: XOR<UserUpdateWithoutAdminRoomsInput, UserUncheckedUpdateWithoutAdminRoomsInput>
+    create: XOR<UserCreateWithoutAdminRoomsInput, UserUncheckedCreateWithoutAdminRoomsInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutRoomsInput = {
+  export type UserUpdateToOneWithWhereWithoutAdminRoomsInput = {
     where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAdminRoomsInput, UserUncheckedUpdateWithoutAdminRoomsInput>
+  }
+
+  export type UserUpdateWithoutAdminRoomsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rooms?: CanvasRoomUpdateManyWithoutUsersNestedInput
+    elements?: ElementUpdateManyWithoutSenderNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAdminRoomsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rooms?: CanvasRoomUncheckedUpdateManyWithoutUsersNestedInput
+    elements?: ElementUncheckedUpdateManyWithoutSenderNestedInput
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutRoomsInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutRoomsInput, UserUncheckedUpdateWithoutRoomsInput>
+    create: XOR<UserCreateWithoutRoomsInput, UserUncheckedCreateWithoutRoomsInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutRoomsInput = {
+    where: UserWhereUniqueInput
     data: XOR<UserUpdateWithoutRoomsInput, UserUncheckedUpdateWithoutRoomsInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutRoomsInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutRoomsInput>
+  }
+
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
+    createdAt?: DateTimeFilter<"User"> | Date | string
+  }
+
+  export type ElementUpsertWithWhereUniqueWithoutRoomInput = {
+    where: ElementWhereUniqueInput
+    update: XOR<ElementUpdateWithoutRoomInput, ElementUncheckedUpdateWithoutRoomInput>
+    create: XOR<ElementCreateWithoutRoomInput, ElementUncheckedCreateWithoutRoomInput>
+  }
+
+  export type ElementUpdateWithWhereUniqueWithoutRoomInput = {
+    where: ElementWhereUniqueInput
+    data: XOR<ElementUpdateWithoutRoomInput, ElementUncheckedUpdateWithoutRoomInput>
+  }
+
+  export type ElementUpdateManyWithWhereWithoutRoomInput = {
+    where: ElementScalarWhereInput
+    data: XOR<ElementUpdateManyMutationInput, ElementUncheckedUpdateManyWithoutRoomInput>
+  }
+
+  export type CanvasRoomCreateWithoutElementsInput = {
+    id?: string
+    slug: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    admin: UserCreateNestedOneWithoutAdminRoomsInput
+    users?: UserCreateNestedManyWithoutRoomsInput
+  }
+
+  export type CanvasRoomUncheckedCreateWithoutElementsInput = {
+    id?: string
+    slug: string
+    adminId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutRoomsInput
+  }
+
+  export type CanvasRoomCreateOrConnectWithoutElementsInput = {
+    where: CanvasRoomWhereUniqueInput
+    create: XOR<CanvasRoomCreateWithoutElementsInput, CanvasRoomUncheckedCreateWithoutElementsInput>
+  }
+
+  export type UserCreateWithoutElementsInput = {
+    id?: string
+    email: string
+    password: string
+    name?: string | null
+    createdAt?: Date | string
+    rooms?: CanvasRoomCreateNestedManyWithoutUsersInput
+    adminRooms?: CanvasRoomCreateNestedManyWithoutAdminInput
+  }
+
+  export type UserUncheckedCreateWithoutElementsInput = {
+    id?: string
+    email: string
+    password: string
+    name?: string | null
+    createdAt?: Date | string
+    rooms?: CanvasRoomUncheckedCreateNestedManyWithoutUsersInput
+    adminRooms?: CanvasRoomUncheckedCreateNestedManyWithoutAdminInput
+  }
+
+  export type UserCreateOrConnectWithoutElementsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutElementsInput, UserUncheckedCreateWithoutElementsInput>
+  }
+
+  export type CanvasRoomUpsertWithoutElementsInput = {
+    update: XOR<CanvasRoomUpdateWithoutElementsInput, CanvasRoomUncheckedUpdateWithoutElementsInput>
+    create: XOR<CanvasRoomCreateWithoutElementsInput, CanvasRoomUncheckedCreateWithoutElementsInput>
+    where?: CanvasRoomWhereInput
+  }
+
+  export type CanvasRoomUpdateToOneWithWhereWithoutElementsInput = {
+    where?: CanvasRoomWhereInput
+    data: XOR<CanvasRoomUpdateWithoutElementsInput, CanvasRoomUncheckedUpdateWithoutElementsInput>
+  }
+
+  export type CanvasRoomUpdateWithoutElementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: UserUpdateOneRequiredWithoutAdminRoomsNestedInput
+    users?: UserUpdateManyWithoutRoomsNestedInput
+  }
+
+  export type CanvasRoomUncheckedUpdateWithoutElementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    adminId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutRoomsNestedInput
+  }
+
+  export type UserUpsertWithoutElementsInput = {
+    update: XOR<UserUpdateWithoutElementsInput, UserUncheckedUpdateWithoutElementsInput>
+    create: XOR<UserCreateWithoutElementsInput, UserUncheckedCreateWithoutElementsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutElementsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutElementsInput, UserUncheckedUpdateWithoutElementsInput>
+  }
+
+  export type UserUpdateWithoutElementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rooms?: CanvasRoomUpdateManyWithoutUsersNestedInput
+    adminRooms?: CanvasRoomUpdateManyWithoutAdminNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutElementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rooms?: CanvasRoomUncheckedUpdateManyWithoutUsersNestedInput
+    adminRooms?: CanvasRoomUncheckedUpdateManyWithoutAdminNestedInput
+  }
+
+  export type CanvasRoomCreateManyAdminInput = {
+    id?: string
+    slug: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ElementCreateManySenderInput = {
+    id?: string
+    roomId: string
+    type: $Enums.ShapeTypes
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CanvasRoomUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: UserUpdateOneRequiredWithoutAdminRoomsNestedInput
+    elements?: ElementUpdateManyWithoutRoomNestedInput
+  }
+
+  export type CanvasRoomUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    adminId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    elements?: ElementUncheckedUpdateManyWithoutRoomNestedInput
+  }
+
+  export type CanvasRoomUncheckedUpdateManyWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    adminId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CanvasRoomUpdateWithoutAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUpdateManyWithoutRoomsNestedInput
+    elements?: ElementUpdateManyWithoutRoomNestedInput
+  }
+
+  export type CanvasRoomUncheckedUpdateWithoutAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutRoomsNestedInput
+    elements?: ElementUncheckedUpdateManyWithoutRoomNestedInput
+  }
+
+  export type CanvasRoomUncheckedUpdateManyWithoutAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElementUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumShapeTypesFieldUpdateOperationsInput | $Enums.ShapeTypes
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    room?: CanvasRoomUpdateOneRequiredWithoutElementsNestedInput
+  }
+
+  export type ElementUncheckedUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roomId?: StringFieldUpdateOperationsInput | string
+    type?: EnumShapeTypesFieldUpdateOperationsInput | $Enums.ShapeTypes
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElementUncheckedUpdateManyWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roomId?: StringFieldUpdateOperationsInput | string
+    type?: EnumShapeTypesFieldUpdateOperationsInput | $Enums.ShapeTypes
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElementCreateManyRoomInput = {
+    id?: string
+    senderId: string
+    type: $Enums.ShapeTypes
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserUpdateWithoutRoomsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    photo?: NullableStringFieldUpdateOperationsInput | string | null
-    chats?: ChatUpdateManyWithoutSenderNestedInput
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adminRooms?: CanvasRoomUpdateManyWithoutAdminNestedInput
+    elements?: ElementUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRoomsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    photo?: NullableStringFieldUpdateOperationsInput | string | null
-    chats?: ChatUncheckedUpdateManyWithoutSenderNestedInput
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adminRooms?: CanvasRoomUncheckedUpdateManyWithoutAdminNestedInput
+    elements?: ElementUncheckedUpdateManyWithoutSenderNestedInput
   }
 
-  export type ChatUpsertWithWhereUniqueWithoutRoomInput = {
-    where: ChatWhereUniqueInput
-    update: XOR<ChatUpdateWithoutRoomInput, ChatUncheckedUpdateWithoutRoomInput>
-    create: XOR<ChatCreateWithoutRoomInput, ChatUncheckedCreateWithoutRoomInput>
-  }
-
-  export type ChatUpdateWithWhereUniqueWithoutRoomInput = {
-    where: ChatWhereUniqueInput
-    data: XOR<ChatUpdateWithoutRoomInput, ChatUncheckedUpdateWithoutRoomInput>
-  }
-
-  export type ChatUpdateManyWithWhereWithoutRoomInput = {
-    where: ChatScalarWhereInput
-    data: XOR<ChatUpdateManyMutationInput, ChatUncheckedUpdateManyWithoutRoomInput>
-  }
-
-  export type UserCreateWithoutChatsInput = {
-    id?: string
-    email: string
-    password: string
-    name: string
-    photo?: string | null
-    rooms?: RoomCreateNestedManyWithoutAdminInput
-  }
-
-  export type UserUncheckedCreateWithoutChatsInput = {
-    id?: string
-    email: string
-    password: string
-    name: string
-    photo?: string | null
-    rooms?: RoomUncheckedCreateNestedManyWithoutAdminInput
-  }
-
-  export type UserCreateOrConnectWithoutChatsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutChatsInput, UserUncheckedCreateWithoutChatsInput>
-  }
-
-  export type RoomCreateWithoutChatsInput = {
-    id?: string
-    slug: string
-    createdAt?: Date | string
-    admin: UserCreateNestedOneWithoutRoomsInput
-  }
-
-  export type RoomUncheckedCreateWithoutChatsInput = {
-    id?: string
-    adminId: string
-    slug: string
-    createdAt?: Date | string
-  }
-
-  export type RoomCreateOrConnectWithoutChatsInput = {
-    where: RoomWhereUniqueInput
-    create: XOR<RoomCreateWithoutChatsInput, RoomUncheckedCreateWithoutChatsInput>
-  }
-
-  export type UserUpsertWithoutChatsInput = {
-    update: XOR<UserUpdateWithoutChatsInput, UserUncheckedUpdateWithoutChatsInput>
-    create: XOR<UserCreateWithoutChatsInput, UserUncheckedCreateWithoutChatsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutChatsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutChatsInput, UserUncheckedUpdateWithoutChatsInput>
-  }
-
-  export type UserUpdateWithoutChatsInput = {
+  export type UserUncheckedUpdateManyWithoutRoomsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    photo?: NullableStringFieldUpdateOperationsInput | string | null
-    rooms?: RoomUpdateManyWithoutAdminNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutChatsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    photo?: NullableStringFieldUpdateOperationsInput | string | null
-    rooms?: RoomUncheckedUpdateManyWithoutAdminNestedInput
-  }
-
-  export type RoomUpsertWithoutChatsInput = {
-    update: XOR<RoomUpdateWithoutChatsInput, RoomUncheckedUpdateWithoutChatsInput>
-    create: XOR<RoomCreateWithoutChatsInput, RoomUncheckedCreateWithoutChatsInput>
-    where?: RoomWhereInput
-  }
-
-  export type RoomUpdateToOneWithWhereWithoutChatsInput = {
-    where?: RoomWhereInput
-    data: XOR<RoomUpdateWithoutChatsInput, RoomUncheckedUpdateWithoutChatsInput>
-  }
-
-  export type RoomUpdateWithoutChatsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    admin?: UserUpdateOneRequiredWithoutRoomsNestedInput
-  }
-
-  export type RoomUncheckedUpdateWithoutChatsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    adminId?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoomCreateManyAdminInput = {
-    id?: string
-    slug: string
-    createdAt?: Date | string
-  }
-
-  export type ChatCreateManySenderInput = {
-    id?: number
-    message: string
-    roomId: string
-  }
-
-  export type RoomUpdateWithoutAdminInput = {
+  export type ElementUpdateWithoutRoomInput = {
     id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumShapeTypesFieldUpdateOperationsInput | $Enums.ShapeTypes
+    data?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chats?: ChatUpdateManyWithoutRoomNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sender?: UserUpdateOneRequiredWithoutElementsNestedInput
   }
 
-  export type RoomUncheckedUpdateWithoutAdminInput = {
+  export type ElementUncheckedUpdateWithoutRoomInput = {
     id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chats?: ChatUncheckedUpdateManyWithoutRoomNestedInput
-  }
-
-  export type RoomUncheckedUpdateManyWithoutAdminInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ChatUpdateWithoutSenderInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    room?: RoomUpdateOneRequiredWithoutChatsNestedInput
-  }
-
-  export type ChatUncheckedUpdateWithoutSenderInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ChatUncheckedUpdateManyWithoutSenderInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ChatCreateManyRoomInput = {
-    id?: number
-    message: string
-    senderId: string
-  }
-
-  export type ChatUpdateWithoutRoomInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    sender?: UserUpdateOneRequiredWithoutChatsNestedInput
-  }
-
-  export type ChatUncheckedUpdateWithoutRoomInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
+    type?: EnumShapeTypesFieldUpdateOperationsInput | $Enums.ShapeTypes
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ChatUncheckedUpdateManyWithoutRoomInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+  export type ElementUncheckedUpdateManyWithoutRoomInput = {
+    id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
+    type?: EnumShapeTypesFieldUpdateOperationsInput | $Enums.ShapeTypes
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

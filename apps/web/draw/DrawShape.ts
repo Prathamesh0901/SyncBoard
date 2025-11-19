@@ -47,7 +47,7 @@ export class DrawShape {
             case "pencil": {
                 if (shape.points.length < 2) return;
                 ctx.lineJoin = 'round';
-                ctx.lineCap = 'round';
+                ctx.lineCap = 'round'; 
                 ctx.beginPath();
                 ctx.beginPath();
                 ctx.moveTo((shape.points[0]?.x || 0), (shape.points[0]?.y || 0));

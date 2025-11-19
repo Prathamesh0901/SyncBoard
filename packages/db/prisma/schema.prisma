@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../src/generated/client"
+  output   = "../src/generated/client"
 }
 
 datasource db {
@@ -15,44 +15,55 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  password String
-  name     String
-  photo    String?
-
-  rooms Room[]
-  chats Chat[]
-}
-
-model Room {
-  id        String      @id @default(uuid())
-  adminId   String
-  slug      String   @unique
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String?
   createdAt DateTime @default(now())
 
-  admin User   @relation (fields: [adminId], references: [id])
-  chats Chat[]
+  rooms      CanvasRoom[] @relation("UserRooms")
+  adminRooms CanvasRoom[] @relation("RoomAdmin")
+
+  elements Element[]
 }
 
-model Chat {
-  id       String    @id @default(cuid())
-  message  String
+model CanvasRoom {
+  id   String @id @default(uuid())
+  slug String @unique
+
+  adminId String
+  admin   User   @relation("RoomAdmin", fields: [adminId], references: [id])
+
+  users User[] @relation("UserRooms")
+
+  elements Element[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Element {
+  id String @id @default(cuid())
+
+  roomId String
+  room   CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
   senderId String
-  roomId   String
+  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
 
-  sender User @relation(fields: [senderId], references: [id])
-  room   Room @relation(fields: [roomId], references: [id])
+  type ShapeTypes
+
+  data Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-// model Shape {
-//   id Int @id @default(autoincrement())
-//   type shapeTypes
-//   startX Int
-//   startY Int
-// }
-
-// enum shapeTypes {
-//   rect
-
-// }
+enum ShapeTypes {
+  PENCIL
+  RECTANGLE
+  ELLIPSE
+  LINE
+  ARROW
+  TEXT
+}

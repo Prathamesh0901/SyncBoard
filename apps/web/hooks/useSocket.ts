@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { WS_BACKEND_URL } from "../config";
 import { useRouter } from "next/navigation";
+import { TypedWebSocket } from "../lib/ws/TypedWebSocket";
 
-export function useSocket() {
+export function useSocket(slug: string) {
     const [loading, setLoading] = useState<boolean>(false);
-    const [socket, setSocket]   = useState<WebSocket | null>(null);
+    const [socket, setSocket]   = useState<TypedWebSocket>();
     const router = useRouter();
     
     useEffect(() => {
@@ -14,16 +15,22 @@ export function useSocket() {
             router.push('/auth/signin');
         }
         setLoading(true);
-        const ws = new WebSocket(`${WS_BACKEND_URL}?token=${token}`);
+        const ws = new TypedWebSocket(`${WS_BACKEND_URL}?token=${token}`);
+
         ws.onopen = () => {
+            alert('joined room')
             setLoading(false);
             setSocket(ws);
+            ws.sendTyped({
+                type: 'JOIN_ROOM',
+                slug,
+            })
         }
 
         return () => {
             socket?.close();
         }
-    }, []);
+    }, [slug]);
 
     return {
         socket,

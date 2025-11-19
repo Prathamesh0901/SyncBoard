@@ -18,8 +18,6 @@ export async function auth (req: Request, res: Response, next: NextFunction) {
         next();
     }
     else {
-        console.log('here');
-        
         return res.status(403).json({
             message: 'Unauthorized user'
         })
