@@ -3,12 +3,15 @@ import { Element, Point } from "../types/types";
 import { ElementState } from "../../store/element";
 import { TypedWebSocket } from "../ws/TypedWebSocket";
 import { renderLine } from "../renderers/renderer";
+import { getBoundingBox } from "../hitTest/pointUtilts";
+import { useSelectStore } from "../../store/selectElement";
+import { useToolStore } from "../../store/tool";
 
 export class LineTool {
     start: Point | null = null;
     draft: Element | null = null;
 
-    pointerDown (pt: Point, ws: TypedWebSocket, slug: string) {
+    pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string) {
         this.start = pt;
         this.draft = {
             id: createId(),
@@ -31,7 +34,7 @@ export class LineTool {
         renderLine(draftCtx, this.draft);
     }
 
-    pointerUp (store: ElementState, ws: TypedWebSocket, slug: string) {
+    pointerUp (store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string) {
         if (!this.start || !this.draft || this.draft.type !== 'LINE') return;
 
         if (this.start.x === this.draft.data.eX && this.start.y === this.draft.data.eY) {
@@ -50,6 +53,13 @@ export class LineTool {
                 data: JSON.stringify(this.draft.data)
             }
         })
+
+        const box = getBoundingBox(this.draft, draftCtx);
+        const selectStore = useSelectStore.getState();
+        selectStore.clearSelection();
+        selectStore.add(this.draft.id, box);
+
+        useToolStore.getState().setTool('SELECT');
 
         this.draft = null;
         this.start = null;

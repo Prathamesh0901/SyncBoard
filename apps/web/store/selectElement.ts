@@ -6,6 +6,7 @@ export interface SelectState {
     boundingBoxes: Record<string, BoundingBox>
 
     select: (id: string) => void;
+    updateBox: (id: string, box: BoundingBox) => void;
     selectMany: (ids: string[]) => void;
     add: (id: string, box: BoundingBox) => void;
     clearSelection: () => void;
@@ -18,6 +19,12 @@ export const useSelectStore = create<SelectState>((set) => ({
         selectedIds: [id],
         boundingBoxes: {}
     }),
+    updateBox: (id, box) => set((s) => ({
+        boundingBoxes: {
+            ...s.boundingBoxes,
+            [id]: box
+        }
+    })),
     selectMany: (ids) => set({
         selectedIds: ids,
         boundingBoxes: {}

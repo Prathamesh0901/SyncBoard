@@ -1,7 +1,7 @@
 import { Element, Point } from "../types/types";
 import { pointToSegmentDistance } from "./pointUtilts";
 
-export function hitTestElement (el: Element, point: Point, threshold: number = 6) {
+export function hitTestElement (el: Element, point: Point, threshold: number = 6, ctx: CanvasRenderingContext2D) {
     switch (el.type) {
         case "PENCIL": {
             const pts = el.data.points;
@@ -50,10 +50,26 @@ export function hitTestElement (el: Element, point: Point, threshold: number = 6
             );
         }
         case "TEXT": {
-            const {x, y, text} = el.data;
+            const {x, y, text, fontSize, fontFamily} = el.data;
+
+            const lines = text.split('\n');
+            let w = 0, h = 0;
+            
+            ctx.font = `${fontSize}px ${fontFamily}`;
+            ctx.fillStyle = 'rgb(255, 255, 255)';
+            ctx.textBaseline = 'top';
+
+            for (const line of lines) {
+                const metrics = ctx.measureText(line);
+                w = Math.max(w, metrics.width);
+                h += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + 5;
+            }
+            
             return (
-                Math.abs(point.x - x) < 4.5 * text.length && 
-                Math.abs(point.y - y) < 7
+                point.x >= x && 
+                point.x <= x + w &&
+                point.y >= y &&
+                point.y <= y + h
             )
         }
 

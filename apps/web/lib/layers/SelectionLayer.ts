@@ -1,6 +1,5 @@
-import { SelectState } from "../../store/selectElement";
 import { TransformState, useTransformStore } from "../../store/transform";
-import { BoundingBox, Element } from "../types/types";
+import { BoundingBox, Point } from "../types/types";
 
 export class SelectionLayer {
     private selectCanvas: HTMLCanvasElement;
@@ -17,10 +16,44 @@ export class SelectionLayer {
     drawBoundingBox(boundingBoxes: Record<string, BoundingBox>, transform: TransformState) {
         this.clearSelectCanvas();
 
-        Object.values(boundingBoxes).forEach(box => {
-            this.drawSingleBox(box, transform);
+        if (Object.keys(boundingBoxes).length > 1) {
+
+            const pt1: Point = { x: 1000000, y: 1000000 };
+            const pt2: Point = { x: -1000000, y: -1000000 };
+
+            Object.values(boundingBoxes).forEach(box => {
+                pt1.x = Math.min(pt1.x, box.x1);
+                pt1.y = Math.min(pt1.y, box.y1);
+                pt1.x = Math.min(pt1.x, box.x2);
+                pt1.y = Math.min(pt1.y, box.y2);
+                pt2.x = Math.max(pt2.x, box.x1);
+                pt2.y = Math.max(pt2.y, box.y1);
+                pt2.x = Math.max(pt2.x, box.x2);
+                pt2.y = Math.max(pt2.y, box.y2);
+                this.drawSingleBox(box, transform);
+                // this.drawHandles(box, transform);
+            });
+
+            const box = { x1: pt1.x, y1: pt1.y, x2: pt2.x, y2: pt2.y };
+            const { scale } = transform;
+
+            const width = pt2.x - pt1.x;
+            const height = pt2.y - pt1.y;
+
+            // this.clearSelectCanvas();
+            this.selectCtx.strokeStyle = '#ff0000';
+            this.selectCtx.lineDashOffset = 10;
+            this.selectCtx.lineWidth = 1 / scale;
+
+            this.selectCtx.strokeRect(pt1.x, pt1.y, width, height);
             this.drawHandles(box, transform);
-        })
+        }
+        else {
+            Object.values(boundingBoxes).forEach(box => {
+                this.drawSingleBox(box, transform);
+                this.drawHandles(box, transform);
+            });
+        }
     }
 
     drawSingleBox(box: BoundingBox, transform: TransformState) {
@@ -39,7 +72,7 @@ export class SelectionLayer {
 
     drawHandles(box: BoundingBox, transform: TransformState) {
         const { x1, y1, x2, y2 } = box;
-        const { x, y, scale } = transform;
+        const { scale } = transform;
 
         const handleSize = 8 / scale;
         const half = handleSize / 2;

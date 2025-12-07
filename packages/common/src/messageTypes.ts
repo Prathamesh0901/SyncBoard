@@ -12,6 +12,14 @@ export type ClientMessage = {
         data: string;
     }
 } | {
+    type: 'ELEMENT_UPDATE';
+    slug: string;
+    element: {
+        id: string;
+        type: ShapeTypes;
+        data: string;
+    }
+} | {
     type: 'ELEMENT_DELETE';
     slug: string;
     elementId: string;
@@ -26,6 +34,15 @@ export type ServerMessage = {
     userId: string;
 } | {
     type: 'ELEMENT_CREATED';
+    slug: string;
+    element: {
+        id: string;
+        type: ShapeTypes;
+        data: string;
+    };
+    senderId: string;
+} | {
+    type: 'ELEMENT_UPDATED';
     slug: string;
     element: {
         id: string;

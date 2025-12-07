@@ -11,7 +11,7 @@ export async function onElementDelete(ws: WebSocket, message: ClientMessage) {
     const senderId = room.getUserId(ws);
     
     if (!senderId) return;
-    console.log(elementId);
+    
     await prismaClient.element.deleteMany({
         where: {
             id: elementId

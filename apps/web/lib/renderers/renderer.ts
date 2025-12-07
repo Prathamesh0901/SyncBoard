@@ -20,7 +20,7 @@ export function renderEllipse (ctx: CanvasRenderingContext2D, element: Element) 
     const {x, y, rX, rY} = element.data;
 
     ctx.beginPath();
-    ctx.ellipse(x, y, rX, rY, 0, 0, 2*Math.PI);
+    ctx.ellipse(x, y, Math.abs(rX), Math.abs(rY), 0, 0, 2*Math.PI);
     ctx.stroke();
 }
 
@@ -91,13 +91,28 @@ export function renderPencil (ctx: CanvasRenderingContext2D, element: Element) {
 
 export function renderText (ctx: CanvasRenderingContext2D, element: Element) {
     if (element.type !== 'TEXT') return;
-    const {x, y, text, fontSize = 20, fontFamily = 'Aerial'} = element.data;
+    const {x, y, text, fontSize, fontFamily = 'Arial', angle} = element.data;
 
-    ctx.font = `${fontSize}px ${fontFamily} #999`;
-    ctx.fillStyle = 'rgb(255, 255, 255)';
-    console.log(text);
-    ctx.textRendering = 'optimizeLegibility';
-    console.log(ctx.measureText(text).actualBoundingBoxAscent);
-    ctx.fillText(text.normalize(), x, y);
-    // ctx.strokeText(text, x, y);/
+    const lines = text.split('\n');
+    let w = 0, h = 0;
+
+    ctx.save();
+    
+    for (const line of lines) {
+        ctx.font = `${fontSize}px ${fontFamily}`;
+        ctx.fillStyle = 'rgb(255, 255, 255)';
+        ctx.textBaseline = 'top';
+        
+        const metrics = ctx.measureText(line);
+        w = Math.max(w, metrics.width);
+        h += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + 5;
+    }
+    
+    let offset = y;
+    
+    for(const line of lines) {
+        ctx.fillText(line, x, offset);
+        offset += h;
+    }
+    ctx.restore();
 }

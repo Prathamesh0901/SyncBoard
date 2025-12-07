@@ -27,7 +27,7 @@ export function pointToSegmentDistance(p: Point, a: Point, b: Point) {
     return Math.sqrt(dx * dx + dy * dy);
 }
 
-export function getBoundingBox (el: Element) {
+export function getBoundingBox (el: Element, ctx: CanvasRenderingContext2D) {
         switch (el.type) {
             case "PENCIL": {
                 const pts = el.data.points;
@@ -60,21 +60,32 @@ export function getBoundingBox (el: Element) {
             case "ARROW": {
                 const {sX, sY, eX, eY} = el.data;
                 return {
-                    x1: Math.min(sX, eX),
-                    y1: Math.min(sY, eY),
-                    x2: Math.max(sX, eX),
-                    y2: Math.max(sY, eY)
+                    x1: sX,
+                    y1: sY,
+                    x2: eX,
+                    y2: eY
                 }
             }
             case "TEXT": {
-                const {x, y, text, fontSize} = el.data;
-                const w = text.length * fontSize * 0.55;
-                const h = fontSize * 1.2;
+                const {x, y, text, fontSize, fontFamily} = el.data;
+                const lines = text.split('\n');
+                let w = 0, h = 0;
+                
+                ctx.font = `${fontSize}px ${fontFamily}`;
+                ctx.fillStyle = 'rgb(255, 255, 255)';
+                ctx.textBaseline = 'top';
+
+                for (const line of lines) {
+                    const metrics = ctx.measureText(line);
+                    w = Math.max(w, metrics.width);
+                    h += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + 5;
+                }
+
                 return {
                     x1: x,
-                    y1: y - h,
+                    y1: y,
                     x2: x + w,
-                    y2: y
+                    y2: y + h
                 }
             }
         }

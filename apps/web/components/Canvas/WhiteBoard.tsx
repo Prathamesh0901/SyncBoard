@@ -13,6 +13,11 @@ export default function WhiteBoard ({ slug }: {
     slug: string
 }) {
 
+    // const [size, setSize] = useState({
+    //     w: 0,
+    //     h:0
+    // });
+
     const mainRef = useRef<HTMLCanvasElement>(null);
     const draftRef = useRef<HTMLCanvasElement>(null);
     const selectRef = useRef<HTMLCanvasElement>(null);
@@ -33,6 +38,15 @@ export default function WhiteBoard ({ slug }: {
             new DraftLayer(draftRef.current, slug, socket);
             selectLayerRef.current = new SelectionLayer(selectRef.current, slug);
         };
+        // const update = () => {
+        //     setSize({w: window.innerWidth, h: window.innerHeight})    
+        // }
+        // update();
+        // window.addEventListener('resize', update);
+
+        // return () => {
+        //     window.removeEventListener('resize', update);
+        // }
     }, [slug, socket]);
 
     useEffect(() => {

@@ -3,12 +3,15 @@ import { Element, Point } from "../types/types";
 import { ElementState } from "../../store/element";
 import { TypedWebSocket } from "../ws/TypedWebSocket";
 import { renderRectangle } from "../renderers/renderer";
+import { getBoundingBox } from "../hitTest/pointUtilts";
+import { useSelectStore } from "../../store/selectElement";
+import { useToolStore } from "../../store/tool";
 
 export class RectangleTool {
     start: Point | null = null;
     draft: Element | null = null;
 
-    pointerDown (pt: Point, ws: TypedWebSocket, slug: string) {
+    pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string) {
         this.start = pt;
         this.draft = {
             id: createId(),
@@ -34,7 +37,7 @@ export class RectangleTool {
         renderRectangle(draftCtx, this.draft);
     }
 
-    pointerUp (store: ElementState, ws: TypedWebSocket, slug: string) {
+    pointerUp (store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string) {
         if (!this.start || !this.draft || this.draft.type !== 'RECTANGLE') return;
 
         store.add(this.draft);
@@ -46,7 +49,14 @@ export class RectangleTool {
                 ...this.draft,
                 data: JSON.stringify(this.draft.data)
             }
-        })
+        });
+
+        const box = getBoundingBox(this.draft, draftCtx);
+        const selectStore = useSelectStore.getState();
+        selectStore.clearSelection();
+        selectStore.add(this.draft.id, box);
+
+        useToolStore.getState().setTool('SELECT');
 
         this.start = null;
         this.draft = null;

@@ -7,3 +7,10 @@ export function screenToWorld (a: Point, b: TransformState) {
         y: (a.y - b.y) / b.scale,
     }
 }
+
+export function worldToScreen (a: Point, b: TransformState) {
+    return {
+        x: a.x * b.scale + b.x,
+        y: a.y * b.scale + b.y,
+    }
+}

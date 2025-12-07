@@ -1,6 +1,5 @@
 import { getExisitingElements } from "../utils/fetch";
 import { useElementStore } from "../../store/element";
-import { Element } from "../types/types";
 import { renderArrow, renderEllipse, renderLine, renderPencil, renderRectangle, renderText } from "../renderers/renderer";
 import { useTransformStore } from "../../store/transform";
 
@@ -18,13 +17,12 @@ export class MainLayer {
 
     async init() {
         const shapes = await getExisitingElements(this.slug);
-        console.log(shapes);
         useElementStore.getState().init(shapes);
         this.clearCanvas();
     }
 
-    clearCanvas () {
-        const {scale, x, y} = useTransformStore.getState();
+    clearCanvas() {
+        const { scale, x, y } = useTransformStore.getState();
         this.mainCtx.setTransform(1, 0, 0, 1, 0, 0);
         this.mainCtx.clearRect(0, 0, this.mainCanvas.width, this.mainCanvas.height);
         this.mainCtx.fillStyle = "rgba(0, 0, 0)";
@@ -33,8 +31,10 @@ export class MainLayer {
         return;
     }
 
-    draw () {
-        useElementStore.getState().elements.forEach((el: Element) => {
+    draw() {
+        const elements = useElementStore.getState().elements;
+        Object.entries(elements).forEach((val) => {
+            const el = val[1];
             switch (el.type) {
                 case "RECTANGLE": {
                     renderRectangle(this.mainCtx, el);

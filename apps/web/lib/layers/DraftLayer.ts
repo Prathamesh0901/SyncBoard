@@ -36,6 +36,7 @@ export class DraftLayer {
         this.draftCanvas.addEventListener('mousemove', this.onMouseMove);
         this.draftCanvas.addEventListener('mouseup', this.onMouseUp);
         this.draftCanvas.addEventListener('wheel', this.onZoom);
+        // this.draftCanvas.addEventListener('')
         this.clearDraftCanvas();
     }
 
@@ -53,11 +54,17 @@ export class DraftLayer {
                     useElementStore.getState().add(element);
                     break;
                 }
+                case "ELEMENT_UPDATED": {
+                    const el: Element = {
+                        ...message.element,
+                        data: JSON.parse(message.element.data)
+                    }
+                    useElementStore.getState().remove(el.id);
+                    useElementStore.getState().add(el);
+                    break;
+                }
                 case "ELEMENT_DELETED": {
-                    const store = useElementStore.getState();
-                    let elements = store.elements;
-                    elements = elements.filter(el => el.id !== message.elementId);
-                    store.init(elements);
+                    useElementStore.getState().remove(message.elementId);
                     break;
                 }
                 case "LEFT_ROOM": {
@@ -86,7 +93,7 @@ export class DraftLayer {
         this.isDrawing = true;
         const tool = toolManager.getTool();
         const pt: Point = screenToWorld({x: e.clientX, y: e.clientY}, useTransformStore.getState());
-        tool?.pointerDown(pt, this.socket, this.slug);
+        tool?.pointerDown(this.draftCtx, pt, this.socket, this.slug);
     }
 
     private onMouseMove = (e: MouseEvent) => {
@@ -111,7 +118,7 @@ export class DraftLayer {
         this.clearDraftCanvas();
         this.isDrawing = false;
         const tool = toolManager.getTool();
-        tool?.pointerUp(useElementStore.getState(), this.socket, this.slug);
+        tool?.pointerUp(useElementStore.getState(), this.socket, this.draftCtx, this.slug);
     }
 
     private onZoom = (e: WheelEvent) => {
@@ -123,14 +130,17 @@ export class DraftLayer {
         const direction = e.deltaY < 0 ? 1: -1;
         const zoom = Math.pow(zoomIntensity, direction);
 
-        const { x, y } = useTransformStore.getState();
+        const { x, y, scale } = useTransformStore.getState();
 
         const nx = mouseX - (mouseX - x) * zoom;
         const ny = mouseY - (mouseY - y) * zoom;
 
-        this.setPan(nx, ny);
-
-        this.setZoom(zoom);
+        const finalZoom = zoom * scale;
+        
+        if (finalZoom >= 0.1 && finalZoom <= 30) {
+            this.setPan(nx, ny);
+            this.setZoom(finalZoom);
+        }
     }
 
     destroy() {

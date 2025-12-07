@@ -4,14 +4,17 @@ import { Point, Element } from "../types/types";
 import { hitTestElement } from "./hitTestElement";
 import { getBoundingBox } from "./pointUtilts";
 
-export function getElementAtPoints (pt: Point) {
+export function getElementAtPoints (pt: Point, ctx: CanvasRenderingContext2D) {
+    console.log('called by getElementAtPoints')
     const elements = useElementStore.getState().elements;
-    if (elements.length === 0) return;
     useSelectStore.getState().clearSelection();
-    elements.forEach((element: Element) => {
-        if(hitTestElement(element, pt, 6) === true) {
-            const box = getBoundingBox(element);
+    let el: Element | null = null;
+    Object.values(elements).forEach((element: Element) => {
+        if(hitTestElement(element, pt, 6, ctx) === true) {
+            const box = getBoundingBox(element, ctx);
             useSelectStore.getState().add(element.id, box);
+            el = element;
         }
     });
+    return el;
 }

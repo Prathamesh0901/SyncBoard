@@ -7,6 +7,7 @@ import { onJoin } from './events/onJoin';
 import { onElementsCreate } from './events/onElementDelete';
 import { onElementDelete } from './events/onElementCreate';
 import { onLeave } from './events/onLeave';
+import { onElementUpdate } from './events/onElementUpdate';
 
 const wss = new WebSocketServer({ port: 3002 });
 
@@ -69,6 +70,10 @@ wss.on('connection', async function connection(ws, request) {
             }
             case 'ELEMENT_CREATE': {
                 onElementsCreate(ws, message);
+                break;
+            }
+            case 'ELEMENT_UPDATE': {
+                onElementUpdate(ws, message);
                 break;
             }
             case 'ELEMENT_DELETE': {

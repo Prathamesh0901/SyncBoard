@@ -7,7 +7,7 @@ import { renderPencil } from "../renderers/renderer";
 export class PencilTool {
     draft: Element | null = null;
 
-    pointerDown (pt: Point, ws: TypedWebSocket, slug: string) {
+    pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string) {
         this.draft = {
             id: createId(),
             type: 'PENCIL',
@@ -25,7 +25,7 @@ export class PencilTool {
         renderPencil(draftCtx, this.draft);
     }
     
-    pointerUp (store: ElementState, ws: TypedWebSocket, slug: string) {
+    pointerUp (store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string) {
         if (!this.draft || this.draft.type !== 'PENCIL') return;
 
         store.add(this.draft);

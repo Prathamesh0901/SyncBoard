@@ -52,7 +52,9 @@ export type Element = {
         y: number, 
         text: string, 
         fontSize: number,
-        fontFamily: string
+        fontFamily: string,
+        angle: number,
+        maxWidth?: number
     }
 };
 

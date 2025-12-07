@@ -18,13 +18,14 @@ export function useSocket(slug: string) {
         const ws = new TypedWebSocket(`${WS_BACKEND_URL}?token=${token}`);
 
         ws.onopen = () => {
-            alert('joined room')
-            setLoading(false);
-            setSocket(ws);
-            ws.sendTyped({
-                type: 'JOIN_ROOM',
-                slug,
-            })
+            setTimeout(() => {
+                setLoading(false);
+                setSocket(ws);
+                ws.sendTyped({
+                    type: 'JOIN_ROOM',
+                    slug,
+                })
+            }, 5);
         }
 
         return () => {
