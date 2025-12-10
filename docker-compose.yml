@@ -12,6 +12,15 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    container_name: drawapp-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - rddata:/var/lib/redis/data
   
 volumes:
   pgdata:
+  rddata:
