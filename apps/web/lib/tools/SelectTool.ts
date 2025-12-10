@@ -103,9 +103,30 @@ export class SelectTool {
             return;
         }
         if (this.el.length === 0 || !this.initialPos || !this.h) return;
-        console.log(this.h.handleId);
+
+        const boundingBoxes = useSelectStore.getState().boundingBoxes;
+
         const diffX = pt.x - this.initialPos.x;
         const diffY = pt.y - this.initialPos.y;
+
+        const pt1: Point = { x: 1000000, y: 1000000 };
+        const pt2: Point = { x: -1000000, y: -1000000 };
+
+        Object.values(boundingBoxes).forEach(box => {
+            pt1.x = Math.min(pt1.x, box.x1);
+            pt1.y = Math.min(pt1.y, box.y1);
+            pt1.x = Math.min(pt1.x, box.x2);
+            pt1.y = Math.min(pt1.y, box.y2);
+            pt2.x = Math.max(pt2.x, box.x1);
+            pt2.y = Math.max(pt2.y, box.y1);
+            pt2.x = Math.max(pt2.x, box.x2);
+            pt2.y = Math.max(pt2.y, box.y2);
+        });
+        const bbox = { x1: pt1.x, y1: pt1.y, x2: pt2.x, y2: pt2.y };
+
+        const sx = (bbox.x2 - bbox.x1 - diffX) / (bbox.x2 - bbox.x1);
+        const sy = (bbox.y2 - bbox.y1 - diffY) / (bbox.y2 - bbox.y1);
+
         this.initialPos = pt;
         for (const e of this.el) {
             this.isMoved = true;
@@ -164,69 +185,76 @@ export class SelectTool {
                     case "tl": {
                         switch (e.type) {
                             case "PENCIL": {
-                                const { x1, x2, y1, y2 } = getBoundingBox(e, draftCtx);
-                                const oldWidth = Math.abs(x2 - x1);
-                                const oldHeight = Math.abs(y2 - y1);
-
-                                const scaleX = (oldWidth - diffX) / oldWidth;
-                                const scaleY = (oldHeight - diffY) / oldHeight;
-
                                 const pts = e.data.points;
                                 for (const pt of pts) {
-                                    pt.x = (pt.x - x2) * scaleX + x2;
-                                    pt.y = (pt.y - y2) * scaleY + y2;
+                                    pt.x = (pt.x - bbox.x2) * sx + bbox.x2;
+                                    pt.y = (pt.y - bbox.y2) * sy + bbox.y2;
                                 }
                                 e.data.points = pts;
                                 renderPencil(draftCtx, e);
                                 break;
                             }
                             case "RECTANGLE": {
-                                e.data.x += diffX;
-                                e.data.y += diffY;
-                                e.data.w -= diffX;
-                                e.data.h -= diffY;
+                                e.data.x = bbox.x2 + (e.data.x - bbox.x2) * sx;
+                                e.data.y = bbox.y2 + (e.data.y - bbox.y2) * sy;
+                                e.data.w *= sx;
+                                e.data.h *= sy;
                                 renderRectangle(draftCtx, e);
                                 break;
                             }
                             case "ELLIPSE": {
-                                e.data.x += diffX / 2;
-                                e.data.y += diffY / 2;
-                                e.data.rX -= diffX / 2;
-                                e.data.rY -= diffY / 2;
+                                e.data.x = bbox.x2 + (e.data.x - bbox.x2) * sx;
+                                e.data.y = bbox.y2 + (e.data.y - bbox.y2) * sy;
+                                e.data.rX *= sx;
+                                e.data.rY *= sy;
                                 renderEllipse(draftCtx, e);
                                 break;
                             }
                             case "LINE": {
-                                e.data.sX += diffX;
-                                e.data.sY += diffY;
+                                e.data.sX = bbox.x2 + (e.data.sX - bbox.x2) * sx;
+                                e.data.sY = bbox.y2 + (e.data.sY - bbox.y2) * sy;
+
+                                e.data.eX = bbox.x2 + (e.data.eX - bbox.x2) * sx;
+                                e.data.eY = bbox.y2 + (e.data.eY - bbox.y2) * sy;
+
                                 renderLine(draftCtx, e);
                                 break;
                             }
                             case "ARROW": {
-                                e.data.sX += diffX;
-                                e.data.sY += diffY;
+                                e.data.sX = bbox.x2 + (e.data.sX - bbox.x2) * sx;
+                                e.data.sY = bbox.y2 + (e.data.sY - bbox.y2) * sy;
+
+                                e.data.eX = bbox.x2 + (e.data.eX - bbox.x2) * sx;
+                                e.data.eY = bbox.y2 + (e.data.eY - bbox.y2) * sy;
+
+                                e.data.headlen *= sx;
                                 renderArrow(draftCtx, e);
                                 break;
                             }
                             case "TEXT": {
                                 const { text, fontSize, fontFamily = 'Arial' } = e.data;
-                                const lines = text.split('\n');
-                                let w = 0, h = 0;
-
+                                
                                 draftCtx.font = `${fontSize}px ${fontFamily}`;
                                 draftCtx.fillStyle = 'rgb(255, 255, 255)';
                                 draftCtx.textBaseline = 'top';
+                                
+                                // const lines = text.split('\n');
+                                // let w = 0, h = 0;
+                                // for (const line of lines) {
+                                //     const metrics = draftCtx.measureText(line);
+                                //     w = Math.max(w, metrics.width);
+                                //     h += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + 5;
+                                // }
 
-                                for (const line of lines) {
-                                    const metrics = draftCtx.measureText(line);
-                                    w = Math.max(w, metrics.width);
-                                    h += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + 5;
-                                }
+                                // const newFontSize = Math.max(10, Math.abs(fontSize * Math.abs((w - diffX + h - diffY) / (w + h))));
+                                // e.data.fontSize = newFontSize * (bbox.x2 - bbox.x1 - diffX + bbox.y2 - bbox.y1 - diffY) / (bbox.x2 - bbox.x1 + bbox.y2 - bbox.y1);
 
-                                const newFontSize = Math.max(10, Math.abs(fontSize * Math.abs((w - diffX + h - diffY) / (w + h))));
-                                e.data.x += diffX;
-                                e.data.y += diffY;
-                                e.data.fontSize = newFontSize;
+                                // e.data.x += diffX;
+                                // e.data.y += diffY;
+                                
+                                e.data.x = bbox.x2 + (e.data.x - bbox.x2) * sx;
+                                e.data.y = bbox.y2 + (e.data.y - bbox.y2) * sy;
+                                e.data.fontSize *= sx;
                                 renderText(draftCtx, e);
                                 break;
                             }
@@ -236,67 +264,70 @@ export class SelectTool {
                     case "tr": {
                         switch (e.type) {
                             case "PENCIL": {
-                                const { x1, x2, y1, y2 } = getBoundingBox(e, draftCtx);
-                                const oldWidth = Math.abs(x2 - x1);
-                                const oldHeight = Math.abs(y2 - y1);
-
-                                const scaleX = (oldWidth + diffX) / oldWidth;
-                                const scaleY = (oldHeight - diffY) / oldHeight;
-
                                 const pts = e.data.points;
                                 for (const pt of pts) {
-                                    pt.x = (pt.x - x1) * scaleX + x1;
-                                    pt.y = (pt.y - y2) * scaleY + y2;
+                                    pt.x = (pt.x - bbox.x1) / sx + bbox.x1;
+                                    pt.y = (pt.y - bbox.y2) * sy + bbox.y2;
                                 }
                                 e.data.points = pts;
                                 renderPencil(draftCtx, e);
                                 break;
                             }
                             case "RECTANGLE": {
-                                e.data.y += diffY;
-                                e.data.w += diffX;
-                                e.data.h -= diffY;
+                                e.data.x = bbox.x1 + (e.data.x - bbox.x1) / sx;
+                                e.data.y = bbox.y2 + (e.data.y - bbox.y2) * sy;
+                                e.data.w /= sx;
+                                e.data.h *= sy;
                                 renderRectangle(draftCtx, e);
                                 break;
                             }
                             case "ELLIPSE": {
-                                e.data.x += diffX / 2;
-                                e.data.y += diffY / 2;
-                                e.data.rX += diffX / 2;
-                                e.data.rY -= diffY / 2;
+                                e.data.x = bbox.x1 + (e.data.x - bbox.x1) / sx;
+                                e.data.y = bbox.y2 + (e.data.y - bbox.y2) * sy;
+                                e.data.rX /= sx;
+                                e.data.rY *= sy;
                                 renderEllipse(draftCtx, e);
                                 break;
                             }
                             case "LINE": {
-                                e.data.sY += diffY;
-                                e.data.eX += diffX;
+                                e.data.sX = bbox.x1 + (e.data.sX - bbox.x1) / sx;
+                                e.data.sY = bbox.y2 + (e.data.sY - bbox.y2) * sy;
+                                e.data.eX = bbox.x1 + (e.data.eX - bbox.x1) / sx;
+                                e.data.eY = bbox.y2 + (e.data.eY - bbox.y2) * sy;
                                 renderLine(draftCtx, e);
                                 break;
                             }
                             case "ARROW": {
-                                e.data.sY += diffY;
-                                e.data.eX += diffX;
+                                e.data.sX = bbox.x1 + (e.data.sX - bbox.x1) / sx;
+                                e.data.sY = bbox.y2 + (e.data.sY - bbox.y2) * sy;
+                                e.data.eX = bbox.x1 + (e.data.eX - bbox.x1) / sx;
+                                e.data.eY = bbox.y2 + (e.data.eY - bbox.y2) * sy;
+                                e.data.headlen /= sx;
                                 renderArrow(draftCtx, e);
                                 break;
                             }
                             case "TEXT": {
                                 const { text, fontSize, fontFamily = 'Arial' } = e.data;
                                 const lines = text.split('\n');
-                                let w = 0, h = 0;
-
+                                
                                 draftCtx.font = `${fontSize}px ${fontFamily}`;
                                 draftCtx.fillStyle = 'rgb(255, 255, 255)';
                                 draftCtx.textBaseline = 'top';
+                                
+                                // let w = 0, h = 0;
+                                // for (const line of lines) {
+                                //     const metrics = draftCtx.measureText(line);
+                                //     w = Math.max(w, metrics.width);
+                                //     h += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + 5;
+                                // }
 
-                                for (const line of lines) {
-                                    const metrics = draftCtx.measureText(line);
-                                    w = Math.max(w, metrics.width);
-                                    h += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + 5;
-                                }
+                                // const newFontSize = Math.max(10, Math.abs(fontSize * Math.abs((w + diffX + h - diffY) / (w + h))));
+                                // e.data.y += diffY;
+                                // e.data.fontSize = newFontSize;
 
-                                const newFontSize = Math.max(10, Math.abs(fontSize * Math.abs((w + diffX + h - diffY) / (w + h))));
-                                e.data.y += diffY;
-                                e.data.fontSize = newFontSize;
+                                e.data.x = bbox.x1 + (e.data.x - bbox.x1) / sx;
+                                e.data.y = bbox.y2 + (e.data.y - bbox.y2) * sy;
+                                e.data.fontSize /= sx;
                                 renderText(draftCtx, e);
                                 break;
                             }
@@ -306,64 +337,71 @@ export class SelectTool {
                     case "br": {
                         switch (e.type) {
                             case "PENCIL": {
-                                const { x1, x2, y1, y2 } = getBoundingBox(e, draftCtx);
-                                const oldWidth = Math.abs(x1 - x2);
-                                const oldHeight = Math.abs(y1 - y2);
-
-                                const scaleX = (oldWidth + diffX) / oldWidth;
-                                const scaleY = (oldHeight + diffY) / oldHeight;
-
                                 const pts = e.data.points;
                                 for (const pt of pts) {
-                                    pt.x = (pt.x - x1) * scaleX + x1;
-                                    pt.y = (pt.y - y1) * scaleY + y1;
+                                    pt.x = (pt.x - bbox.x1) / sx + bbox.x1;
+                                    pt.y = (pt.y - bbox.y1) / sy + bbox.y1;
                                 }
                                 e.data.points = pts;
                                 renderPencil(draftCtx, e);
                                 break;
                             }
                             case "RECTANGLE": {
-                                e.data.w += diffX;
-                                e.data.h += diffY;
+                                e.data.x = bbox.x1 + (e.data.x - bbox.x1) / sx;
+                                e.data.y = bbox.y1 + (e.data.y - bbox.y1) / sy;
+                                e.data.w /= sx;
+                                e.data.h /= sy;
                                 renderRectangle(draftCtx, e);
                                 break;
                             }
                             case "ELLIPSE": {
-                                e.data.x += diffX / 2;
-                                e.data.y += diffY / 2;
-                                e.data.rX += diffX / 2;
-                                e.data.rY += diffY / 2;
+                                e.data.x = bbox.x1 + (e.data.x - bbox.x1) / sx;
+                                e.data.y = bbox.y1 + (e.data.y - bbox.y1) / sy;
+                                e.data.rX /= sx;
+                                e.data.rY /= sy;
                                 renderEllipse(draftCtx, e);
                                 break;
                             }
                             case "LINE": {
-                                e.data.eX += diffX;
-                                e.data.eY += diffY;
+                                e.data.sX = bbox.x1 + (e.data.sX - bbox.x1) / sx;
+                                e.data.sY = bbox.y1 + (e.data.sY - bbox.y1) / sy;
+                                e.data.eX = bbox.x1 + (e.data.eX - bbox.x1) / sx;
+                                e.data.eY = bbox.y1 + (e.data.eY - bbox.y1) / sy;
                                 renderLine(draftCtx, e);
                                 break;
                             }
                             case "ARROW": {
-                                e.data.eX += diffX;
-                                e.data.eY += diffY;
+                                e.data.sX = bbox.x1 + (e.data.sX - bbox.x1) / sx;
+                                e.data.sY = bbox.y1 + (e.data.sY - bbox.y1) / sy;
+                                e.data.eX = bbox.x1 + (e.data.eX - bbox.x1) / sx;
+                                e.data.eY = bbox.y1 + (e.data.eY - bbox.y1) / sy;
+                                e.data.headlen /= sx;
                                 renderArrow(draftCtx, e);
                                 break;
                             }
                             case "TEXT": {
                                 const { text, fontSize, fontFamily = 'Arial' } = e.data;
                                 const lines = text.split('\n');
-                                let w = 0;
+                                draftCtx.font = `${fontSize}px ${fontFamily}`;
+                                draftCtx.fillStyle = 'rgb(255, 255, 255)';
+                                draftCtx.textBaseline = 'top';
+                                // let w = 0;
 
-                                for (const line of lines) {
-                                    draftCtx.font = `${fontSize}px ${fontFamily}`;
-                                    draftCtx.fillStyle = 'rgb(255, 255, 255)';
-                                    draftCtx.textBaseline = 'top';
+                                // for (const line of lines) {
+                                //     draftCtx.font = `${fontSize}px ${fontFamily}`;
+                                //     draftCtx.fillStyle = 'rgb(255, 255, 255)';
+                                //     draftCtx.textBaseline = 'top';
 
-                                    const metrics = draftCtx.measureText(line);
-                                    w = Math.max(w, metrics.width);
-                                }
+                                //     const metrics = draftCtx.measureText(line);
+                                //     w = Math.max(w, metrics.width);
+                                // }
 
-                                const newFontSize = Math.max(10, fontSize * ((w + diffX) / (w)));
-                                e.data.fontSize = newFontSize;
+                                // const newFontSize = Math.max(10, fontSize * ((w + diffX) / (w)));
+                                // e.data.fontSize = newFontSize;
+
+                                e.data.x = bbox.x1 + (e.data.x - bbox.x1) / sx;
+                                e.data.y = bbox.y1 + (e.data.y - bbox.y1) / sy;     
+                                e.data.fontSize /= sx;
                                 renderText(draftCtx, e);
                             }
                         }
@@ -372,67 +410,70 @@ export class SelectTool {
                     case "bl": {
                         switch (e.type) {
                             case "PENCIL": {
-                                const { x1, x2, y1, y2 } = getBoundingBox(e, draftCtx);
-                                const oldWidth = Math.abs(x2 - x1);
-                                const oldHeight = Math.abs(y2 - y1);
-
-                                const scaleX = (oldWidth - diffX) / oldWidth;
-                                const scaleY = (oldHeight + diffY) / oldHeight;
-
                                 const pts = e.data.points;
                                 for (const pt of pts) {
-                                    pt.x = (pt.x - x2) * scaleX + x2;
-                                    pt.y = (pt.y - y1) * scaleY + y1;
+                                    pt.x = (pt.x - bbox.x2) * sx + bbox.x2;
+                                    pt.y = (pt.y - bbox.y1) / sy + bbox.y1;
                                 }
                                 e.data.points = pts;
                                 renderPencil(draftCtx, e);
                                 break;
                             }
                             case "RECTANGLE": {
-                                e.data.x += diffX;
-                                e.data.w -= diffX;
-                                e.data.h += diffY;
+                                e.data.x = bbox.x2 + (e.data.x - bbox.x2) * sx;
+                                e.data.y = bbox.y1 + (e.data.y - bbox.y1) / sy;
+                                e.data.w *= sx;
+                                e.data.h /= sy;
                                 renderRectangle(draftCtx, e);
                                 break;
                             }
                             case "ELLIPSE": {
-                                e.data.x += diffX / 2;
-                                e.data.y += diffY / 2;
-                                e.data.rX -= diffX / 2;
-                                e.data.rY += diffY / 2;
+                                e.data.x = bbox.x2 + (e.data.x - bbox.x2) * sx;
+                                e.data.y = bbox.y1 + (e.data.y - bbox.y1) / sy;
+                                e.data.rX *= sx;
+                                e.data.rY /= sy;
                                 renderEllipse(draftCtx, e);
                                 break;
                             }
                             case "LINE": {
-                                e.data.sX += diffX;
-                                e.data.eY += diffY;
+                                e.data.sX = bbox.x2 + (e.data.sX - bbox.x2) * sx;
+                                e.data.sY = bbox.y1 + (e.data.sY - bbox.y1) / sy;
+                                e.data.eX = bbox.x2 + (e.data.eX - bbox.x2) * sx;
+                                e.data.eY = bbox.y1 + (e.data.eY - bbox.y1) / sy;
                                 renderLine(draftCtx, e);
                                 break;
                             }
                             case "ARROW": {
-                                e.data.sX += diffX;
-                                e.data.eY += diffY;
+                                e.data.sX = bbox.x2 + (e.data.sX - bbox.x2) * sx;
+                                e.data.sY = bbox.y1 + (e.data.sY - bbox.y1) / sy;
+                                e.data.eX = bbox.x2 + (e.data.eX - bbox.x2) * sx;
+                                e.data.eY = bbox.y1 + (e.data.eY - bbox.y1) / sy;
+                                e.data.headlen *= sx;
                                 renderArrow(draftCtx, e);
                                 break;
                             }
                             case "TEXT": {
                                 const { text, fontSize, fontFamily = 'Arial' } = e.data;
-                                const lines = text.split('\n');
-                                let w = 0;
-
                                 draftCtx.font = `${fontSize}px ${fontFamily}`;
                                 draftCtx.fillStyle = 'rgb(255, 255, 255)';
                                 draftCtx.textBaseline = 'top';
+                                // const lines = text.split('\n');
+                                // let w = 0;
 
-                                for (const line of lines) {
-                                    const metrics = draftCtx.measureText(line);
-                                    w = Math.max(w, metrics.width);
-                                }
 
-                                const newFontSize = Math.max(10, Math.abs(fontSize * Math.abs((w - diffX) / (w))));
-                                e.data.x += diffX;
-                                // e.data.y += diffY;
-                                e.data.fontSize = newFontSize;
+                                // for (const line of lines) {
+                                //     const metrics = draftCtx.measureText(line);
+                                //     w = Math.max(w, metrics.width);
+                                // }
+
+                                // const newFontSize = Math.max(10, Math.abs(fontSize * Math.abs((w - diffX) / (w))));
+                                // e.data.x += diffX;
+                                // // e.data.y += diffY;
+                                // e.data.fontSize = newFontSize;
+                                
+                                e.data.x = bbox.x2 + (e.data.x - bbox.x2) * sx;
+                                e.data.y = bbox.y1 + (e.data.y - bbox.y1) / sy;
+                                e.data.fontSize *= sx;
                                 renderText(draftCtx, e);
                                 break;
                             }
@@ -442,166 +483,172 @@ export class SelectTool {
                     case "tc": {
                         switch (e.type) {
                             case "PENCIL": {
-                                const { y1, y2 } = getBoundingBox(e, draftCtx);
-                                const oldHeight = Math.abs(y2 - y1);
-
-                                const scaleY = (oldHeight - diffY) / oldHeight;
-
                                 const pts = e.data.points;
                                 for (const pt of pts) {
-                                    pt.y = (pt.y - y2) * scaleY + y2;
+                                    pt.y = (pt.y - bbox.y2) * sy + bbox.y2;
                                 }
                                 e.data.points = pts;
                                 renderPencil(draftCtx, e);
                                 break;
                             }
                             case "RECTANGLE": {
-                                e.data.y += diffY;
-                                e.data.h -= diffY;
+                                e.data.y = bbox.y2 + (e.data.y - bbox.y2) * sy;
+                                e.data.h *= sy;
                                 renderRectangle(draftCtx, e);
                                 break;
                             }
                             case "ELLIPSE": {
-                                e.data.y += diffY / 2;
-                                e.data.rY -= diffY / 2;
+                                e.data.y = bbox.y2 + (e.data.y - bbox.y2) * sy;
+                                e.data.rY *= sy;
                                 renderEllipse(draftCtx, e);
                                 break;
                             }
                             case "LINE": {
-                                e.data.sY += diffY;
+                                e.data.sY = bbox.y2 + (e.data.sY - bbox.y2) * sy;
+                                e.data.eY = bbox.y2 + (e.data.eY - bbox.y2) * sy;
                                 renderLine(draftCtx, e);
                                 break;
                             }
                             case "ARROW": {
-                                e.data.sY += diffY;
+                                e.data.sY = bbox.y2 + (e.data.sY - bbox.y2) * sy;
+                                e.data.eY = bbox.y2 + (e.data.eY - bbox.y2) * sy;
+                                e.data.headlen *= sy;
                                 renderArrow(draftCtx, e);
                                 break;
                             }
-                            case "TEXT":
+                            case "TEXT": {
+                                renderText(draftCtx, e);
+                                break;
+                            }
                         }
                         break;
                     }
                     case "mr": {
                         switch (e.type) {
                             case "PENCIL": {
-                                const { x1, x2 } = getBoundingBox(e, draftCtx);
-                                const oldWidth = Math.abs(x2 - x1);
-
-                                const scaleX = (oldWidth + diffX) / oldWidth;
-
                                 const pts = e.data.points;
                                 for (const pt of pts) {
-                                    pt.x = (pt.x - x1) * scaleX + x1;
+                                    pt.x = (pt.x - bbox.x1) / sx + bbox.x1;
                                 }
                                 e.data.points = pts;
                                 renderPencil(draftCtx, e);
                                 break;
                             }
                             case "RECTANGLE": {
-                                e.data.w += diffX;
+                                e.data.x = bbox.x1 + (e.data.x - bbox.x1) / sx;
+                                e.data.w /= sx;
                                 renderRectangle(draftCtx, e);
                                 break;
                             }
                             case "ELLIPSE": {
-                                e.data.x += diffX / 2;
-                                e.data.rX += diffX / 2;
+                                e.data.x = bbox.x1 + (e.data.x - bbox.x1) / sx;
+                                e.data.rX /= sx;
                                 renderEllipse(draftCtx, e);
                                 break;
                             }
                             case "LINE": {
-                                e.data.eX += diffX;
+                                e.data.sX = bbox.x1 + (e.data.sX - bbox.x1) / sx;
+                                e.data.eX = bbox.x1 + (e.data.eX - bbox.x1) / sx;
                                 renderLine(draftCtx, e);
                                 break;
                             }
                             case "ARROW": {
-                                e.data.eX += diffX;
+                                e.data.sX = bbox.x1 + (e.data.sX - bbox.x1) / sx;
+                                e.data.eX = bbox.x1 + (e.data.eX - bbox.x1) / sx;
+                                e.data.headlen /= sx;
                                 renderArrow(draftCtx, e);
                                 break;
                             }
-                            case "TEXT":
+                            case "TEXT": {
+                                renderText(draftCtx, e);
+                                break;
+                            }
                         }
                         break;
                     }
                     case "bc": {
                         switch (e.type) {
                             case "PENCIL": {
-                                const { y1, y2 } = getBoundingBox(e, draftCtx);
-                                const oldHeight = Math.abs(y2 - y1);
-
-                                const scaleY = (oldHeight + diffY) / oldHeight;
-
                                 const pts = e.data.points;
                                 for (const pt of pts) {
-                                    pt.y = (pt.y - y1) * scaleY + y1;
+                                    pt.y = (pt.y - bbox.y1) / sy + bbox.y1;
                                 }
                                 e.data.points = pts;
                                 renderPencil(draftCtx, e);
                                 break;
                             }
                             case "RECTANGLE": {
-                                e.data.h += diffY;
+                                e.data.y = bbox.y1 + (e.data.y - bbox.y1) / sy;
+                                e.data.h /= sy;
                                 renderRectangle(draftCtx, e);
                                 break;
                             }
                             case "ELLIPSE": {
-                                e.data.y += diffY / 2;
-                                e.data.rY += diffY / 2;
+                                e.data.y = bbox.y1 + (e.data.y - bbox.y1) / sy;
+                                e.data.rY /= sy;
                                 renderEllipse(draftCtx, e);
                                 break;
                             }
                             case "LINE": {
-                                e.data.eY += diffY;
+                                e.data.sY = bbox.y1 + (e.data.sY - bbox.y1) / sy;
+                                e.data.eY = bbox.y1 + (e.data.eY - bbox.y1) / sy;
                                 renderLine(draftCtx, e);
                                 break;
                             }
                             case "ARROW": {
-                                e.data.eY += diffY;
+                                e.data.sY = bbox.y1 + (e.data.sY - bbox.y1) / sy;
+                                e.data.eY = bbox.y1 + (e.data.eY - bbox.y1) / sy;
+                                e.data.headlen /= sy;
                                 renderArrow(draftCtx, e);
                                 break;
                             }
-                            case "TEXT":
+                            case "TEXT": {
+                                renderText(draftCtx, e);
+                                break;
+                            }
                         }
                         break;
                     }
                     case "ml": {
                         switch (e.type) {
                             case "PENCIL": {
-                                const { x1, x2 } = getBoundingBox(e, draftCtx);
-                                const oldWidth = Math.abs(x2 - x1);
-
-                                const scaleX = (oldWidth - diffX) / oldWidth;
-
                                 const pts = e.data.points;
                                 for (const pt of pts) {
-                                    pt.x = (pt.x - x2) * scaleX + x2;
+                                    pt.x = (pt.x - bbox.x2) * sx + bbox.x2;
                                 }
                                 e.data.points = pts;
                                 renderPencil(draftCtx, e);
                                 break;
                             }
                             case "RECTANGLE": {
-                                e.data.x += diffX;
-                                e.data.w -= diffX;
+                                e.data.x = bbox.x2 + (e.data.x - bbox.x2) * sx;
+                                e.data.w *= sx;
                                 renderRectangle(draftCtx, e);
                                 break;
                             }
                             case "ELLIPSE": {
-                                e.data.x += diffX / 2;
-                                e.data.rX -= diffX / 2;
+                                e.data.x = bbox.x2 + (e.data.x - bbox.x2) * sx;
+                                e.data.rX *= sx;
                                 renderEllipse(draftCtx, e);
                                 break;
                             }
                             case "LINE": {
-                                e.data.sX += diffX;
+                                e.data.sX = bbox.x2 + (e.data.sX - bbox.x2) * sx;
+                                e.data.eX = bbox.x2 + (e.data.eX - bbox.x2) * sx;
                                 renderLine(draftCtx, e);
                                 break;
                             }
                             case "ARROW": {
-                                e.data.sX += diffX;
+                                e.data.sX = bbox.x2 + (e.data.sX - bbox.x2) * sx;
+                                e.data.eX = bbox.x2 + (e.data.eX - bbox.x2) * sx;
+                                e.data.headlen *= sx;
                                 renderArrow(draftCtx, e);
                                 break;
                             }
-                            case "TEXT":
+                            case "TEXT": {
+                                renderText(draftCtx, e);
+                                break;
+                            }
                         }
                         break;
                     }
