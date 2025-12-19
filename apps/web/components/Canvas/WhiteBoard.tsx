@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSocket } from "../../hooks/useSocket";
 import { MainLayer } from "../../lib/layers/MainLayer";
 import { DraftLayer } from "../../lib/layers/DraftLayer";
@@ -13,10 +13,10 @@ export default function WhiteBoard ({ slug }: {
     slug: string
 }) {
 
-    // const [size, setSize] = useState({
-    //     w: 0,
-    //     h:0
-    // });
+    const [size, setSize] = useState({
+        w: 0,
+        h:0
+    });
 
     const mainRef = useRef<HTMLCanvasElement>(null);
     const draftRef = useRef<HTMLCanvasElement>(null);
@@ -38,25 +38,18 @@ export default function WhiteBoard ({ slug }: {
             new DraftLayer(draftRef.current, slug, socket);
             selectLayerRef.current = new SelectionLayer(selectRef.current, slug);
         };
-        // const update = () => {
-        //     setSize({w: window.innerWidth, h: window.innerHeight})    
-        // }
-        // update();
-        // window.addEventListener('resize', update);
+        const update = () => {
+            setSize({w: window.innerWidth, h: window.innerHeight})    
+        }
+        update();
+        window.addEventListener('resize', update);
 
-        // return () => {
-        //     window.removeEventListener('resize', update);
-        // }
+        return () => {
+            window.removeEventListener('resize', update);
+        }
     }, [slug, socket]);
 
-    useEffect(() => {
-        if (!mainLayerRef.current) return;
-
-        mainLayerRef.current.clearCanvas();
-        mainLayerRef.current.draw();
-        
-    }, [elements, transform]);
-
+    
     useEffect(() => {
         if (!selectLayerRef.current) return;
 
@@ -64,6 +57,14 @@ export default function WhiteBoard ({ slug }: {
         selectLayerRef.current.drawBoundingBox(boundingBoxes, transform);
 
     }, [boundingBoxes, transform]);
+    
+    useEffect(() => {
+        if (!mainLayerRef.current) return;
+
+        mainLayerRef.current.clearCanvas();
+        mainLayerRef.current.draw();
+        
+    }, [elements, transform]);
 
     if (loading) {
         return (
@@ -75,9 +76,9 @@ export default function WhiteBoard ({ slug }: {
 
     return (
         <>
-            <canvas ref={mainRef} width={window.innerWidth} height={window.innerHeight} className="absolute top-0 left-0"/>
-            <canvas ref={selectRef} width={window.innerWidth} height={window.innerHeight} className="absolute top-0 left-0 bg-transparent"/>
-            <canvas ref={draftRef} width={window.innerWidth} height={window.innerHeight} className="absolute top-0 left-0 bg-transparent"/>
+            <canvas ref={mainRef} width={size.w} height={size.h} className="absolute top-0 left-0"/>
+            <canvas ref={selectRef} width={size.w} height={size.h} className="absolute top-0 left-0 bg-transparent"/>
+            <canvas ref={draftRef} width={size.w} height={size.h} className="absolute top-0 left-0 bg-transparent"/>
         </>
     )
 }
