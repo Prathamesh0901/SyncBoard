@@ -27,12 +27,12 @@ export function pointToSegmentDistance(p: Point, a: Point, b: Point) {
     return Math.sqrt(dx * dx + dy * dy);
 }
 
-export function getBoundingBox (el: Element, ctx: CanvasRenderingContext2D) {
+export function getBoundingBox(el: Element, ctx: CanvasRenderingContext2D) {
         switch (el.type) {
             case "PENCIL": {
                 const pts = el.data.points;
-                const max = {x: Math.pow(10, -10), y: Math.pow(10, -10)};
-                const min = {x: Math.pow(10, 10), y: Math.pow(10, 10)};
+            const max = { x: Math.pow(10, -10), y: Math.pow(10, -10) };
+            const min = { x: Math.pow(10, 10), y: Math.pow(10, 10) };
                 for (const pt of pts) {
                     max.x = Math.max(max.x, pt.x);
                     max.y = Math.max(max.y, pt.y);
@@ -47,18 +47,18 @@ export function getBoundingBox (el: Element, ctx: CanvasRenderingContext2D) {
                 }
             }
             case "RECTANGLE": {
-                const {x, y, w, h} = el.data;
+            const { x, y, w, h } = el.data;
                 const x1 = x, y1 = y, x2 = x + w, y2 = y + h;
-                return {x1, y1, x2, y2};
+            return { x1, y1, x2, y2 };
             }
             case "ELLIPSE": {
-                const {x, y, rX, rY} = el.data;
+            const { x, y, rX, rY } = el.data;
                 const x1 = x - rX, y1 = y - rY, x2 = x + rX, y2 = y + rY;
-                return {x1, y1, x2, y2};
+            return { x1, y1, x2, y2 };
             }
             case "LINE": 
             case "ARROW": {
-                const {sX, sY, eX, eY} = el.data;
+            const { sX, sY, eX, eY } = el.data;
                 return {
                     x1: sX,
                     y1: sY,
@@ -67,18 +67,43 @@ export function getBoundingBox (el: Element, ctx: CanvasRenderingContext2D) {
                 }
             }
             case "TEXT": {
-                const {x, y, text, fontSize, fontFamily} = el.data;
-                const lines = text.split('\n');
-                let w = 0, h = 0;
+            const { x, y, text, fontSize, fontFamily, currWidth } = el.data;
+            let w = 0, lineCount = 0;
                 
                 ctx.font = `${fontSize}px ${fontFamily}`;
                 ctx.fillStyle = 'rgb(255, 255, 255)';
                 ctx.textBaseline = 'top';
 
-                for (const line of lines) {
-                    const metrics = ctx.measureText(line);
-                    w = Math.max(w, metrics.width);
-                    h += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + 5;
+            const paragraphs = text.split("\n");
+
+            paragraphs.forEach(paragraph => {
+
+                if (paragraph === "") {
+                    lineCount++;
+                    return;
+                }
+
+                const tokens = paragraph.match(/\S+\s*/g) || [];
+
+                let currentLine = "";
+
+                for (const token of tokens) {
+                    const testLine = currentLine + token;
+                    const measure = ctx.measureText(testLine);
+                    const width = measure.width;
+
+                    if (width > currWidth && currentLine !== "") {
+                        w = Math.max(w, ctx.measureText(currentLine).width);
+                        lineCount++;
+                        currentLine = token;
+                    } else {
+                        currentLine = testLine;
+                    }
+                }
+                
+                if (currentLine) {
+                    lineCount++;
+                    w = Math.max(w, ctx.measureText(currentLine).width);
                 }
 
                 return {
