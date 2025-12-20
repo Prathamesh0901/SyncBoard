@@ -67,45 +67,12 @@ export function getBoundingBox(el: Element, ctx: CanvasRenderingContext2D) {
             }
         }
         case "TEXT": {
-            const { x, y, text, fontSize, fontFamily, currWidth } = el.data;
-            let w = 0, lineCount = 0;
+            const { x, y, fontSize, fontFamily, currWidth, lineCount } = el.data;
 
             ctx.font = `${fontSize}px ${fontFamily}`;
             ctx.fillStyle = 'rgb(255, 255, 255)';
+            ctx.lineWidth = 1;
             ctx.textBaseline = 'top';
-
-            const paragraphs = text.split("\n");
-
-            paragraphs.forEach(paragraph => {
-
-                if (paragraph === "") {
-                    lineCount++;
-                    return;
-                }
-
-                const tokens = paragraph.match(/\S+\s*/g) || [];
-
-                let currentLine = "";
-
-                for (const token of tokens) {
-                    const testLine = currentLine + token;
-                    const measure = ctx.measureText(testLine);
-                    const width = measure.width;
-
-                    if (width > currWidth && currentLine !== "") {
-                        w = Math.max(w, ctx.measureText(currentLine).width);
-                        lineCount++;
-                        currentLine = token;
-                    } else {
-                        currentLine = testLine;
-                    }
-                }
-                
-                if (currentLine) {
-                    lineCount++;
-                    w = Math.max(w, ctx.measureText(currentLine).width);
-                }
-            })
 
             return {
                 x1: x,
