@@ -50,26 +50,18 @@ export function hitTestElement (el: Element, point: Point, threshold: number = 6
             );
         }
         case "TEXT": {
-            const {x, y, text, fontSize, fontFamily} = el.data;
-
-            const lines = text.split('\n');
-            let w = 0, h = 0;
+            const {x, y, fontSize, fontFamily, currWidth, lineCount} = el.data;
             
             ctx.font = `${fontSize}px ${fontFamily}`;
             ctx.fillStyle = 'rgb(255, 255, 255)';
+            ctx.lineWidth = 1;
             ctx.textBaseline = 'top';
-
-            for (const line of lines) {
-                const metrics = ctx.measureText(line);
-                w = Math.max(w, metrics.width);
-                h += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + 5;
-            }
             
             return (
                 point.x >= x && 
-                point.x <= x + w &&
+                point.x <= x + currWidth &&
                 point.y >= y &&
-                point.y <= y + h
+                point.y <= y + fontSize * lineCount
             )
         }
 
