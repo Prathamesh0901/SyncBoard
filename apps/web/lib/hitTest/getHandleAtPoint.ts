@@ -73,6 +73,7 @@ export function getHandleAtPoints(pt: Point, ctx: CanvasRenderingContext2D) {
                     h.handleId = 'single';
                     const box = getBoundingBox(el, ctx);
                     selectStore.add(el.id, box);
+                    break;
                 }
             }
         }
