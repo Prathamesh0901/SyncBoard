@@ -232,28 +232,10 @@ export class SelectTool {
                                 break;
                             }
                             case "TEXT": {
-                                const { text, fontSize, fontFamily = 'Arial' } = e.data;
-                                
-                                draftCtx.font = `${fontSize}px ${fontFamily}`;
-                                draftCtx.fillStyle = 'rgb(255, 255, 255)';
-                                draftCtx.textBaseline = 'top';
-                                
-                                // const lines = text.split('\n');
-                                // let w = 0, h = 0;
-                                // for (const line of lines) {
-                                //     const metrics = draftCtx.measureText(line);
-                                //     w = Math.max(w, metrics.width);
-                                //     h += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + 5;
-                                // }
-
-                                // const newFontSize = Math.max(10, Math.abs(fontSize * Math.abs((w - diffX + h - diffY) / (w + h))));
-                                // e.data.fontSize = newFontSize * (bbox.x2 - bbox.x1 - diffX + bbox.y2 - bbox.y1 - diffY) / (bbox.x2 - bbox.x1 + bbox.y2 - bbox.y1);
-
-                                // e.data.x += diffX;
-                                // e.data.y += diffY;
-                                
                                 e.data.x = bbox.x2 + (e.data.x - bbox.x2) * sx;
                                 e.data.y = bbox.y2 + (e.data.y - bbox.y2) * sy;
+                                e.data.maxWidth *= sx; 
+                                e.data.currWidth = Math.max(e.data.maxWidth, e.data.currWidth*sx); 
                                 e.data.fontSize *= sx;
                                 renderText(draftCtx, e);
                                 break;
@@ -307,26 +289,10 @@ export class SelectTool {
                                 break;
                             }
                             case "TEXT": {
-                                const { text, fontSize, fontFamily = 'Arial' } = e.data;
-                                const lines = text.split('\n');
-                                
-                                draftCtx.font = `${fontSize}px ${fontFamily}`;
-                                draftCtx.fillStyle = 'rgb(255, 255, 255)';
-                                draftCtx.textBaseline = 'top';
-                                
-                                // let w = 0, h = 0;
-                                // for (const line of lines) {
-                                //     const metrics = draftCtx.measureText(line);
-                                //     w = Math.max(w, metrics.width);
-                                //     h += metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + 5;
-                                // }
-
-                                // const newFontSize = Math.max(10, Math.abs(fontSize * Math.abs((w + diffX + h - diffY) / (w + h))));
-                                // e.data.y += diffY;
-                                // e.data.fontSize = newFontSize;
-
                                 e.data.x = bbox.x1 + (e.data.x - bbox.x1) / sx;
                                 e.data.y = bbox.y2 + (e.data.y - bbox.y2) * sy;
+                                e.data.maxWidth /= sx; 
+                                e.data.currWidth = Math.max(e.data.maxWidth, e.data.currWidth / sx); 
                                 e.data.fontSize /= sx;
                                 renderText(draftCtx, e);
                                 break;
@@ -380,27 +346,10 @@ export class SelectTool {
                                 break;
                             }
                             case "TEXT": {
-                                const { text, fontSize, fontFamily = 'Arial' } = e.data;
-                                const lines = text.split('\n');
-                                draftCtx.font = `${fontSize}px ${fontFamily}`;
-                                draftCtx.fillStyle = 'rgb(255, 255, 255)';
-                                draftCtx.textBaseline = 'top';
-                                // let w = 0;
-
-                                // for (const line of lines) {
-                                //     draftCtx.font = `${fontSize}px ${fontFamily}`;
-                                //     draftCtx.fillStyle = 'rgb(255, 255, 255)';
-                                //     draftCtx.textBaseline = 'top';
-
-                                //     const metrics = draftCtx.measureText(line);
-                                //     w = Math.max(w, metrics.width);
-                                // }
-
-                                // const newFontSize = Math.max(10, fontSize * ((w + diffX) / (w)));
-                                // e.data.fontSize = newFontSize;
-
                                 e.data.x = bbox.x1 + (e.data.x - bbox.x1) / sx;
-                                e.data.y = bbox.y1 + (e.data.y - bbox.y1) / sy;     
+                                e.data.y = bbox.y1 + (e.data.y - bbox.y1) / sy;    
+                                e.data.maxWidth /= sx;
+                                e.data.currWidth = Math.max(e.data.maxWidth, e.data.currWidth / sx); 
                                 e.data.fontSize /= sx;
                                 renderText(draftCtx, e);
                             }
@@ -453,27 +402,11 @@ export class SelectTool {
                                 break;
                             }
                             case "TEXT": {
-                                const { text, fontSize, fontFamily = 'Arial' } = e.data;
-                                draftCtx.font = `${fontSize}px ${fontFamily}`;
-                                draftCtx.fillStyle = 'rgb(255, 255, 255)';
-                                draftCtx.textBaseline = 'top';
-                                // const lines = text.split('\n');
-                                // let w = 0;
-
-
-                                // for (const line of lines) {
-                                //     const metrics = draftCtx.measureText(line);
-                                //     w = Math.max(w, metrics.width);
-                                // }
-
-                                // const newFontSize = Math.max(10, Math.abs(fontSize * Math.abs((w - diffX) / (w))));
-                                // e.data.x += diffX;
-                                // // e.data.y += diffY;
-                                // e.data.fontSize = newFontSize;
-                                
                                 e.data.x = bbox.x2 + (e.data.x - bbox.x2) * sx;
                                 e.data.y = bbox.y1 + (e.data.y - bbox.y1) / sy;
                                 e.data.fontSize *= sx;
+                                e.data.maxWidth *= sx;
+                                e.data.currWidth = Math.max(e.data.maxWidth, e.data.currWidth * sx); 
                                 renderText(draftCtx, e);
                                 break;
                             }
@@ -560,6 +493,7 @@ export class SelectTool {
                                 break;
                             }
                             case "TEXT": {
+                                e.data.currWidth = Math.max(e.data.maxWidth, e.data.currWidth+diffX);
                                 renderText(draftCtx, e);
                                 break;
                             }
@@ -645,7 +579,11 @@ export class SelectTool {
                                 renderArrow(draftCtx, e);
                                 break;
                             }
-                            case "TEXT": {
+                            case "TEXT": {  
+                                if (e.data.currWidth-diffX > e.data.maxWidth) {
+                                    e.data.x += diffX;
+                                    e.data.currWidth = e.data.currWidth-diffX;
+                                }
                                 renderText(draftCtx, e);
                                 break;
                             }
