@@ -15,27 +15,26 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  name      String?
+  id    String @id @default(uuid())
+  email String @unique
+  password String
+  name String?
   createdAt DateTime @default(now())
 
-  rooms      CanvasRoom[] @relation("UserRooms")
+  rooms RoomUser[]
   adminRooms CanvasRoom[] @relation("RoomAdmin")
-
+  
   elements Element[]
 }
 
 model CanvasRoom {
-  id   String @id @default(uuid())
+  id String @id @default(uuid())
   slug String @unique
 
   adminId String
-  admin   User   @relation("RoomAdmin", fields: [adminId], references: [id])
+  admin User @relation("RoomAdmin", fields: [adminId], references: [id])
 
-  users User[] @relation("UserRooms")
-
+  users RoomUser[]
   elements Element[]
 
   createdAt DateTime @default(now())
@@ -57,6 +56,18 @@ model Element {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model RoomUser {
+  userId String
+  roomId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  joinedAt DateTime @default(now())
+
+  @@id([userId, roomId])
 }
 
 enum ShapeTypes {
