@@ -1,8 +1,6 @@
 "use client";
 
-// import { Input } from "@repo/ui/input"
-// import { Button } from "@repo/ui/button";
-import { ChangeEvent, ChangeEventHandler, MouseEventHandler, ReactNode, useState } from "react"
+import { ChangeEvent, ChangeEventHandler, ReactNode, useState } from "react"
 import { HTTP_BACKEND_URL } from "../config";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -28,7 +26,7 @@ export function AuthPage({ isSignin }: {
             password
         }
         if(!isSignin) userData.name = name;
-        const data = await fetch(`${HTTP_BACKEND_URL}/${isSignin?'signin':'signup'}`, {
+        const data = await fetch(`${HTTP_BACKEND_URL}/auth/${isSignin?'signin':'signup'}`, {
             method: 'POST',
             body: JSON.stringify(userData),
             headers: {
