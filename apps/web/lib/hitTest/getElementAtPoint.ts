@@ -5,13 +5,12 @@ import { hitTestElement } from "./hitTestElement";
 import { getBoundingBox } from "./pointUtilts";
 
 export function getElementAtPoints (pt: Point, ctx: CanvasRenderingContext2D) {
-    console.log('called by getElementAtPoints')
     const elements = useElementStore.getState().elements;
     useSelectStore.getState().clearSelection();
     let el: Element | null = null;
     Object.values(elements).forEach((element: Element) => {
-        if(hitTestElement(element, pt, 6, ctx) === true) {
-            const box = getBoundingBox(element, ctx);
+        const box = getBoundingBox(element, ctx);
+        if(hitTestElement(element, pt, 10, ctx) === true) {
             useSelectStore.getState().add(element.id, box);
             el = element;
         }

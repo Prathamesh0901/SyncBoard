@@ -10,6 +10,7 @@ export interface SelectState {
     selectMany: (ids: string[]) => void;
     add: (id: string, box: BoundingBox) => void;
     clearSelection: () => void;
+    remove: (id: string) => void;
 };
 
 export const useSelectStore = create<SelectState>((set) => ({
@@ -45,4 +46,12 @@ export const useSelectStore = create<SelectState>((set) => ({
             boundingBoxes: {}
         })
     },
+    remove: (id) => set((s) => {
+        const boxes = s.boundingBoxes;
+        delete boxes[id];
+        return {
+            selectedIds: s.selectedIds.filter(i => i !== id),
+            boundingBoxes: {...boxes}
+        }
+    })
 }));

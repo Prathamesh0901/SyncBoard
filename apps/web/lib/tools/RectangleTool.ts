@@ -6,6 +6,7 @@ import { renderRectangle } from "../renderers/renderer";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useSelectStore } from "../../store/selectElement";
 import { useToolStore } from "../../store/tool";
+import { useRoomStore } from "../../store/room";
 
 export class RectangleTool {
     start: Point | null = null;
@@ -20,7 +21,8 @@ export class RectangleTool {
                 x: pt.x,
                 y: pt.y,
                 h: 0,
-                w: 0
+                w: 0,
+                angle: 0,
             }
         }
     }
@@ -41,10 +43,12 @@ export class RectangleTool {
         if (!this.start || !this.draft || this.draft.type !== 'RECTANGLE') return;
 
         store.add(this.draft);
+        
+        const roomId = useRoomStore.getState().roomId;
 
         ws.sendTyped({
             type: 'ELEMENT_CREATE',
-            slug,
+            roomId,
             element: {
                 ...this.draft,
                 data: JSON.stringify(this.draft.data)

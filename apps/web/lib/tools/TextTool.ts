@@ -7,26 +7,27 @@ import { useTransformStore } from "../../store/transform";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useSelectStore } from "../../store/selectElement";
 import { useToolStore } from "../../store/tool";
+import { useRoomStore } from "../../store/room";
 
 export class TextTool {
     start: Point | null = null;
     inputEl: HTMLTextAreaElement | null = null;
 
-    pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string) {
+    pointerDown(draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string) {
         this.start = pt;
         console.log('pointer down');
         this.createInput(draftCtx, this.start, ws, slug);
     }
 
-    pointerMove (pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string) {
-        return;
-    }
-    
-    pointerUp (store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string) {
+    pointerMove(pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string) {
         return;
     }
 
-    createInput (ctx: CanvasRenderingContext2D, point: Point, ws: TypedWebSocket, slug: string) {
+    pointerUp(store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string) {
+        return;
+    }
+
+    createInput(ctx: CanvasRenderingContext2D, point: Point, ws: TypedWebSocket, slug: string) {
         const p = worldToScreen(point, useTransformStore.getState());
         const input = document.createElement('textarea');
         input.style.position = 'absolute';
@@ -56,11 +57,23 @@ export class TextTool {
         })
     }
 
-    finish (ctx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string) {
+    finish(ctx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string) {
         if (!this.inputEl || !this.start) return;
-
         const text = this.inputEl.value.trim();
         if (text.length > 0) {
+            ctx.font = `50px Arial`;
+            ctx.fillStyle = 'rgb(255, 255, 255)';
+            ctx.lineWidth = 1;
+            ctx.textBaseline = 'top';
+            let maxWidth = 0, currWidth = 0;
+            const lines = text.split('\n');
+            lines.forEach(line => {
+                const tokens = line.match(/\S+\s*/g);
+                tokens?.forEach(token => {
+                    maxWidth = Math.max(maxWidth, ctx.measureText(token).width);
+                });
+                currWidth = Math.max(currWidth, ctx.measureText(line).width);
+            })
             const element: Element = {
                 id: createId(),
                 type: 'TEXT',
@@ -70,13 +83,20 @@ export class TextTool {
                     text,
                     fontSize: 50,
                     fontFamily: 'Arial',
-                    angle: 100
+                    angle: 0,
+                    maxWidth,
+                    currWidth,
+                    lineCount: lines.length,
+                    lineHeight: 0
                 }
             };
-            useElementStore.getState().add(element)
+
+            useElementStore.getState().add(element);
+            const roomId = useRoomStore.getState().roomId;
+
             ws.sendTyped({
                 type: 'ELEMENT_CREATE',
-                slug,
+                roomId,
                 element: {
                     ...element,
                     data: JSON.stringify(element.data)
@@ -86,10 +106,10 @@ export class TextTool {
             const selectStore = useSelectStore.getState();
             selectStore.clearSelection();
             selectStore.add(element.id, box);
-    
+
             useToolStore.getState().setTool('SELECT');
         }
-        
+
         document.body.removeChild(this.inputEl);
         this.start = null;
         this.inputEl = null;

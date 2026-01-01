@@ -1,5 +1,5 @@
 import { Element, Point } from "../types/types";
-import { pointToSegmentDistance } from "./pointUtilts";
+import {pointToSegmentDistance } from "./pointUtilts";
 
 export function hitTestElement (el: Element, point: Point, threshold: number = 6, ctx: CanvasRenderingContext2D) {
     switch (el.type) {

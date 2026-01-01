@@ -6,6 +6,7 @@ import { renderLine } from "../renderers/renderer";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useSelectStore } from "../../store/selectElement";
 import { useToolStore } from "../../store/tool";
+import { useRoomStore } from "../../store/room";
 
 export class LineTool {
     start: Point | null = null;
@@ -20,7 +21,10 @@ export class LineTool {
                 sX: pt.x,
                 sY: pt.y,
                 eX: pt.x,
-                eY: pt.y
+                eY: pt.y,
+                angle: 0,
+                w: 0,
+                h: 0
             }
         }
     }
@@ -30,6 +34,8 @@ export class LineTool {
 
         this.draft.data.eX = pt.x;
         this.draft.data.eY = pt.y;
+        this.draft.data.w  = pt.x - this.draft.data.sX;
+        this.draft.data.h  = pt.y - this.draft.data.sY;
 
         renderLine(draftCtx, this.draft);
     }
@@ -44,10 +50,12 @@ export class LineTool {
         }
 
         store.add(this.draft);
+        
+        const roomId = useRoomStore.getState().roomId;
 
         ws.sendTyped({
             type: 'ELEMENT_CREATE',
-            slug,
+            roomId,
             element: {
                 ...this.draft,
                 data: JSON.stringify(this.draft.data)

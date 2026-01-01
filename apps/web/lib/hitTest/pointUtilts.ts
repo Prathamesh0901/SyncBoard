@@ -43,18 +43,18 @@ export function getBoundingBox(el: Element, ctx: CanvasRenderingContext2D) {
                 x1: min.x,
                 y1: min.y,
                 x2: max.x,
-                y2: max.y
+                y2: max.y,
+                angle: el.data.angle
             }
         }
         case "RECTANGLE": {
             const { x, y, w, h } = el.data;
-            const x1 = x, y1 = y, x2 = x + w, y2 = y + h;
-            return { x1, y1, x2, y2 };
+            return { x1: x, y1: y, x2: x + w, y2: y + h, angle: el.data.angle };
         }
         case "ELLIPSE": {
             const { x, y, rX, rY } = el.data;
             const x1 = x - rX, y1 = y - rY, x2 = x + rX, y2 = y + rY;
-            return { x1, y1, x2, y2 };
+            return { x1, y1, x2, y2, angle: el.data.angle };
         }
         case "LINE":
         case "ARROW": {
@@ -63,11 +63,12 @@ export function getBoundingBox(el: Element, ctx: CanvasRenderingContext2D) {
                 x1: sX,
                 y1: sY,
                 x2: eX,
-                y2: eY
+                y2: eY,
+                angle: el.data.angle
             }
         }
         case "TEXT": {
-            const { x, y, fontSize, fontFamily, currWidth, lineCount } = el.data;
+            const { x, y, fontSize, fontFamily, currWidth, lineCount, lineHeight } = el.data;
 
             ctx.font = `${fontSize}px ${fontFamily}`;
             ctx.fillStyle = 'rgb(255, 255, 255)';
@@ -78,8 +79,13 @@ export function getBoundingBox(el: Element, ctx: CanvasRenderingContext2D) {
                 x1: x,
                 y1: y,
                 x2: x + currWidth,
-                y2: y + fontSize * lineCount
+                y2: y + (fontSize + lineHeight) * lineCount,
+                angle: el.data.angle
             }
         }
     }
+}
+
+export function lineMagnitude(pt: Point) {
+    return Math.sqrt(pt.x * pt.x + pt.y * pt.y);
 }

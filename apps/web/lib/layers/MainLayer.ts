@@ -2,6 +2,9 @@ import { getExisitingElements } from "../utils/fetch";
 import { useElementStore } from "../../store/element";
 import { renderArrow, renderEllipse, renderLine, renderPencil, renderRectangle, renderText } from "../renderers/renderer";
 import { useTransformStore } from "../../store/transform";
+import { getBoundingBox } from "../hitTest/pointUtilts";
+import { renderWithTransform } from "../renderers/render";
+import { useRoomStore } from "../../store/room";
 
 export class MainLayer {
     private mainCanvas: HTMLCanvasElement;
@@ -16,8 +19,9 @@ export class MainLayer {
     }
 
     async init() {
-        const shapes = await getExisitingElements(this.slug);
-        useElementStore.getState().init(shapes);
+        const message = await getExisitingElements(this.slug);
+        useElementStore.getState().init(message.elements);
+        useRoomStore.getState().setRoomState(this.slug, message.roomId);
         this.clearCanvas();
     }
 
@@ -33,34 +37,8 @@ export class MainLayer {
 
     draw() {
         const elements = useElementStore.getState().elements;
-        Object.entries(elements).forEach((val) => {
-            const el = val[1];
-            switch (el.type) {
-                case "RECTANGLE": {
-                    renderRectangle(this.mainCtx, el);
-                    break;
-                }
-                case "ELLIPSE": {
-                    renderEllipse(this.mainCtx, el);
-                    break;
-                }
-                case "TEXT": {
-                    renderText(this.mainCtx, el);
-                    break;
-                }
-                case "ARROW": {
-                    renderArrow(this.mainCtx, el);
-                    break;
-                }
-                case "LINE": {
-                    renderLine(this.mainCtx, el);
-                    break;
-                }
-                case "PENCIL": {
-                    renderPencil(this.mainCtx, el);
-                    break;
-                }
-            }
+        Object.values(elements).forEach((el) => {
+            renderWithTransform(this.mainCtx, el);
         })
     }
 }

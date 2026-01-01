@@ -5,7 +5,10 @@ export type Element = {
     id: string;
     type: 'PENCIL',
     data: {
-        points: Point[]
+        x: number;
+        y: number;
+        points: Point[];
+        angle: number;
     }
 } | {
     id: string;
@@ -15,6 +18,7 @@ export type Element = {
         y: number;
         h: number;
         w: number;
+        angle: number;
     }
 } | {
     id: string;
@@ -24,6 +28,9 @@ export type Element = {
         y: number;
         rX: number;
         rY: number;
+        angle: number;
+        h: number;
+        w: number;
     }
 } | {
     id: string;
@@ -33,6 +40,9 @@ export type Element = {
         sY: number;
         eX: number;
         eY: number;
+        angle: number;
+        h: number;
+        w: number;
     }
 } | {
     id: string;
@@ -43,6 +53,9 @@ export type Element = {
         eX: number;
         eY: number;
         headlen: number;
+        angle: number;
+        h: number;
+        w: number;
     }
 } | {
     id: string;
@@ -54,7 +67,10 @@ export type Element = {
         fontSize: number,
         fontFamily: string,
         angle: number,
-        maxWidth?: number
+        maxWidth: number,
+        currWidth: number,
+        lineCount: number,
+        lineHeight: number
     }
 };
 
@@ -67,5 +83,8 @@ export interface BoundingBox {
     x1: number, 
     y1: number, 
     x2: number, 
-    y2: number
+    y2: number,
+    angle: number
 }
+
+export type ResizeHandle = "no" | "ea" | "so" | "we" | "nw" | "ne" | "se" | "sw";

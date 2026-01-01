@@ -5,6 +5,9 @@ import { toolManager } from "../tools/ToolManager";
 import { useTransformStore } from "../../store/transform";
 import { useToolStore } from "../../store/tool";
 import { screenToWorld } from "../utils/helper";
+import { useSelectStore } from "../../store/selectElement";
+import { getBoundingBox } from "../hitTest/pointUtilts";
+import { useRoomStore } from "../../store/room";
 
 export class DraftLayer {
     private draftCanvas: HTMLCanvasElement;
@@ -36,7 +39,7 @@ export class DraftLayer {
         this.draftCanvas.addEventListener('mousemove', this.onMouseMove);
         this.draftCanvas.addEventListener('mouseup', this.onMouseUp);
         this.draftCanvas.addEventListener('wheel', this.onZoom);
-        // this.draftCanvas.addEventListener('')
+        document.addEventListener('keydown', this.onKeyDown);
         this.clearDraftCanvas();
     }
 
@@ -61,10 +64,13 @@ export class DraftLayer {
                     }
                     useElementStore.getState().remove(el.id);
                     useElementStore.getState().add(el);
+                    const box = getBoundingBox(el, this.draftCtx);
+                    useSelectStore.getState().updateBox(el.id, box);
                     break;
                 }
                 case "ELEMENT_DELETED": {
                     useElementStore.getState().remove(message.elementId);
+                    useSelectStore.getState().remove(message.elementId);
                     break;
                 }
                 case "LEFT_ROOM": {
@@ -143,14 +149,34 @@ export class DraftLayer {
         }
     }
 
+    private onKeyDown (e: KeyboardEvent) {
+        const key = e.key.toLowerCase();
+        console.log(key);
+        if (key === 'delete') {
+            const roomId = useRoomStore.getState().roomId;
+            const selectStore = useSelectStore.getState();
+            const elementStore = useElementStore.getState();
+            selectStore.selectedIds.forEach(id => {
+                this.socket?.sendTyped({
+                    type: 'ELEMENT_DELETE',
+                    elementId: id,
+                    roomId
+                })
+                elementStore.remove(id);
+            });
+            useSelectStore.getState().clearSelection();
+        }
+    }
+
     destroy() {
         this.draftCanvas.removeEventListener('mousedown', this.onMouseDown);
         this.draftCanvas.removeEventListener('mousemove', this.onMouseMove);
         this.draftCanvas.removeEventListener('mouseup', this.onMouseUp);
         this.draftCanvas.removeEventListener('wheel', this.onZoom);
+        document.removeEventListener('keydown', this.onKeyDown);
         this.socket.sendTyped({
             type: 'LEAVE_ROOM',
-            slug: this.slug
+            roomId: useRoomStore.getState().roomId
         });
         this.socket.close();
     }

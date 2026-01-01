@@ -6,6 +6,7 @@ import { renderEllipse } from "../renderers/renderer";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useSelectStore } from "../../store/selectElement";
 import { useToolStore } from "../../store/tool";
+import { useRoomStore } from "../../store/room";
 
 export class EllipseTool {
     start: Point | null = null;
@@ -20,7 +21,10 @@ export class EllipseTool {
                 x: pt.x,
                 y: pt.y,
                 rX: 0,
-                rY: 0
+                rY: 0,
+                angle: 0,
+                w: 0,
+                h: 0
             }
         }
     }
@@ -37,6 +41,9 @@ export class EllipseTool {
         this.draft.data.y = centerY;
         this.draft.data.rX = radiusX;
         this.draft.data.rY = radiusY;
+
+        this.draft.data.w  = 2 * radiusX;
+        this.draft.data.h  = 2 * radiusY;
         
         renderEllipse(draftCtx, this.draft);
     }
@@ -45,10 +52,12 @@ export class EllipseTool {
         if (!this.start || !this.draft || this.draft.type !== 'ELLIPSE') return;
 
         store.add(this.draft);
+        
+        const roomId = useRoomStore.getState().roomId;
 
         ws.sendTyped({
             type: 'ELEMENT_CREATE',
-            slug,
+            roomId,
             element: {
                 ...this.draft,
                 data: JSON.stringify(this.draft.data)

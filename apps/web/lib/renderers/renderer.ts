@@ -89,7 +89,7 @@ export function renderPencil(ctx: CanvasRenderingContext2D, element: Element) {
 export function renderText(ctx: CanvasRenderingContext2D, element: Element) {
     if (element.type !== 'TEXT') return;
     const { x, y, text, fontSize, fontFamily = 'Arial', currWidth, lineHeight } = element.data;
-    
+
     ctx.font = `${fontSize}px ${fontFamily}`;
     ctx.fillStyle = 'rgb(255, 255, 255)';
     ctx.lineWidth = 1;
@@ -98,6 +98,8 @@ export function renderText(ctx: CanvasRenderingContext2D, element: Element) {
     const resultLines: string[] = [];
     const paragraphs = text.split("\n");
 
+    let currMaxWidth = 0;
+
     paragraphs.forEach(paragraph => {
 
         const tokens = paragraph.match(/\S+\s*/g) || [];
@@ -105,6 +107,7 @@ export function renderText(ctx: CanvasRenderingContext2D, element: Element) {
         let currentLine = "";
 
         for (const token of tokens) {
+            currMaxWidth = Math.max(currMaxWidth, ctx.measureText(token).width); 
             const testLine = currentLine + token;
             const measure = ctx.measureText(testLine);
             const width = measure.width;
@@ -122,6 +125,7 @@ export function renderText(ctx: CanvasRenderingContext2D, element: Element) {
     })
 
     element.data.lineCount = resultLines.length;
+    element.data.maxWidth = currMaxWidth;
     
     let offset = y;
 

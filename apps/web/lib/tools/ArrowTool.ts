@@ -6,6 +6,7 @@ import { renderArrow } from "../renderers/renderer";
 import { useSelectStore } from "../../store/selectElement";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useToolStore } from "../../store/tool";
+import { useRoomStore } from "../../store/room";
 
 export class ArrowTool {
     start: Point | null = null;
@@ -21,7 +22,10 @@ export class ArrowTool {
                 sY: pt.y,
                 eX: pt.x,
                 eY: pt.y,
-                headlen: 10
+                headlen: 10,
+                angle: 0,
+                w: 0,
+                h: 0
             }
         }
     }
@@ -31,6 +35,8 @@ export class ArrowTool {
 
         this.draft.data.eX = pt.x;
         this.draft.data.eY = pt.y;
+        this.draft.data.w  = pt.x - this.draft.data.sX;
+        this.draft.data.h  = pt.y - this.draft.data.sY;
 
         renderArrow(draftCtx, this.draft);
     }
@@ -46,9 +52,11 @@ export class ArrowTool {
 
         store.add(this.draft);
 
+        const roomId = useRoomStore.getState().roomId;
+
         ws.sendTyped({
             type: 'ELEMENT_CREATE',
-            slug,
+            roomId,
             element: {
                 ...this.draft,
                 data: JSON.stringify(this.draft.data)
