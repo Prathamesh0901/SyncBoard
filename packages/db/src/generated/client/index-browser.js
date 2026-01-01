@@ -146,6 +146,12 @@ exports.Prisma.ElementScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.RoomUserScalarFieldEnum = {
+  userId: 'userId',
+  roomId: 'roomId',
+  joinedAt: 'joinedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -182,7 +188,8 @@ exports.ShapeTypes = exports.$Enums.ShapeTypes = {
 exports.Prisma.ModelName = {
   User: 'User',
   CanvasRoom: 'CanvasRoom',
-  Element: 'Element'
+  Element: 'Element',
+  RoomUser: 'RoomUser'
 };
 
 /**

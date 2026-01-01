@@ -118,6 +118,12 @@ exports.Prisma.ElementScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.RoomUserScalarFieldEnum = {
+  userId: 'userId',
+  roomId: 'roomId',
+  joinedAt: 'joinedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -154,7 +160,8 @@ exports.ShapeTypes = exports.$Enums.ShapeTypes = {
 exports.Prisma.ModelName = {
   User: 'User',
   CanvasRoom: 'CanvasRoom',
-  Element: 'Element'
+  Element: 'Element',
+  RoomUser: 'RoomUser'
 };
 /**
  * Create the Client
@@ -185,7 +192,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
+    "rootEnvPath": "../../../.env",
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -203,13 +210,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  password  String\n  name      String?\n  createdAt DateTime @default(now())\n\n  rooms      CanvasRoom[] @relation(\"UserRooms\")\n  adminRooms CanvasRoom[] @relation(\"RoomAdmin\")\n\n  elements Element[]\n}\n\nmodel CanvasRoom {\n  id   String @id @default(uuid())\n  slug String @unique\n\n  adminId String\n  admin   User   @relation(\"RoomAdmin\", fields: [adminId], references: [id])\n\n  users User[] @relation(\"UserRooms\")\n\n  elements Element[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Element {\n  id String @id @default(cuid())\n\n  roomId String\n  room   CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)\n\n  senderId String\n  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)\n\n  type ShapeTypes\n\n  data Json\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nenum ShapeTypes {\n  PENCIL\n  RECTANGLE\n  ELLIPSE\n  LINE\n  ARROW\n  TEXT\n}\n",
-  "inlineSchemaHash": "f628ffb3f7d6cf33f55600869208dc276cc636c4dd84940a11558a777a229918",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  password  String\n  name      String?\n  createdAt DateTime @default(now())\n\n  rooms      RoomUser[]\n  adminRooms CanvasRoom[] @relation(\"RoomAdmin\")\n\n  elements Element[]\n}\n\nmodel CanvasRoom {\n  id   String @id @default(uuid())\n  slug String @unique\n\n  adminId String\n  admin   User   @relation(\"RoomAdmin\", fields: [adminId], references: [id])\n\n  users    RoomUser[]\n  elements Element[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Element {\n  id String @id @default(cuid())\n\n  roomId String\n  room   CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)\n\n  senderId String\n  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)\n\n  type ShapeTypes\n\n  data Json\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel RoomUser {\n  userId String\n  roomId String\n\n  user User       @relation(fields: [userId], references: [id], onDelete: Cascade)\n  room CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)\n\n  joinedAt DateTime @default(now())\n\n  @@id([userId, roomId])\n}\n\nenum ShapeTypes {\n  PENCIL\n  RECTANGLE\n  ELLIPSE\n  LINE\n  ARROW\n  TEXT\n}\n",
+  "inlineSchemaHash": "9190a46e52b257eb5b38cf7ff953fc068f39b4edc90b080328abaf3d333ab6e6",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"rooms\",\"kind\":\"object\",\"type\":\"CanvasRoom\",\"relationName\":\"UserRooms\"},{\"name\":\"adminRooms\",\"kind\":\"object\",\"type\":\"CanvasRoom\",\"relationName\":\"RoomAdmin\"},{\"name\":\"elements\",\"kind\":\"object\",\"type\":\"Element\",\"relationName\":\"ElementToUser\"}],\"dbName\":null},\"CanvasRoom\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"admin\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"RoomAdmin\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserRooms\"},{\"name\":\"elements\",\"kind\":\"object\",\"type\":\"Element\",\"relationName\":\"CanvasRoomToElement\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Element\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"roomId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"room\",\"kind\":\"object\",\"type\":\"CanvasRoom\",\"relationName\":\"CanvasRoomToElement\"},{\"name\":\"senderId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sender\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ElementToUser\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"ShapeTypes\"},{\"name\":\"data\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"rooms\",\"kind\":\"object\",\"type\":\"RoomUser\",\"relationName\":\"RoomUserToUser\"},{\"name\":\"adminRooms\",\"kind\":\"object\",\"type\":\"CanvasRoom\",\"relationName\":\"RoomAdmin\"},{\"name\":\"elements\",\"kind\":\"object\",\"type\":\"Element\",\"relationName\":\"ElementToUser\"}],\"dbName\":null},\"CanvasRoom\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"admin\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"RoomAdmin\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"RoomUser\",\"relationName\":\"CanvasRoomToRoomUser\"},{\"name\":\"elements\",\"kind\":\"object\",\"type\":\"Element\",\"relationName\":\"CanvasRoomToElement\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Element\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"roomId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"room\",\"kind\":\"object\",\"type\":\"CanvasRoom\",\"relationName\":\"CanvasRoomToElement\"},{\"name\":\"senderId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sender\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ElementToUser\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"ShapeTypes\"},{\"name\":\"data\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"RoomUser\":{\"fields\":[{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"roomId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"RoomUserToUser\"},{\"name\":\"room\",\"kind\":\"object\",\"type\":\"CanvasRoom\",\"relationName\":\"CanvasRoomToRoomUser\"},{\"name\":\"joinedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
