@@ -5,17 +5,17 @@ import { ClientMessage } from "@repo/common/messageTypes";
 export async function onLeave(ws: WebSocket, message: ClientMessage) {
     if (message.type !== 'LEAVE_ROOM') return;
 
-    const { slug } = message;
+    const { roomId } = message;
     
     const senderId = room.getUserId(ws);
 
-    room.leaveRoom(slug, ws);
+    room.leaveRoom(roomId, ws);
 
     if (!senderId) return;
 
-    room.broadcast(slug, {
+    room.broadcast(roomId, {
         type: 'LEFT_ROOM',
-        slug,
+        roomId,
         senderId
     }, ws);
 }

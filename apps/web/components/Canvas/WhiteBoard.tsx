@@ -8,6 +8,7 @@ import { useElementStore } from "../../store/element";
 import { useTransformStore } from "../../store/transform";
 import { useSelectStore } from "../../store/selectElement";
 import { SelectionLayer } from "../../lib/layers/SelectionLayer";
+import { useRoomStore } from "../../store/room";
 
 export default function WhiteBoard ({ slug }: {
     slug: string
@@ -26,11 +27,12 @@ export default function WhiteBoard ({ slug }: {
     const selectLayerRef = useRef<SelectionLayer>(null);
 
     const elements = useElementStore();
+    const roomStore = useRoomStore.getState();
     const boundingBoxes = useSelectStore().boundingBoxes;
 
     const transform = useTransformStore();
 
-    const {socket, loading} = useSocket(slug);
+    const {socket, loading} = useSocket(roomStore.roomId);
 
     useEffect(() => {
         if (mainRef.current && draftRef.current && selectRef.current && socket) {

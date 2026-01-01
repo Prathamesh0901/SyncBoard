@@ -8,7 +8,6 @@ export class RoomManager {
     private publishClient: RedisClientType;
     private rooms: Map<string, WebSocket[]>;
     private sockets: Map<WebSocket, string>;
-    private roomId: Map<string, string>;
 
     private constructor() {
         this.publishClient = createClient();
@@ -17,7 +16,6 @@ export class RoomManager {
         this.subscribeClient.connect();
         this.rooms = new Map();
         this.sockets = new Map();
-        this.roomId = new Map();
     }
 
     static getInstance() {
@@ -69,21 +67,6 @@ export class RoomManager {
 
     getUserId (ws: WebSocket) {
         return this.sockets.get(ws);
-    }
-
-    async getRoomId (slug: string) {
-        let id = this.roomId.get(slug);
-        if (!id) {
-            const room = await prismaClient?.canvasRoom.findUnique({
-                where: {
-                    slug
-                }
-            })
-            if (!room) return null;
-            this.roomId.set(slug, room.id);
-            id = room.id;
-        }
-        return id;
     }
 }
 

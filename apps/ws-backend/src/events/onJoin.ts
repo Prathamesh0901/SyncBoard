@@ -5,13 +5,13 @@ import WebSocket from 'ws';
 export async function onJoin(ws: WebSocket, message: ClientMessage, userId: string) {
     if (message.type !== 'JOIN_ROOM') return;
 
-    const { slug } = message;
+    const { roomId } = message;
 
-    room.joinRoom(slug, ws, userId);
+    room.joinRoom(roomId, ws, userId);
 
-    room.broadcast(slug, {
+    room.broadcast(roomId, {
         type: 'JOINED_ROOM',
-        slug,
+        roomId,
         userId
     }, ws);
 }

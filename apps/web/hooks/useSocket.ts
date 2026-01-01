@@ -3,7 +3,7 @@ import { WS_BACKEND_URL } from "../config";
 import { useRouter } from "next/navigation";
 import { TypedWebSocket } from "../lib/ws/TypedWebSocket";
 
-export function useSocket(slug: string) {
+export function useSocket(roomId: string) {
     const [loading, setLoading] = useState<boolean>(false);
     const [socket, setSocket]   = useState<TypedWebSocket>();
     const router = useRouter();
@@ -23,7 +23,7 @@ export function useSocket(slug: string) {
                 setSocket(ws);
                 ws.sendTyped({
                     type: 'JOIN_ROOM',
-                    slug,
+                    roomId,
                 })
             }, 5);
         }
@@ -31,7 +31,7 @@ export function useSocket(slug: string) {
         return () => {
             socket?.close();
         }
-    }, [slug]);
+    }, [roomId]);
 
     return {
         socket,

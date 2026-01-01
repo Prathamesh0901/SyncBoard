@@ -6,7 +6,7 @@ import WebSocket from 'ws';
 export async function onElementUpdate(ws: WebSocket, message: ClientMessage) {
     if (message.type !== 'ELEMENT_UPDATE') return;
 
-    const { slug } = message;
+    const { roomId } = message;
     const { id } = message.element;
     
     const senderId = room.getUserId(ws);
@@ -24,5 +24,5 @@ export async function onElementUpdate(ws: WebSocket, message: ClientMessage) {
 
     console.log(res.updatedAt);
 
-    room.broadcast(slug, {...message, type: 'ELEMENT_UPDATED', senderId}, ws);
+    room.broadcast(roomId, {...message, type: 'ELEMENT_UPDATED', senderId}, ws);
 }

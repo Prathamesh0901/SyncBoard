@@ -1,11 +1,11 @@
 import { WebSocketServer } from 'ws';
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '@repo/backend-common/config';
+import { JWT_AUTH_SECRET } from '@repo/backend-common/config';
 import { prismaClient } from '@repo/db/client';
 import { ClientMessage } from "@repo/common/messageTypes";
 import { onJoin } from './events/onJoin';
-import { onElementsCreate } from './events/onElementDelete';
-import { onElementDelete } from './events/onElementCreate';
+import { onElementCreate } from './events/onElementCreate';
+import { onElementDelete } from './events/onElementDelete';
 import { onLeave } from './events/onLeave';
 import { onElementUpdate } from './events/onElementUpdate';
 
@@ -13,7 +13,7 @@ const wss = new WebSocketServer({ port: 3002 });
 
 async function checkUser (token: string): Promise<string | null> {
     try {
-        const decoded = jwt.verify(token, JWT_SECRET); 
+        const decoded = jwt.verify(token, JWT_AUTH_SECRET); 
         
         if(typeof decoded === 'string') return null;
         
@@ -54,7 +54,7 @@ wss.on('connection', async function connection(ws, request) {
     
     ws.on('message', async function message(data) {
         const message: ClientMessage = JSON.parse(data.toString());
-        console.log(message.type);
+        
         if (!message.type) {
             ws.send(JSON.stringify({
                 status: 400,
@@ -69,7 +69,7 @@ wss.on('connection', async function connection(ws, request) {
                 break;
             }
             case 'ELEMENT_CREATE': {
-                onElementsCreate(ws, message);
+                onElementCreate(ws, message);
                 break;
             }
             case 'ELEMENT_UPDATE': {

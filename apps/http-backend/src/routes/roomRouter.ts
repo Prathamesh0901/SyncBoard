@@ -78,11 +78,42 @@ roomRouter.get('/:slug', auth, async (req, res) => {
         const room = await prismaClient.canvasRoom.findFirst({
             where: {
                 slug
+            },
+            include: {
+                users: {
+                    select: {
+                        userId: true
+                    }
+                }
             }
         });
+
+        if (!room) {
+            return res.status(400).json({
+                message: "Invalid room slug"
+            });
+        }
+        
+        // @ts-ignore
+        const userId = req.userId;
+
+        let hasAccess = room.adminId === userId;
+        for (const user of room.users) {
+            hasAccess = hasAccess || user.userId === userId;
+            if (hasAccess) break;
+        }
+
+        if (!hasAccess) {
+            return res.status(401).json({
+                message: "Unauthorized access"
+            })
+        }
+
         res.status(200).json({
-            room
+            roomId: room.id,
+            slug: room.slug
         });
+
     } catch (error) {
         console.log('Error fetching the room:', error);
         res.status(411).json({
