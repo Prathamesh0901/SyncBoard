@@ -20,13 +20,33 @@ elementRouter.get('/:slug', auth, async (req, res) => {
             include: {
                 elements: {
                     orderBy: { createdAt: 'asc' }
+                },
+                users: {
+                    select: {
+                        userId: true
+                    }
                 }
-            } 
+            }
         });
+
+        // @ts-ignore
+        const userId = req.userId;
 
         if (!room) {
             return res.status(404).json({
                 message: "Slug is invalid or room does not exist"
+            })
+        }
+
+        let hasAccess = room.adminId === userId;
+        for (const user of room.users) {
+            hasAccess = hasAccess || user.userId === userId;
+            if (hasAccess) break;
+        }
+
+        if (!hasAccess) {
+            return res.status(401).json({
+                message: "Unauthorized access"
             })
         }
 

@@ -20,7 +20,15 @@ roomRouter.post('/', auth, async (req, res) => {
             data: {
                 slug: parsedData.data.slug,
                 // @ts-ignore
-                adminId: req.userId
+                adminId: req.userId,
+            }
+        });
+
+        await prismaClient.roomUser.create({
+            data: {
+                // @ts-ignore
+                userId: req.userId,
+                roomId: room.id
             }
         });
 

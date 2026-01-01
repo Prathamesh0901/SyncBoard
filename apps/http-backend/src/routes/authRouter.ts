@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { CreateUserSchema, SigninSchema } from '@repo/common/types';
 import { prismaClient } from '@repo/db/client';
-import { JWT_SECRET } from '@repo/backend-common/config';
+import { JWT_AUTH_SECRET } from '@repo/backend-common/config';
 
 const authRouter: Router = express.Router();
 
@@ -34,7 +34,7 @@ authRouter.post('/signup', async (req, res) => {
 
         const token = jwt.sign({
             userId: user.id
-        }, JWT_SECRET);
+        }, JWT_AUTH_SECRET);
 
         res.json({
             message: "User signup successful",
@@ -74,7 +74,7 @@ authRouter.post('/signin', async (req, res) => {
 
         const token = jwt.sign( {
             userId: user.id
-        }, JWT_SECRET);
+        }, JWT_AUTH_SECRET);
         
         res.status(200).json({
             message: 'User signed in successfully',
