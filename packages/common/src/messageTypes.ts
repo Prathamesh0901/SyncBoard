@@ -2,10 +2,10 @@ import { ShapeTypes } from "@repo/db/types";
 
 export type ClientMessage = {
     type: 'JOIN_ROOM';
-    slug: string;
+    roomId: string;
 } | {
     type: 'ELEMENT_CREATE';
-    slug: string;
+    roomId: string;
     element: {
         id: string;
         type: ShapeTypes;
@@ -13,7 +13,7 @@ export type ClientMessage = {
     }
 } | {
     type: 'ELEMENT_UPDATE';
-    slug: string;
+    roomId: string;
     element: {
         id: string;
         type: ShapeTypes;
@@ -21,20 +21,20 @@ export type ClientMessage = {
     }
 } | {
     type: 'ELEMENT_DELETE';
-    slug: string;
+    roomId: string;
     elementId: string;
 } | {
     type: 'LEAVE_ROOM';
-    slug: string;
+    roomId: string;
 };
 
 export type ServerMessage = {
     type: 'JOINED_ROOM';
-    slug: string;
+    roomId: string;
     userId: string;
 } | {
     type: 'ELEMENT_CREATED';
-    slug: string;
+    roomId: string;
     element: {
         id: string;
         type: ShapeTypes;
@@ -43,7 +43,7 @@ export type ServerMessage = {
     senderId: string;
 } | {
     type: 'ELEMENT_UPDATED';
-    slug: string;
+    roomId: string;
     element: {
         id: string;
         type: ShapeTypes;
@@ -52,11 +52,11 @@ export type ServerMessage = {
     senderId: string;
 } | {
     type: 'ELEMENT_DELETED';
-    slug: string;
+    roomId: string;
     elementId: string;
     senderId: string;
 } | {
     type: 'LEFT_ROOM';
-    slug: string;
+    roomId: string;
     senderId: string;
 };
