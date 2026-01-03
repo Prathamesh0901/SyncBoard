@@ -7,27 +7,26 @@ import { useTransformStore } from "../../store/transform";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useSelectStore } from "../../store/selectElement";
 import { useToolStore } from "../../store/tool";
-import { useRoomStore } from "../../store/room";
 
 export class TextTool {
     start: Point | null = null;
     inputEl: HTMLTextAreaElement | null = null;
 
-    pointerDown(draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string) {
+    pointerDown(draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         this.start = pt;
         console.log('pointer down');
-        this.createInput(draftCtx, this.start, ws, slug);
+        this.createInput(draftCtx, this.start, ws, slug, roomId);
     }
 
-    pointerMove(pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string) {
+    pointerMove(pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string, roomId: string) {
         return;
     }
 
-    pointerUp(store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string) {
+    pointerUp(store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string, roomId: string) {
         return;
     }
 
-    createInput(ctx: CanvasRenderingContext2D, point: Point, ws: TypedWebSocket, slug: string) {
+    createInput(ctx: CanvasRenderingContext2D, point: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         const p = worldToScreen(point, useTransformStore.getState());
         const input = document.createElement('textarea');
         input.style.position = 'absolute';
@@ -52,12 +51,12 @@ export class TextTool {
         input.addEventListener('keydown', (e) => {
             if ((e.key === 'Enter' && !e.shiftKey) || e.key === 'Delete') {
                 e.preventDefault();
-                this.finish(ctx, ws, slug);
+                this.finish(ctx, ws, slug, roomId);
             }
         })
     }
 
-    finish(ctx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string) {
+    finish(ctx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string, roomId: string) {
         if (!this.inputEl || !this.start) return;
         const text = this.inputEl.value.trim();
         if (text.length > 0) {
@@ -92,7 +91,6 @@ export class TextTool {
             };
 
             useElementStore.getState().add(element);
-            const roomId = useRoomStore.getState().roomId;
 
             ws.sendTyped({
                 type: 'ELEMENT_CREATE',

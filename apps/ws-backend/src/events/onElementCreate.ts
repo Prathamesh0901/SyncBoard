@@ -2,6 +2,7 @@ import { room } from "../RoomManager";
 import { ClientMessage } from "@repo/common/messageTypes";
 import { prismaClient } from "@repo/db/client";
 import WebSocket from 'ws';
+import { checkAccess } from "../utils/checkAccess";
 
 export async function onElementCreate(ws: WebSocket, message: ClientMessage) {
     if (message.type !== 'ELEMENT_CREATE') return;
@@ -15,6 +16,14 @@ export async function onElementCreate(ws: WebSocket, message: ClientMessage) {
     if (!roomId) {
         ws.send(JSON.stringify({
             message: "Invalid Room"
+        }));
+        return;
+    }
+
+    if (!checkAccess(senderId, roomId)) {
+        ws.send(JSON.stringify({
+            type: 'ERROR',
+            message: 'Unauthorized Accesss'
         }));
         return;
     }

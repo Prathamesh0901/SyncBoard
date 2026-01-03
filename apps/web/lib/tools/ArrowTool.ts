@@ -6,13 +6,12 @@ import { renderArrow } from "../renderers/renderer";
 import { useSelectStore } from "../../store/selectElement";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useToolStore } from "../../store/tool";
-import { useRoomStore } from "../../store/room";
 
 export class ArrowTool {
     start: Point | null = null;
     draft: Element | null = null;
 
-    pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string) {
+    pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         this.start = pt;
         this.draft = {
             id: createId(),
@@ -30,7 +29,7 @@ export class ArrowTool {
         }
     }
 
-    pointerMove (pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string) {
+    pointerMove (pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string, roomId: string) {
         if (!this.start || !this.draft || this.draft.type !== 'ARROW') return;
 
         this.draft.data.eX = pt.x;
@@ -41,7 +40,7 @@ export class ArrowTool {
         renderArrow(draftCtx, this.draft);
     }
 
-    pointerUp (store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string) {
+    pointerUp (store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string, roomId: string) {
         if (!this.start || !this.draft || this.draft.type !== 'ARROW') return;
         
         if (this.start.x === this.draft.data.eX && this.start.y === this.draft.data.eY) {
@@ -51,8 +50,6 @@ export class ArrowTool {
         }
 
         store.add(this.draft);
-
-        const roomId = useRoomStore.getState().roomId;
 
         ws.sendTyped({
             type: 'ELEMENT_CREATE',

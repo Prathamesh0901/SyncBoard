@@ -3,14 +3,13 @@ import { Element, Point } from "../types/types";
 import { ElementState } from "../../store/element";
 import { TypedWebSocket } from "../ws/TypedWebSocket";
 import { renderPencil } from "../renderers/renderer";
-import { useRoomStore } from "../../store/room";
 
 export class PencilTool {
     draft: Element | null = null;
     x1 = Math.pow(10, 10);
     y1 = Math.pow(10, 10);
 
-    pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string) {
+    pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         this.x1 = pt.x;
         this.y1 = pt.y;
         this.draft = {
@@ -25,7 +24,7 @@ export class PencilTool {
         }
     }
 
-    pointerMove (pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string) {
+    pointerMove (pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string, roomId: string) {
         if (!this.draft || this.draft.type !== 'PENCIL') return;
         this.x1 = Math.min(this.x1, pt.x);
         this.y1 = Math.min(this.y1, pt.y);
@@ -37,12 +36,10 @@ export class PencilTool {
         renderPencil(draftCtx, this.draft);
     }
     
-    pointerUp (store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string) {
+    pointerUp (store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string, roomId: string) {
         if (!this.draft || this.draft.type !== 'PENCIL') return;
 
         store.add(this.draft);
-        
-        const roomId = useRoomStore.getState().roomId;
 
         ws.sendTyped({
             type: 'ELEMENT_CREATE',

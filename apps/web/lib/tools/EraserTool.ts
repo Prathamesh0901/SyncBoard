@@ -1,5 +1,4 @@
 import { ElementState, useElementStore } from "../../store/element";
-import { useRoomStore } from "../../store/room";
 import { useSelectStore } from "../../store/selectElement";
 import { toLocalPoint } from "../geometry/transform";
 import { hitTestElement } from "../hitTest/hitTestElement";
@@ -8,19 +7,19 @@ import { Point } from "../types/types";
 import { TypedWebSocket } from "../ws/TypedWebSocket";
 
 export class EraserTool {
-    pointerDown(draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string) {
-        this.eraserAt(pt, ws, slug, draftCtx);
+    pointerDown(draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string, roomId: string) {
+        this.eraserAt(pt, ws, slug, draftCtx, roomId);
     }
 
-    pointerMove(pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string) {
-        this.eraserAt(pt, ws, slug, draftCtx);
+    pointerMove(pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string, roomId: string) {
+        this.eraserAt(pt, ws, slug, draftCtx, roomId);
     }
 
-    pointerUp(store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string) {
+    pointerUp(store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string, roomId: string) {
         return;
     }
 
-    eraserAt(pt: Point, ws: TypedWebSocket, slug: string, ctx: CanvasRenderingContext2D) {
+    eraserAt(pt: Point, ws: TypedWebSocket, slug: string, ctx: CanvasRenderingContext2D, roomId: string) {
         const store = useElementStore.getState();
         const elements = store.elements;
 
@@ -38,8 +37,6 @@ export class EraserTool {
             const removed = Object.values(elements).filter(el => !updated.includes(el));
 
             const selectStore = useSelectStore.getState();
-
-            const roomId = useRoomStore.getState().roomId;      
 
             removed.forEach(el => {
                 selectStore.remove(el.id);

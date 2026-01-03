@@ -59,4 +59,7 @@ export type ServerMessage = {
     type: 'LEFT_ROOM';
     roomId: string;
     senderId: string;
+} | {
+    type: 'ERROR',
+    message: string
 };

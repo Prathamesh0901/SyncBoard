@@ -6,13 +6,12 @@ import { renderEllipse } from "../renderers/renderer";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useSelectStore } from "../../store/selectElement";
 import { useToolStore } from "../../store/tool";
-import { useRoomStore } from "../../store/room";
 
 export class EllipseTool {
     start: Point | null = null;
     draft: Element | null = null;
 
-    pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string) {
+    pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         this.start = pt;
         this.draft = {
             id: createId(),
@@ -29,7 +28,7 @@ export class EllipseTool {
         }
     }
 
-    pointerMove (pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string) {
+    pointerMove (pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string, roomId: string) {
         if (!this.start || !this.draft || this.draft.type !== 'ELLIPSE') return;
 
         const radiusX = Math.abs(pt.x - this.start.x)/2;
@@ -48,12 +47,10 @@ export class EllipseTool {
         renderEllipse(draftCtx, this.draft);
     }
 
-    pointerUp (store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string) {
+    pointerUp (store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string, roomId: string) {
         if (!this.start || !this.draft || this.draft.type !== 'ELLIPSE') return;
 
         store.add(this.draft);
-        
-        const roomId = useRoomStore.getState().roomId;
 
         ws.sendTyped({
             type: 'ELEMENT_CREATE',

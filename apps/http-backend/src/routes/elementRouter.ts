@@ -9,6 +9,7 @@ elementRouter.get('/:slug', auth, async (req, res) => {
         const slug = req.params.slug;
         if(!slug) {
             return res.status(403).json({
+                messageType: "error",
                 message: "Slug is required"
             })
         }
@@ -34,7 +35,8 @@ elementRouter.get('/:slug', auth, async (req, res) => {
 
         if (!room) {
             return res.status(404).json({
-                message: "Slug is invalid or room does not exist"
+                messageType: "error",
+                message: "Room does not exist"
             })
         }
 
@@ -46,19 +48,23 @@ elementRouter.get('/:slug', auth, async (req, res) => {
 
         if (!hasAccess) {
             return res.status(401).json({
+                messageType: "error",
                 message: "Unauthorized access"
             })
         }
 
         res.status(200).json({
+            messageType: "info",
             elements: room.elements,
-            roomId: room.id
+            roomId: room.id,
+            message: "Elements fetched"
         });
         
     } catch (error) {
-        console.log('Error fetching the chats:', error);
+        console.log('Error fetching the elements:', error);
         res.status(411).json({
-            message: "Error fetching the chats"
+            messageType: "error",
+            message: "Error fetching the elements"
         })
     }
 })

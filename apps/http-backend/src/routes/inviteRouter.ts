@@ -11,6 +11,7 @@ inviteRouter.post('/', auth, async (req, res) => {
         const { slug } = req.body;
         if(!slug) {
             return res.status(403).json({
+                messageType: "error",
                 message: "Room Id is required"
             })
         }
@@ -23,7 +24,8 @@ inviteRouter.post('/', auth, async (req, res) => {
 
         if (!room) {
             return res.status(404).json({
-                message: "Invalid Room Id"
+                messageType: "error",
+                message: "Room does not exist"
             })
         }
 
@@ -32,6 +34,7 @@ inviteRouter.post('/', auth, async (req, res) => {
 
         if (room.adminId !== userId) {
             return res.status(401).json({
+                messageType: "error",
                 messsage: "Unauthorized access"
             });
         }
@@ -43,18 +46,20 @@ inviteRouter.post('/', auth, async (req, res) => {
         const token = jwt.sign(payload, JWT_INVITE_SECRET, { expiresIn: '24h' });
 
         res.status(200).json({
+            messageType: "info",
             roomId: room.id,
-            token
+            token,
+            message: "Invite link generated"
         });
         
     } catch (error) {
         console.log('Error generating invite token:', error);
         res.status(411).json({
-            message: "Error generating invite token"
+            messageType: "error",
+            message: "Error generating invite link"
         })
     }
 });
-
 
 inviteRouter.post('/verify', async (req, res) => {
     try {
@@ -76,12 +81,14 @@ inviteRouter.post('/verify', async (req, res) => {
 
         if (!room) {
             return res.status(404).json({
+                messageType: "error",
                 message: "Invalid Invite Token",
                 valid: false
             })
         };
         
         res.status(200).json({
+            messageType: "success",
             message: "Valid invite token",
             valid: true,
             slug: room.slug,
@@ -91,6 +98,7 @@ inviteRouter.post('/verify', async (req, res) => {
     } catch (error) {
         console.log('Error verifying token:', error);
         res.status(411).json({
+            messageType: "error",
             message: "Invalid or expired token",
             valid: false
         })
@@ -102,6 +110,7 @@ inviteRouter.post('/accept', auth, async (req, res) => {
         const { token } = req.body;
         if(!token) {
             return res.status(403).json({
+                messageType: "error",
                 message: "Room Id is required"
             })
         }
@@ -117,6 +126,7 @@ inviteRouter.post('/accept', auth, async (req, res) => {
 
         if (!room) {
             return res.status(404).json({
+                messageType: "error",
                 message: "Invalid Invite Token",
                 valid: false
             })
@@ -132,7 +142,8 @@ inviteRouter.post('/accept', auth, async (req, res) => {
         })
 
         res.status(200).json({
-            message: "Valid invite token",
+            messageType: "success",
+            message: "Invite accepted",
             valid: true,
             slug: room.slug,
             roomId: room.id
@@ -141,6 +152,7 @@ inviteRouter.post('/accept', auth, async (req, res) => {
     } catch (error) {
         console.log('Error verifying token:', error);
         res.status(411).json({
+            messageType: "error",
             message: "Invalid or expired token",
             valid: false
         })

@@ -1,22 +1,17 @@
 import { useEffect, useState } from "react";
 import { WS_BACKEND_URL } from "../config";
-import { useRouter } from "next/navigation";
 import { TypedWebSocket } from "../lib/ws/TypedWebSocket";
+import { getAuthToken } from "../lib/utils/fetch";
 
 export function useSocket(roomId: string) {
     const [loading, setLoading] = useState<boolean>(false);
-    const [socket, setSocket]   = useState<TypedWebSocket>();
-    const router = useRouter();
+    const [socket, setSocket] = useState<TypedWebSocket>();
     
     useEffect(() => {
-        const token = JSON.parse(localStorage.getItem('draw-app-data') || '');
-        if(token === '') {
-            alert('Signin or signup first');
-            router.push('/auth/signin');
-        }
+        const token = getAuthToken();
         setLoading(true);
         const ws = new TypedWebSocket(`${WS_BACKEND_URL}?token=${token}`);
-
+        
         ws.onopen = () => {
             setTimeout(() => {
                 setLoading(false);
@@ -24,15 +19,26 @@ export function useSocket(roomId: string) {
                 ws.sendTyped({
                     type: 'JOIN_ROOM',
                     roomId,
-                })
+                });
             }, 5);
         }
-
+        
+        ws.onclose = () => {
+            console.log('WebSocket closed');
+            setSocket(undefined);
+        }
+        
         return () => {
-            socket?.close();
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.sendTyped({
+                    type: 'LEAVE_ROOM',
+                    roomId
+                });
+            }
+            ws.close();
         }
     }, [roomId]);
-
+    
     return {
         socket,
         loading

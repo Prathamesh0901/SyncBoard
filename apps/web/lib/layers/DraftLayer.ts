@@ -7,12 +7,13 @@ import { useToolStore } from "../../store/tool";
 import { screenToWorld } from "../utils/helper";
 import { useSelectStore } from "../../store/selectElement";
 import { getBoundingBox } from "../hitTest/pointUtilts";
-import { useRoomStore } from "../../store/room";
+import { useToastStore } from "../../store/toast";
 
 export class DraftLayer {
     private draftCanvas: HTMLCanvasElement;
     private draftCtx: CanvasRenderingContext2D;
     private slug: string;
+    private roomId: string;
     private socket: TypedWebSocket;
     private isDrawing: boolean;
     private isPanning: boolean;
@@ -20,10 +21,11 @@ export class DraftLayer {
     private setPan: (x: number, y: number) => void;
     private setZoom: (factor: number) => void;
 
-    constructor(draftCanvas: HTMLCanvasElement, slug: string, socket: TypedWebSocket) {
+    constructor(draftCanvas: HTMLCanvasElement, slug: string, roomId: string, socket: TypedWebSocket) {
         this.draftCanvas = draftCanvas;
         this.draftCtx = draftCanvas.getContext('2d')!;
         this.slug = slug;
+        this.roomId = roomId;
         this.socket = socket;
         this.isDrawing = false;
         this.isPanning = false;
@@ -44,9 +46,11 @@ export class DraftLayer {
     }
 
     initHandlers() {
+        const { showToast } = useToastStore.getState();
         this.socket.onTypedMessage((message) => {
             switch (message.type) {
                 case "JOINED_ROOM": {
+                    showToast('Joined room', 'info');
                     break;
                 }
                 case "ELEMENT_CREATED": {
@@ -74,6 +78,11 @@ export class DraftLayer {
                     break;
                 }
                 case "LEFT_ROOM": {
+                    showToast('Left room', 'info');
+                    break;
+                }
+                case 'ERROR': {
+                    showToast(message.message, 'error');
                     break;
                 }
             }
@@ -99,7 +108,7 @@ export class DraftLayer {
         this.isDrawing = true;
         const tool = toolManager.getTool();
         const pt: Point = screenToWorld({x: e.clientX, y: e.clientY}, useTransformStore.getState());
-        tool?.pointerDown(this.draftCtx, pt, this.socket, this.slug);
+        tool?.pointerDown(this.draftCtx, pt, this.socket, this.slug, this.roomId);
     }
 
     private onMouseMove = (e: MouseEvent) => {
@@ -112,7 +121,7 @@ export class DraftLayer {
         this.clearDraftCanvas();
         const tool = toolManager.getTool();
         const pt: Point = screenToWorld({x: e.clientX, y: e.clientY}, useTransformStore.getState());
-        tool?.pointerMove(pt, this.draftCtx, this.socket, this.slug);
+        tool?.pointerMove(pt, this.draftCtx, this.socket, this.slug, this.roomId);
     }
 
     private onMouseUp = () => {
@@ -124,7 +133,7 @@ export class DraftLayer {
         this.clearDraftCanvas();
         this.isDrawing = false;
         const tool = toolManager.getTool();
-        tool?.pointerUp(useElementStore.getState(), this.socket, this.draftCtx, this.slug);
+        tool?.pointerUp(useElementStore.getState(), this.socket, this.draftCtx, this.slug, this.roomId);
     }
 
     private onZoom = (e: WheelEvent) => {
@@ -149,18 +158,16 @@ export class DraftLayer {
         }
     }
 
-    private onKeyDown (e: KeyboardEvent) {
+    private onKeyDown = (e: KeyboardEvent) => {
         const key = e.key.toLowerCase();
-        console.log(key);
         if (key === 'delete') {
-            const roomId = useRoomStore.getState().roomId;
             const selectStore = useSelectStore.getState();
             const elementStore = useElementStore.getState();
             selectStore.selectedIds.forEach(id => {
-                this.socket?.sendTyped({
+                this.socket.sendTyped({
                     type: 'ELEMENT_DELETE',
                     elementId: id,
-                    roomId
+                    roomId: this.roomId
                 })
                 elementStore.remove(id);
             });
@@ -176,7 +183,7 @@ export class DraftLayer {
         document.removeEventListener('keydown', this.onKeyDown);
         this.socket.sendTyped({
             type: 'LEAVE_ROOM',
-            roomId: useRoomStore.getState().roomId
+            roomId: this.roomId
         });
         this.socket.close();
     }

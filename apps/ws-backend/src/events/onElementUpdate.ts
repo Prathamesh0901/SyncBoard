@@ -20,9 +20,7 @@ export async function onElementUpdate(ws: WebSocket, message: ClientMessage) {
         data: {
             data: JSON.parse(message.element.data)
         }
-    })
-
-    console.log(res.updatedAt);
+    });
 
     room.broadcast(roomId, {...message, type: 'ELEMENT_UPDATED', senderId}, ws);
 }

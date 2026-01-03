@@ -11,7 +11,6 @@ import { resizeSingleElement } from "../geometry/resizeSingle";
 import { resizeMultiElement } from "../geometry/resizeMultiple";
 import { toWorldPoint } from "../geometry/transform";
 import { renderWithTransform } from "../renderers/render";
-import { useRoomStore } from "../../store/room";
 
 export class SelectTool {
     h: { handleId: string | null } | null = null;
@@ -28,7 +27,7 @@ export class SelectTool {
     groupBounds: BoundingBox = { x1: 0, y1: 0, x2: 0, y2: 0, angle: 0 };
     groupCenter: Point = { x: 0, y: 0 };
 
-    pointerDown(draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string) {
+    pointerDown(draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         this.h = getHandleAtPoints(pt, draftCtx);
         this.initialPos = pt;
         this.isMoved = false;
@@ -93,7 +92,7 @@ export class SelectTool {
         }
     }
 
-    pointerMove(pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string) {
+    pointerMove(pt: Point, draftCtx: CanvasRenderingContext2D, ws: TypedWebSocket, slug: string, roomId: string) {
         const { scale, x, y } = useTransformStore.getState();
 
         draftCtx.setTransform(1, 0, 0, 1, 0, 0);
@@ -202,7 +201,7 @@ export class SelectTool {
         return;
     }
 
-    pointerUp(store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string) {
+    pointerUp(store: ElementState, ws: TypedWebSocket, draftCtx: CanvasRenderingContext2D, slug: string, roomId: string) {
         if (this.isDragging) {
             const ids = useSelectStore.getState().selectedIds;
             const els = useElementStore.getState().elements;
@@ -214,8 +213,6 @@ export class SelectTool {
 
         for (const e of this.elements) {
             store.add(e);
-            
-            const roomId = useRoomStore.getState().roomId;
 
             if (this.isMoved) {
                 ws.sendTyped({

@@ -6,11 +6,13 @@ export class SelectionLayer {
     private selectCanvas: HTMLCanvasElement;
     private selectCtx: CanvasRenderingContext2D;
     private slug: string;
+    private roomId: string;
 
-    constructor(selectCanvas: HTMLCanvasElement, slug: string) {
+    constructor(selectCanvas: HTMLCanvasElement, slug: string, roomId: string) {
         this.selectCanvas = selectCanvas;
         this.selectCtx = selectCanvas.getContext('2d')!;
         this.slug = slug;
+        this.roomId = roomId;
         this.clearSelectCanvas();
     }
 

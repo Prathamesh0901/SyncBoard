@@ -54,7 +54,7 @@ wss.on('connection', async function connection(ws, request) {
     
     ws.on('message', async function message(data) {
         const message: ClientMessage = JSON.parse(data.toString());
-        
+        console.log(message.type);
         if (!message.type) {
             ws.send(JSON.stringify({
                 status: 400,

@@ -19,6 +19,7 @@ export async function auth (req: Request, res: Response, next: NextFunction) {
     }
     else {
         return res.status(403).json({
+            messageType: "error",
             message: 'Unauthorized user'
         })
     }
