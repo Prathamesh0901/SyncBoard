@@ -192,7 +192,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -205,13 +205,13 @@ const config = {
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "DATABASE_URL",
+        "fromEnvVar": "POSTGRES_DB_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  password  String\n  name      String?\n  createdAt DateTime @default(now())\n\n  rooms      RoomUser[]\n  adminRooms CanvasRoom[] @relation(\"RoomAdmin\")\n\n  elements Element[]\n}\n\nmodel CanvasRoom {\n  id   String @id @default(uuid())\n  slug String @unique\n\n  adminId String\n  admin   User   @relation(\"RoomAdmin\", fields: [adminId], references: [id])\n\n  users    RoomUser[]\n  elements Element[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Element {\n  id String @id @default(cuid())\n\n  roomId String\n  room   CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)\n\n  senderId String\n  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)\n\n  type ShapeTypes\n\n  data Json\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel RoomUser {\n  userId String\n  roomId String\n\n  user User       @relation(fields: [userId], references: [id], onDelete: Cascade)\n  room CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)\n\n  joinedAt DateTime @default(now())\n\n  @@id([userId, roomId])\n}\n\nenum ShapeTypes {\n  PENCIL\n  RECTANGLE\n  ELLIPSE\n  LINE\n  ARROW\n  TEXT\n}\n",
-  "inlineSchemaHash": "9190a46e52b257eb5b38cf7ff953fc068f39b4edc90b080328abaf3d333ab6e6",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"POSTGRES_DB_URL\")\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  password  String\n  name      String?\n  createdAt DateTime @default(now())\n\n  rooms      RoomUser[]\n  adminRooms CanvasRoom[] @relation(\"RoomAdmin\")\n\n  elements Element[]\n}\n\nmodel CanvasRoom {\n  id   String @id @default(uuid())\n  slug String @unique\n\n  adminId String\n  admin   User   @relation(\"RoomAdmin\", fields: [adminId], references: [id])\n\n  users    RoomUser[]\n  elements Element[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Element {\n  id String @id @default(cuid())\n\n  roomId String\n  room   CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)\n\n  senderId String\n  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)\n\n  type ShapeTypes\n\n  data Json\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel RoomUser {\n  userId String\n  roomId String\n\n  user User       @relation(fields: [userId], references: [id], onDelete: Cascade)\n  room CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)\n\n  joinedAt DateTime @default(now())\n\n  @@id([userId, roomId])\n}\n\nenum ShapeTypes {\n  PENCIL\n  RECTANGLE\n  ELLIPSE\n  LINE\n  ARROW\n  TEXT\n}\n",
+  "inlineSchemaHash": "246a12aec12ac36e7d498f0b2e79ecacd45c7c397805cd9984a2e5cf0a6d2d2d",
   "copyEngine": true
 }
 config.dirname = '/'
@@ -223,7 +223,7 @@ config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({
   parsed: {
-    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
+    POSTGRES_DB_URL: typeof globalThis !== 'undefined' && globalThis['POSTGRES_DB_URL'] || typeof process !== 'undefined' && process.env && process.env.POSTGRES_DB_URL || undefined
   }
 })
 

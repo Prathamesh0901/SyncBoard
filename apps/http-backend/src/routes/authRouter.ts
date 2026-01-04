@@ -2,7 +2,8 @@ import express, { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { CreateUserSchema, SigninSchema } from '@repo/common/types';
 import { prismaClient } from '@repo/db/client';
-import { JWT_AUTH_SECRET } from '@repo/backend-common/config';
+import { JWT_AUTH_SECRET } from '../config';
+import bcrypt from 'bcrypt';
 
 const authRouter: Router = express.Router();
 
@@ -17,11 +18,13 @@ authRouter.post('/signup', async (req, res) => {
                 message: 'Incorrect inputs'
             })
         }
+
+        const hash = await bcrypt.hash(parsedData.data.password, 12);
         
         const user = await prismaClient.user.create({
             data: {
                 email: parsedData.data.email,
-                password: parsedData.data.password,
+                password: hash,
                 name: parsedData.data.name
             }
         });
@@ -29,7 +32,7 @@ authRouter.post('/signup', async (req, res) => {
         if(!user) {
             return res.status(500).json({
                 messageType: "error",
-                message: "User not found"
+                message: "User already exists"
             })
         }
 
@@ -67,8 +70,7 @@ authRouter.post('/signin', async (req, res) => {
 
         const user = await prismaClient.user.findFirst({
             where: {
-                email: parsedData.data.email,
-                password: parsedData.data.password
+                email: parsedData.data.email
             }
         });
 
@@ -76,6 +78,15 @@ authRouter.post('/signin', async (req, res) => {
             return res.status(403).json({
                 messageType: "error",
                 message: "Invalid username or password"
+            })
+        }
+        
+        const valid = await bcrypt.compare(parsedData.data.password, user.password);
+
+        if(!valid) {
+            return res.status(403).json({
+                messageType: "error",
+                message: "Invalid password"
             })
         }
 

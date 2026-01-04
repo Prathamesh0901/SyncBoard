@@ -1,6 +1,7 @@
 import { createClient, type RedisClientType } from 'redis';
 import { ServerMessage } from "@repo/common/messageTypes";
 import WebSocket from 'ws';
+import { REDIS_DB_URL } from './config';
 
 export class RoomManager {
     private static instance: RoomManager;
@@ -10,7 +11,9 @@ export class RoomManager {
     private sockets: Map<WebSocket, string>;
 
     private constructor() {
-        this.publishClient = createClient();
+        this.publishClient = createClient({
+            url: REDIS_DB_URL
+        });
         this.publishClient.connect();
         this.subscribeClient = this.publishClient.duplicate();
         this.subscribeClient.connect();

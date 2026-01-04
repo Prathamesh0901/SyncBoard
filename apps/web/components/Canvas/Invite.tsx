@@ -2,7 +2,7 @@
 
 import { Copy, CopyCheck, Loader2, UserPlus, X } from "lucide-react";
 import { useState } from "react";
-import { getInviteToken } from "../../lib/utils/fetch";
+import { getBaseUrl, getInviteToken } from "../../lib/utils/fetch";
 import { useToastStore } from "../../store/toast";
 
 export function Invite({ roomId }: { roomId: string }) {
@@ -26,7 +26,7 @@ export function Invite({ roomId }: { roomId: string }) {
         return;
       }
 
-      setInviteLink(`http://localhost:3000/invite/${token}`);
+      setInviteLink(`${getBaseUrl()}/invite/${token}`);
     }
   };
 

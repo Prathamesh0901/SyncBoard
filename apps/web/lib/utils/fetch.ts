@@ -129,7 +129,7 @@ export async function acceptToken(inviteToken: string) {
     }
 }
 
-export async function getRoomId(slug: string) {
+export async function getCanvasRoomId(slug: string) {
     try {
         const token = getAuthToken();
         const data = await fetch(`${HTTP_BACKEND_URL}/rooms/${slug}`, {
@@ -150,7 +150,7 @@ export async function getRoomId(slug: string) {
     }
 }
 
-export async function createRoom(slug: string) {
+export async function createCanvasRoom (slug: string) {
     try {
         const token = getAuthToken();
         const data = await fetch(`${HTTP_BACKEND_URL}/rooms`, {
@@ -171,7 +171,7 @@ export async function createRoom(slug: string) {
     }
 }
 
-export async function fetchMyRooms () {
+export async function fetchMyCanvasRooms () {
     try {
         const token = getAuthToken();
         const data = await fetch(`${HTTP_BACKEND_URL}/rooms`, {
@@ -190,7 +190,7 @@ export async function fetchMyRooms () {
     }
 }
 
-export async function deleteRoom (roomId: string) {
+export async function deleteCanvasRoom (roomId: string) {
     try {
         const token = getAuthToken();
         const data = await fetch(`${HTTP_BACKEND_URL}/rooms/${roomId}`, {
@@ -271,4 +271,11 @@ export function getUserId () {
     }
     const parsedData = JSON.parse(data);
     return parsedData.id; 
+}
+
+export function getBaseUrl () {
+    if (process.env.VERCEL_URL) {
+        return `https://${process.env.VERCEL_URL}`
+    }
+    return 'http://localhost:3000';
 }

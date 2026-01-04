@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 import { prismaClient } from '@repo/db/client';
 import { auth } from '../middleware/authMiddleware';
 import jwt from 'jsonwebtoken';
-import { JWT_INVITE_SECRET } from '@repo/backend-common/config';
+import { JWT_INVITE_SECRET } from '../config';
 
 const inviteRouter: Router = express.Router();
 

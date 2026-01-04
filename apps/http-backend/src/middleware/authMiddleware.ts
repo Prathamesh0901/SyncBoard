@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import { JWT_AUTH_SECRET } from "@repo/backend-common/config";
+import jwt from 'jsonwebtoken';
+import { JWT_AUTH_SECRET } from '../config';
 import { prismaClient } from "@repo/db/client";
 
 export async function auth (req: Request, res: Response, next: NextFunction) {

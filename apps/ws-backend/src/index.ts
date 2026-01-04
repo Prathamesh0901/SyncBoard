@@ -1,6 +1,6 @@
 import { WebSocketServer } from 'ws';
 import jwt from 'jsonwebtoken';
-import { JWT_AUTH_SECRET } from '@repo/backend-common/config';
+import { JWT_AUTH_SECRET } from './config';
 import { prismaClient } from '@repo/db/client';
 import { ClientMessage } from "@repo/common/messageTypes";
 import { onJoin } from './events/onJoin';

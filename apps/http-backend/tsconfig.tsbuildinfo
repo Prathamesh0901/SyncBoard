@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/middleware/authmiddleware.ts","./src/routes/authrouter.ts","./src/routes/elementrouter.ts","./src/routes/inviterouter.ts","./src/routes/roomrouter.ts"],"version":"5.9.2"}
+{"root":["./src/config.ts","./src/index.ts","./src/middleware/authmiddleware.ts","./src/routes/authrouter.ts","./src/routes/elementrouter.ts","./src/routes/inviterouter.ts","./src/routes/roomrouter.ts"],"version":"5.9.2"}

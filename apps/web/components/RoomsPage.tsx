@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { EllipsisVertical, Plus, X } from "lucide-react";
 import {
-  createRoom,
-  deleteRoom,
-  fetchMyRooms,
+  createCanvasRoom,
+  deleteCanvasRoom,
+  fetchMyCanvasRooms,
   getUserId,
   updateCanvasName,
 } from "../lib/utils/fetch";
@@ -43,7 +43,7 @@ export default function RoomsPage() {
       return;
     }
 
-    fetchMyRooms()
+    fetchMyCanvasRooms()
       .then((data) => setCanvases(data.rooms))
       .catch(console.error);
   }, []);
@@ -54,7 +54,7 @@ export default function RoomsPage() {
 
     setCreating(true);
     try {
-      const newCanvas = await createRoom(canvasName.trim());
+      const newCanvas = await createCanvasRoom(canvasName.trim());
       setCanvases((prev) => [newCanvas, ...prev]);
       setCanvasName("");
       setShowCreate(false);
@@ -98,7 +98,7 @@ export default function RoomsPage() {
 
   /* -------------------- DELETE CANVAS -------------------- */
   const handleDelete = async (canvasId: string) => {
-    const success = await deleteRoom(canvasId);
+    const success = await deleteCanvasRoom(canvasId);
     if (success) {
       setCanvases((prev) => prev.filter((c) => c.id !== canvasId));
     }
@@ -127,7 +127,7 @@ export default function RoomsPage() {
 
       {/* Canvas grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {canvases.map((canvas) => (
+        {canvases && canvases.map((canvas) => (
           <CanvasCard
             key={canvas.id}
             canvas={canvas}
