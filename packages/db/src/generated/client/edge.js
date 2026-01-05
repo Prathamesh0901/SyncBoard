@@ -185,6 +185,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -202,6 +206,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -210,8 +215,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"POSTGRES_DB_URL\")\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  password  String\n  name      String?\n  createdAt DateTime @default(now())\n\n  rooms      RoomUser[]\n  adminRooms CanvasRoom[] @relation(\"RoomAdmin\")\n\n  elements Element[]\n}\n\nmodel CanvasRoom {\n  id   String @id @default(uuid())\n  slug String @unique\n\n  adminId String\n  admin   User   @relation(\"RoomAdmin\", fields: [adminId], references: [id])\n\n  users    RoomUser[]\n  elements Element[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Element {\n  id String @id @default(cuid())\n\n  roomId String\n  room   CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)\n\n  senderId String\n  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)\n\n  type ShapeTypes\n\n  data Json\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel RoomUser {\n  userId String\n  roomId String\n\n  user User       @relation(fields: [userId], references: [id], onDelete: Cascade)\n  room CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)\n\n  joinedAt DateTime @default(now())\n\n  @@id([userId, roomId])\n}\n\nenum ShapeTypes {\n  PENCIL\n  RECTANGLE\n  ELLIPSE\n  LINE\n  ARROW\n  TEXT\n}\n",
-  "inlineSchemaHash": "246a12aec12ac36e7d498f0b2e79ecacd45c7c397805cd9984a2e5cf0a6d2d2d",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n  output        = \"../src/generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"POSTGRES_DB_URL\")\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  password  String\n  name      String?\n  createdAt DateTime @default(now())\n\n  rooms      RoomUser[]\n  adminRooms CanvasRoom[] @relation(\"RoomAdmin\")\n\n  elements Element[]\n}\n\nmodel CanvasRoom {\n  id   String @id @default(uuid())\n  slug String @unique\n\n  adminId String\n  admin   User   @relation(\"RoomAdmin\", fields: [adminId], references: [id])\n\n  users    RoomUser[]\n  elements Element[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Element {\n  id String @id @default(cuid())\n\n  roomId String\n  room   CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)\n\n  senderId String\n  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)\n\n  type ShapeTypes\n\n  data Json\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel RoomUser {\n  userId String\n  roomId String\n\n  user User       @relation(fields: [userId], references: [id], onDelete: Cascade)\n  room CanvasRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)\n\n  joinedAt DateTime @default(now())\n\n  @@id([userId, roomId])\n}\n\nenum ShapeTypes {\n  PENCIL\n  RECTANGLE\n  ELLIPSE\n  LINE\n  ARROW\n  TEXT\n}\n",
+  "inlineSchemaHash": "022fdb37eefb2e3e1e9923ec08174d1cffd2f3616a8b34c967751c5f5e9381ea",
   "copyEngine": true
 }
 config.dirname = '/'
