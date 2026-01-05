@@ -11,14 +11,13 @@ export class RoomManager {
     private sockets: Map<WebSocket, string>;
 
     private constructor() {
+        console.log(REDIS_DB_URL);
         this.publishClient = createClient({
             url: REDIS_DB_URL
         });
         this.publishClient.connect();
         this.subscribeClient = this.publishClient.duplicate();
-        this.subscribeClient.connect({
-            url: REDIS_DB_URL
-        });
+        this.subscribeClient.connect();
         this.rooms = new Map();
         this.sockets = new Map();
     }

@@ -48,8 +48,6 @@ wss.on('connection', async function connection(ws, request) {
 
     const userId = await checkUser(token);
 
-    console.log(userId);
-
     if(!userId) {
         ws.close();
         return;

@@ -20,7 +20,7 @@ export function useSocket(roomId: string) {
                     type: 'JOIN_ROOM',
                     roomId,
                 });
-            }, 5);
+            }, 1000);
         }
         
         ws.onclose = () => {
