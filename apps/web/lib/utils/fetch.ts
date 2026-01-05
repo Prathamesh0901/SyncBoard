@@ -1,4 +1,3 @@
-import { Asul } from "next/font/google";
 import { HTTP_BACKEND_URL } from "../../config";
 import { useToastStore } from "../../store/toast";
 import { Element } from "../types/types";
@@ -271,11 +270,4 @@ export function getUserId () {
     }
     const parsedData = JSON.parse(data);
     return parsedData.id; 
-}
-
-export function getBaseUrl () {
-    if (process.env.VERCEL_URL) {
-        return `https://${process.env.VERCEL_URL}`
-    }
-    return 'http://localhost:3000';
 }

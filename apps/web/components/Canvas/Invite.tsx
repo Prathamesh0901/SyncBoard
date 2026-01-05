@@ -2,8 +2,9 @@
 
 import { Copy, CopyCheck, Loader2, UserPlus, X } from "lucide-react";
 import { useState } from "react";
-import { getBaseUrl, getInviteToken } from "../../lib/utils/fetch";
+import { getInviteToken } from "../../lib/utils/fetch";
 import { useToastStore } from "../../store/toast";
+import { PUBLIC_APP_URL } from "../../config";
 
 export function Invite({ roomId }: { roomId: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +27,7 @@ export function Invite({ roomId }: { roomId: string }) {
         return;
       }
 
-      setInviteLink(`${getBaseUrl()}/invite/${token}`);
+      setInviteLink(`${PUBLIC_APP_URL}/invite/${token}`);
     }
   };
 
