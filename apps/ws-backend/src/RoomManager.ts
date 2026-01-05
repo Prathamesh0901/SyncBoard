@@ -16,7 +16,9 @@ export class RoomManager {
         });
         this.publishClient.connect();
         this.subscribeClient = this.publishClient.duplicate();
-        this.subscribeClient.connect();
+        this.subscribeClient.connect({
+            url: REDIS_DB_URL
+        });
         this.rooms = new Map();
         this.sockets = new Map();
     }

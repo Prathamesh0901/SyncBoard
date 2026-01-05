@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { WebSocketServer } from 'ws';
 import jwt from 'jsonwebtoken';
 import { JWT_AUTH_SECRET } from './config';
@@ -46,6 +47,8 @@ wss.on('connection', async function connection(ws, request) {
     const token = queryParams.get('token') || '';
 
     const userId = await checkUser(token);
+
+    console.log(userId);
 
     if(!userId) {
         ws.close();
