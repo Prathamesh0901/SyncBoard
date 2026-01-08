@@ -107,7 +107,12 @@ export class SelectTool {
             draftCtx.fillStyle = "rgba(36,123,194,0.25)";
             draftCtx.fillRect(this.initialPos.x, this.initialPos.y, w, h);
 
-            getElementsInsideBox(this.initialPos, pt, draftCtx);
+            const x1 = Math.min(this.initialPos.x, pt.x);
+            const x2 = Math.max(this.initialPos.x, pt.x);
+            const y1 = Math.min(this.initialPos.y, pt.y);
+            const y2 = Math.max(this.initialPos.y, pt.y);
+
+            getElementsInsideBox({x: x1, y: y1}, {x: x2, y: y2}, draftCtx);
             return;
         }
 
