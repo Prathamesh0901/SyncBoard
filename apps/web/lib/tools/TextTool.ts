@@ -108,7 +108,7 @@ export class TextTool {
             const box = getBoundingBox(element, ctx);
             const selectStore = useSelectStore.getState();
             selectStore.clearSelection();
-            selectStore.add(element.id, box);
+            selectStore.add(element.id, box, 'TEXT');
 
             useToolStore.getState().setTool('SELECT');
         }

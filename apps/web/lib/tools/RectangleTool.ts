@@ -26,7 +26,7 @@ export class RectangleTool {
                 angle: 0,
                 strokeColor: styleStore.strokeColor,
                 strokeWidth: styleStore.strokeWidth,
-                strokeStyle: styleStore.strokeType,
+                strokeType: styleStore.strokeType,
                 opacity: styleStore.opacity
             }
         }
@@ -61,7 +61,7 @@ export class RectangleTool {
         const box = getBoundingBox(this.draft, draftCtx);
         const selectStore = useSelectStore.getState();
         selectStore.clearSelection();
-        selectStore.add(this.draft.id, box);
+        selectStore.add(this.draft.id, box, 'OTHER');
 
         useToolStore.getState().setTool('SELECT');
 
