@@ -1,5 +1,5 @@
 import { TransformState, useTransformStore } from "../../store/transform";
-import { toLocalPoint, toWorldPoint } from "../geometry/transform";
+import { toWorldPoint } from "../geometry/transform";
 import { BoundingBox, Point } from "../types/types";
 
 export class SelectionLayer {

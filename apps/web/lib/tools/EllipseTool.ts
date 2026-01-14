@@ -6,6 +6,7 @@ import { renderEllipse } from "../renderers/renderer";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useSelectStore } from "../../store/selectElement";
 import { useToolStore } from "../../store/tool";
+import { useStyleStore } from "../../store/style";
 
 export class EllipseTool {
     start: Point | null = null;
@@ -13,6 +14,7 @@ export class EllipseTool {
 
     pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         this.start = pt;
+        const styleStore = useStyleStore.getState();
         this.draft = {
             id: createId(),
             type: 'ELLIPSE',
@@ -22,8 +24,10 @@ export class EllipseTool {
                 rX: 0,
                 rY: 0,
                 angle: 0,
-                w: 0,
-                h: 0
+                strokeColor: styleStore.strokeColor,
+                strokeWidth: styleStore.strokeWidth,
+                strokeStyle: styleStore.strokeType,
+                opacity: styleStore.opacity
             }
         }
     }
@@ -40,9 +44,6 @@ export class EllipseTool {
         this.draft.data.y = centerY;
         this.draft.data.rX = radiusX;
         this.draft.data.rY = radiusY;
-
-        this.draft.data.w  = 2 * radiusX;
-        this.draft.data.h  = 2 * radiusY;
         
         renderEllipse(draftCtx, this.draft);
     }

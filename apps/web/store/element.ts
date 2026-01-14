@@ -7,6 +7,7 @@ export interface ElementState {
     init: (elements: Element[]) => void;
     remove: (id: string) => void;
     update: (id: string, el: Element) => void;
+    updateStyle: (id: string, patch: any) => void;
 };
 
 export const useElementStore = create<ElementState>((set) => ({
@@ -33,5 +34,15 @@ export const useElementStore = create<ElementState>((set) => ({
         const newElements = {...s.elements};
         newElements[id] = el;
         return {elements: newElements}
+    }),
+    updateStyle: (id, patch) => set((s) => {
+        const el = s.elements[id];
+        if (el) {
+            el.data = {
+                ...el?.data,
+                ...patch
+            }
+        }
+        return {elements: s.elements}
     })
 }));

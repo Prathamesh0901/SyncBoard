@@ -105,7 +105,8 @@ export function getHandleAtPoints(pt: Point, ctx: CanvasRenderingContext2D) {
                 localPt = toLocalPoint(pt.x, pt.y, cx, cy, box.angle);
                 if (hitTestElement(el, localPt, 10, ctx)) {
                     clickHandle.handleId = 'single';
-                    selectStore.add(el.id, box);
+                    const type = el.type;
+                    selectStore.add(el.id, box, (type === 'TEXT'? 'TEXT': 'OTHER'));
                     break;
                 }
             }

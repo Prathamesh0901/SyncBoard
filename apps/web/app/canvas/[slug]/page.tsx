@@ -6,6 +6,7 @@ import { Invite } from "../../../components/Canvas/Invite";
 import AcceptInvite from "../../../components/AcceptInvite";
 import { DashboardButton } from "../../../components/Canvas/DashboardButton";
 import { HTTP_BACKEND_URL } from "../../../config";
+import SidePanel from "../../../components/Canvas/SidePanel";
 
 export default async function RoomPage({ params, searchParams }: {
     params: {
@@ -50,6 +51,7 @@ export default async function RoomPage({ params, searchParams }: {
                     <ZoomBar />
                     <Invite roomId={slug} />
                     <DashboardButton />
+                    <SidePanel />
                 </div>
             }
         </>

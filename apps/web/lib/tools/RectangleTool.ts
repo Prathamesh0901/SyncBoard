@@ -6,6 +6,7 @@ import { renderRectangle } from "../renderers/renderer";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useSelectStore } from "../../store/selectElement";
 import { useToolStore } from "../../store/tool";
+import { useStyleStore } from "../../store/style";
 
 export class RectangleTool {
     start: Point | null = null;
@@ -13,6 +14,7 @@ export class RectangleTool {
 
     pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         this.start = pt;
+        const styleStore = useStyleStore.getState();
         this.draft = {
             id: createId(),
             type: 'RECTANGLE',
@@ -22,6 +24,10 @@ export class RectangleTool {
                 h: 0,
                 w: 0,
                 angle: 0,
+                strokeColor: styleStore.strokeColor,
+                strokeWidth: styleStore.strokeWidth,
+                strokeStyle: styleStore.strokeType,
+                opacity: styleStore.opacity
             }
         }
     }

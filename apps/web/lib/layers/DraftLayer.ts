@@ -8,6 +8,7 @@ import { screenToWorld } from "../utils/helper";
 import { useSelectStore } from "../../store/selectElement";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useToastStore } from "../../store/toast";
+import { subscribeCollaboration } from "../collaboration/events";
 
 export class DraftLayer {
     private draftCanvas: HTMLCanvasElement;
@@ -34,6 +35,10 @@ export class DraftLayer {
         this.setZoom = useTransformStore.getState().setZoom;
         this.initHandlers();
         this.initEvents();
+
+        subscribeCollaboration(event => {
+            this.handleEvent(event);
+        })
     }
 
     initEvents () {
@@ -97,6 +102,18 @@ export class DraftLayer {
         return;
     }
     
+    private handleEvent(event: any) {
+        switch(event.type) {
+            case "ELEMENT_UPDATE": {
+                this.socket.sendTyped({
+                    ...event,
+                    roomId: this.roomId
+                })
+                break;
+            }
+        }
+    }
+
     private onMouseDown = (e: MouseEvent) => {
         const currTool = useToolStore.getState().tool;
         if (currTool === 'FREE_HAND' && !this.isDrawing) {

@@ -11,7 +11,8 @@ export function getElementAtPoints (pt: Point, ctx: CanvasRenderingContext2D) {
     Object.values(elements).forEach((element: Element) => {
         const box = getBoundingBox(element, ctx);
         if(hitTestElement(element, pt, 10, ctx) === true) {
-            useSelectStore.getState().add(element.id, box);
+            const type = element.type;
+            useSelectStore.getState().add(element.id, box, (type === 'TEXT'?'TEXT':'OTHER'));
             el = element;
         }
     });

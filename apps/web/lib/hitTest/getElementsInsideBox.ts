@@ -14,7 +14,8 @@ export function getElementsInsideBox (pt1: Point, pt2: Point, ctx: CanvasRenderi
             box.y1 >= pt1.y && box.y1 <= pt2.y &&
             box.y2 >= pt1.y && box.y2 <= pt2.y
         ) {
-            selectStore.add(element.id, box);
+            const type = element.type;
+            selectStore.add(element.id, box, (type === 'TEXT'? 'TEXT': 'OTHER'));
         }
     });
     return;

@@ -9,6 +9,9 @@ export type Element = {
         y: number;
         points: Point[];
         angle: number;
+        strokeColor: string;
+        strokeWidth: number;
+        opacity: number;
     }
 } | {
     id: string;
@@ -19,6 +22,10 @@ export type Element = {
         h: number;
         w: number;
         angle: number;
+        strokeColor: string;
+        strokeWidth: number;
+        opacity: number;
+        strokeType: StrokeTypes;
     }
 } | {
     id: string;
@@ -29,8 +36,10 @@ export type Element = {
         rX: number;
         rY: number;
         angle: number;
-        h: number;
-        w: number;
+        strokeColor: string;
+        strokeWidth: number;
+        opacity: number;
+        strokeType: StrokeTypes;
     }
 } | {
     id: string;
@@ -41,8 +50,10 @@ export type Element = {
         eX: number;
         eY: number;
         angle: number;
-        h: number;
-        w: number;
+        strokeColor: string;
+        strokeWidth: number;
+        opacity: number;
+        strokeType: StrokeTypes;
     }
 } | {
     id: string;
@@ -54,8 +65,10 @@ export type Element = {
         eY: number;
         headlen: number;
         angle: number;
-        h: number;
-        w: number;
+        strokeColor: string;
+        strokeWidth: number;
+        opacity: number;
+        strokeType: StrokeTypes;
     }
 } | {
     id: string;
@@ -71,6 +84,9 @@ export type Element = {
         currWidth: number,
         lineCount: number,
         lineHeight: number
+        strokeColor: string;
+        strokeWidth: number;
+        opacity: number;
     }
 };
 
@@ -88,3 +104,6 @@ export interface BoundingBox {
 }
 
 export type ResizeHandle = "no" | "ea" | "so" | "we" | "nw" | "ne" | "se" | "sw";
+
+
+export type StrokeTypes = "SOLID" | "DASHED" | "DOTTED";

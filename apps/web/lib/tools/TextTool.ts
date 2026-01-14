@@ -7,6 +7,7 @@ import { useTransformStore } from "../../store/transform";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useSelectStore } from "../../store/selectElement";
 import { useToolStore } from "../../store/tool";
+import { useStyleStore } from "../../store/style";
 
 export class TextTool {
     start: Point | null = null;
@@ -14,7 +15,6 @@ export class TextTool {
 
     pointerDown(draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         this.start = pt;
-        console.log('pointer down');
         this.createInput(draftCtx, this.start, ws, slug, roomId);
     }
 
@@ -28,6 +28,7 @@ export class TextTool {
 
     createInput(ctx: CanvasRenderingContext2D, point: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         const p = worldToScreen(point, useTransformStore.getState());
+        const styleStore = useStyleStore.getState();
         const input = document.createElement('textarea');
         input.style.position = 'absolute';
         input.style.left = p.x + "px";
@@ -41,7 +42,7 @@ export class TextTool {
         input.style.outline = "none";
         input.style.resize = "none";
         input.style.whiteSpace = "pre";
-        input.style.color = "rgb(255, 255, 255)";
+        input.style.color = styleStore.strokeColor;
 
         document.body.appendChild(input);
         input.focus();
@@ -72,7 +73,8 @@ export class TextTool {
                     maxWidth = Math.max(maxWidth, ctx.measureText(token).width);
                 });
                 currWidth = Math.max(currWidth, ctx.measureText(line).width);
-            })
+            });
+            const styleStore = useStyleStore.getState();
             const element: Element = {
                 id: createId(),
                 type: 'TEXT',
@@ -80,13 +82,16 @@ export class TextTool {
                     x: this.start.x,
                     y: this.start.y,
                     text,
-                    fontSize: 50,
+                    fontSize: styleStore.fontSize,
                     fontFamily: 'Arial',
                     angle: 0,
                     maxWidth,
                     currWidth,
                     lineCount: lines.length,
-                    lineHeight: 0
+                    lineHeight: 0,
+                    strokeColor: styleStore.strokeColor,
+                    strokeWidth: styleStore.strokeWidth,
+                    opacity: styleStore.opacity
                 }
             };
 

@@ -6,6 +6,7 @@ import { renderLine } from "../renderers/renderer";
 import { getBoundingBox } from "../hitTest/pointUtilts";
 import { useSelectStore } from "../../store/selectElement";
 import { useToolStore } from "../../store/tool";
+import { useStyleStore } from "../../store/style";
 
 export class LineTool {
     start: Point | null = null;
@@ -13,6 +14,7 @@ export class LineTool {
 
     pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         this.start = pt;
+        const styleStore = useStyleStore.getState();
         this.draft = {
             id: createId(),
             type: 'LINE',
@@ -22,8 +24,10 @@ export class LineTool {
                 eX: pt.x,
                 eY: pt.y,
                 angle: 0,
-                w: 0,
-                h: 0
+                strokeColor: styleStore.strokeColor,
+                strokeWidth: styleStore.strokeWidth,
+                strokeStyle: styleStore.strokeType,
+                opacity: styleStore.opacity
             }
         }
     }
@@ -33,8 +37,6 @@ export class LineTool {
 
         this.draft.data.eX = pt.x;
         this.draft.data.eY = pt.y;
-        this.draft.data.w  = pt.x - this.draft.data.sX;
-        this.draft.data.h  = pt.y - this.draft.data.sY;
 
         renderLine(draftCtx, this.draft);
     }

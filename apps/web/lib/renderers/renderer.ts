@@ -2,34 +2,53 @@ import { Element } from "../types/types";
 
 export function renderRectangle(ctx: CanvasRenderingContext2D, element: Element) {
     if (element.type !== 'RECTANGLE') return;
+    
+    const { x, y, w, h, strokeColor, strokeWidth, opacity, strokeType } = element.data;
 
-    ctx.strokeStyle = 'rgb(255, 255, 255)';
-    ctx.lineWidth = 1;
-    const { x, y, w, h } = element.data;
+    ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = strokeWidth;
+    ctx.globalAlpha = opacity;
+
+    if (strokeType === 'DOTTED') ctx.setLineDash([2, 5]);
+    else if (strokeType === 'DASHED') ctx.setLineDash([8, 5]);
+
     ctx.strokeRect(x, y, w, h);
+    ctx.setLineDash([]);
 }
 
 export function renderEllipse(ctx: CanvasRenderingContext2D, element: Element) {
     if (element.type !== 'ELLIPSE') return;
 
-    ctx.strokeStyle = 'rgb(255, 255, 255)';
-    ctx.lineWidth = 1;
+    const { x, y, rX, rY, strokeColor, strokeWidth, opacity, strokeType } = element.data;
+    
+    ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = strokeWidth;
+    ctx.globalAlpha = opacity;
 
-    const { x, y, rX, rY } = element.data;
     ctx.beginPath();
+
+    if (strokeType === 'DOTTED') ctx.setLineDash([2, 5]);
+    else if (strokeType === 'DASHED') ctx.setLineDash([8, 5]);
+
     ctx.ellipse(x, y, Math.abs(rX), Math.abs(rY), 0, 0, 2 * Math.PI);
     ctx.stroke();
+    ctx.setLineDash([]);
 }
 
 export function renderArrow(ctx: CanvasRenderingContext2D, element: Element) {
     if (element.type !== 'ARROW') return;
 
-    ctx.strokeStyle = 'rgb(255, 255, 255)';
-    ctx.lineWidth = 1;
-
-    const { sX, sY, eX, eY, headlen } = element.data;
+    const { sX, sY, eX, eY, headlen, strokeColor, strokeWidth, opacity, strokeType } = element.data;
+    
+    ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = strokeWidth;
+    ctx.globalAlpha = opacity;
     
     ctx.beginPath();
+
+    if (strokeType === 'DOTTED') ctx.setLineDash([2, 5]);
+    else if (strokeType === 'DASHED') ctx.setLineDash([8, 5]);
+
     ctx.moveTo(sX, sY);
     ctx.lineTo(eX, eY);
     ctx.stroke();
@@ -48,31 +67,39 @@ export function renderArrow(ctx: CanvasRenderingContext2D, element: Element) {
         eY - headlen * Math.sin(a + 0.3),
     );
     ctx.stroke();
+    ctx.setLineDash([]);
 }
 
 export function renderLine(ctx: CanvasRenderingContext2D, element: Element) {
     if (element.type !== 'LINE') return;
 
-    ctx.strokeStyle = 'rgb(255, 255, 255)';
-    ctx.lineWidth = 1;
-
-    const { sX, sY, eX, eY } = element.data;
+    const { sX, sY, eX, eY, strokeColor, strokeWidth, opacity, strokeType } = element.data;
+    
+    ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = strokeWidth;
+    ctx.globalAlpha = opacity;
 
     ctx.beginPath();
+    
+    if (strokeType === 'DOTTED') ctx.setLineDash([2, 5]);
+    else if (strokeType === 'DASHED') ctx.setLineDash([8, 5]);
+
     ctx.moveTo(sX, sY);
     ctx.lineTo(eX, eY);
     ctx.stroke();
+    ctx.setLineDash([]);
 }
 
 export function renderPencil(ctx: CanvasRenderingContext2D, element: Element) {
     if (element.type !== 'PENCIL') return;
 
-    ctx.strokeStyle = 'rgb(255, 255, 255)';
-    ctx.lineWidth = 1;
+    const { points, strokeColor, strokeWidth, opacity } = element.data;
+    
+    ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = strokeWidth;
+    ctx.globalAlpha = opacity;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-
-    const { points } = element.data;
 
     ctx.beginPath();
     points.forEach((p, i) => {
@@ -88,11 +115,12 @@ export function renderPencil(ctx: CanvasRenderingContext2D, element: Element) {
 
 export function renderText(ctx: CanvasRenderingContext2D, element: Element) {
     if (element.type !== 'TEXT') return;
-    const { x, y, text, fontSize, fontFamily = 'Arial', currWidth, lineHeight } = element.data;
+    const { x, y, text, fontSize, fontFamily = 'Arial', currWidth, lineHeight, strokeColor, strokeWidth, opacity } = element.data;
 
     ctx.font = `${fontSize}px ${fontFamily}`;
-    ctx.fillStyle = 'rgb(255, 255, 255)';
-    ctx.lineWidth = 1;
+    ctx.fillStyle = strokeColor;
+    ctx.lineWidth = strokeWidth;
+    ctx.globalAlpha = opacity;
     ctx.textBaseline = 'top';
     
     const resultLines: string[] = [];

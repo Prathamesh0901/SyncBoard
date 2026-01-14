@@ -3,6 +3,7 @@ import { Element, Point } from "../types/types";
 import { ElementState } from "../../store/element";
 import { TypedWebSocket } from "../ws/TypedWebSocket";
 import { renderPencil } from "../renderers/renderer";
+import { useStyleStore } from "../../store/style";
 
 export class PencilTool {
     draft: Element | null = null;
@@ -12,6 +13,7 @@ export class PencilTool {
     pointerDown (draftCtx: CanvasRenderingContext2D, pt: Point, ws: TypedWebSocket, slug: string, roomId: string) {
         this.x1 = pt.x;
         this.y1 = pt.y;
+        const styleStore = useStyleStore.getState();
         this.draft = {
             id: createId(),
             type: 'PENCIL',
@@ -19,7 +21,10 @@ export class PencilTool {
                 points: [pt],
                 angle: 0,
                 x: this.x1,
-                y: this.y1
+                y: this.y1,
+                strokeColor: styleStore.strokeColor,
+                strokeWidth: styleStore.strokeWidth,
+                opacity: styleStore.opacity
             }
         }
     }
